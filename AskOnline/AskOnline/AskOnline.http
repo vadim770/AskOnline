@@ -1,0 +1,6 @@
+@AskOnline_HostAddress = http://localhost:5230
+
+GET {{AskOnline_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
