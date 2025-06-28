@@ -5,6 +5,7 @@ using AskOnline.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using AskOnline.Dtos;
+using AskOnline.Services;
 
 namespace AskOnline.Controllers
 {
@@ -12,33 +13,22 @@ namespace AskOnline.Controllers
     [ApiController]
     public class AnswersController : ControllerBase
     {
+        private readonly AnswerService _answerService;
         private readonly AppDbContext _context;
+        private readonly UserService _userService;
 
-        public AnswersController(AppDbContext context)
+        public AnswersController(AppDbContext context, UserService userService, AnswerService answerService)
         {
             _context = context;
+            _userService = userService;
+            _answerService = answerService;
         }
 
         // GET: api/Answers/by-question/3
         [HttpGet("by-question/{questionId}")]
         public async Task<ActionResult<IEnumerable<AnswerResponseDto>>> GetAnswersForQuestion(int questionId)
         {
-            var answers = await _context.Answers
-                .Where(a => a.QuestionId == questionId)
-                .Include(a => a.User)
-                .ToListAsync();
-
-            var isAdmin = User.Identity.IsAuthenticated && User.IsInRole(Roles.Admin);
-
-            var answerDtos = answers.Select(a => new AnswerResponseDto
-            {
-                AnswerId = a.AnswerId,
-                Body = a.Body,
-                CreatedAt = a.CreatedAt,
-                QuestionId = a.QuestionId,
-                User = MapUserDto(a.User, isAdmin)
-            }).ToList();
-
+            var answerDtos = await _answerService.GetAnswersForQuestion(questionId, _userService.IsCurrentUserAdmin(),_userService.GetCurrentUserId());
             return Ok(answerDtos);
         }
 
@@ -79,7 +69,7 @@ namespace AskOnline.Controllers
                 Body = answerWithUser.Body,
                 CreatedAt = answerWithUser.CreatedAt,
                 QuestionId = answerWithUser.QuestionId,
-                User = MapUserDto(answerWithUser.User, isAdmin)
+                User = _userService.MapUserDto(answerWithUser.User, isAdmin)
             };
 
             return CreatedAtAction(nameof(GetAnswersForQuestion), new { questionId = answer.QuestionId }, response);
@@ -104,27 +94,6 @@ namespace AskOnline.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private UserPublicDto MapUserDto(User user, bool isAdmin)
-        {
-            if (isAdmin)
-            {
-                return new UserAdminDto
-                {
-                    UserId = user.UserId,
-                    Username = user.Username,
-                    Email = user.Email,
-                    Role = user.Role,
-                    CreatedAt = user.CreatedAt
-                };
-            }
-
-            return new UserPublicDto
-            {
-                UserId = user.UserId,
-                Username = user.Username
-            };
         }
     }
 }
