@@ -3,80 +3,112 @@
   "WorkspaceRootPath": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\askonline.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\askonline.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\questionresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\questionresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\answerrating.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\answerrating.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\questionrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\questionrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\ratingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\ratingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\questionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\questionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\answerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\answerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\userregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\userregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\answerresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\answerresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\tagdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\tagdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\questiontag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\questiontag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\answerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\answerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\tagscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\tagscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\questionrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\questionrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\questions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\questions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\questionresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\questionresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\askonline.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\askonline.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\userregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\userregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\models\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\askonline.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
@@ -90,110 +122,110 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "QuestionResponseDto.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionResponseDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\QuestionResponseDto.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionResponseDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\QuestionResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "RatingController.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\RatingController.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Controllers\\RatingController.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\RatingController.cs",
+              "RelativeToolTip": "AskOnline\\Controllers\\RatingController.cs",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAqwAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T13:02:08.929Z",
+              "WhenOpened": "2025-06-27T10:59:28.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RatingDto.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\RatingDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\RatingDto.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\RatingDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\RatingDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:58:13.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AnswerRating.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\AnswerRating.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Models\\AnswerRating.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\AnswerRating.cs",
+              "RelativeToolTip": "AskOnline\\Models\\AnswerRating.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:34:07.641Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "UserResponseDto.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserResponseDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\UserResponseDto.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserResponseDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\UserResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T10:18:21.808Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "AskOnline\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Data\\AppDbContext.cs*",
-              "RelativeToolTip": "AskOnline\\Data\\AppDbContext.cs*",
-              "ViewState": "AgIAABAAAAAAAAAAAAAkwCQAAAAyAAAAAAAAAA==",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "AskOnline\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAEwEcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-23T15:03:49.905Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AskOnline.csproj",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\AskOnline.csproj",
-              "RelativeDocumentMoniker": "AskOnline\\AskOnline.csproj",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\AskOnline.csproj",
-              "RelativeToolTip": "AskOnline\\AskOnline.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-23T14:31:34.622Z",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\User.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Models\\User.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\User.cs",
+              "RelativeToolTip": "AskOnline\\Models\\User.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA9wBYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-23T15:01:10.346Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "UsersController.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "AskOnline\\Controllers\\UsersController.cs",
               "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\UsersController.cs",
               "RelativeToolTip": "AskOnline\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAkwHIAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAkwJ0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-24T18:09:59.426Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "QuestionRequestDto.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionRequestDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\QuestionRequestDto.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionRequestDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\QuestionRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T13:01:02.123Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "QuestionsController.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\QuestionsController.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Controllers\\QuestionsController.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\QuestionsController.cs",
-              "RelativeToolTip": "AskOnline\\Controllers\\QuestionsController.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAxwBMAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T15:48:11.386Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "AnswersController.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AnswersController.cs",
               "RelativeDocumentMoniker": "AskOnline\\Controllers\\AnswersController.cs",
               "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AnswersController.cs",
               "RelativeToolTip": "AskOnline\\Controllers\\AnswersController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAxwFYAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-25T11:24:30.471Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "QuestionsController.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\QuestionsController.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Controllers\\QuestionsController.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\QuestionsController.cs",
+              "RelativeToolTip": "AskOnline\\Controllers\\QuestionsController.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAIA6wCQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-23T15:48:11.386Z",
               "EditorCaption": ""
             },
             {
@@ -204,7 +236,7 @@
               "RelativeDocumentMoniker": "AskOnline\\Models\\Answer.cs",
               "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Answer.cs",
               "RelativeToolTip": "AskOnline\\Models\\Answer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA9wBcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-23T15:19:39.371Z",
               "EditorCaption": ""
@@ -212,93 +244,92 @@
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "AnswerRequestDto.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerRequestDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\AnswerRequestDto.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerRequestDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\AnswerRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T12:43:12.291Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserRegisterRequest.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserRegisterRequest.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\UserRegisterRequest.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserRegisterRequest.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\UserRegisterRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T20:49:04.195Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
               "Title": "AnswerResponseDto.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerResponseDto.cs",
               "RelativeDocumentMoniker": "AskOnline\\Dtos\\AnswerResponseDto.cs",
               "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerResponseDto.cs",
               "RelativeToolTip": "AskOnline\\Dtos\\AnswerResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-25T12:43:29.875Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TagDto.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\TagDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\TagDto.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\TagDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\TagDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T13:54:32.341Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "QuestionTag.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\QuestionTag.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Models\\QuestionTag.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\QuestionTag.cs",
+              "RelativeToolTip": "AskOnline\\Models\\QuestionTag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T13:52:22.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "LoginRequest.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\LoginRequest.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\LoginRequest.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\LoginRequest.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\LoginRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Title": "Tag.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Tag.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Models\\Tag.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Tag.cs",
+              "RelativeToolTip": "AskOnline\\Models\\Tag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T20:49:28.442Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Roles.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Roles.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Models\\Roles.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Roles.cs",
-              "RelativeToolTip": "AskOnline\\Models\\Roles.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T10:40:32.597Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Program.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Program.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Program.cs",
-              "RelativeToolTip": "AskOnline\\Program.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAAAEIAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T14:28:11.915Z",
+              "WhenOpened": "2025-06-26T13:47:26.347Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "AskOnline\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAUwCwAAAAAAAAAAAAAAA==",
+              "Title": "AnswerRequestDto.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerRequestDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\AnswerRequestDto.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerRequestDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\AnswerRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T19:30:12.743Z",
+              "WhenOpened": "2025-06-25T12:43:12.291Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "TagsController.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\TagsController.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Controllers\\TagsController.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\TagsController.cs",
+              "RelativeToolTip": "AskOnline\\Controllers\\TagsController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAUwA0AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T18:51:19.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "QuestionRequestDto.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionRequestDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\QuestionRequestDto.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionRequestDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\QuestionRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T13:01:02.123Z"
             },
             {
               "$type": "Document",
@@ -308,14 +339,121 @@
               "RelativeDocumentMoniker": "AskOnline\\Models\\Questions.cs",
               "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Questions.cs",
               "RelativeToolTip": "AskOnline\\Models\\Questions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAgwBAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T15:17:26.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-23T15:17:26.088Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 17,
+              "Title": "QuestionResponseDto.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionResponseDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\QuestionResponseDto.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\QuestionResponseDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\QuestionResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T13:02:08.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AskOnline.csproj",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\AskOnline.csproj",
+              "RelativeDocumentMoniker": "AskOnline\\AskOnline.csproj",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\AskOnline.csproj",
+              "RelativeToolTip": "AskOnline\\AskOnline.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-06-23T14:31:34.622Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\UserDto.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T12:33:19.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "UserResponseDto.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserResponseDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\UserResponseDto.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserResponseDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\UserResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T10:18:21.808Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AskOnline\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAUwCwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T19:30:12.743Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "UserRegisterRequest.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserRegisterRequest.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\UserRegisterRequest.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\UserRegisterRequest.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\UserRegisterRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T20:49:04.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Roles.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Roles.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Models\\Roles.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\Roles.cs",
+              "RelativeToolTip": "AskOnline\\Models\\Roles.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T10:40:32.597Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Program.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Program.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Program.cs",
+              "RelativeToolTip": "AskOnline\\Program.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAAAEIAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-23T14:28:11.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\LoginRequest.cs",
+              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\LoginRequest.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T20:49:28.442Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\appsettings.json",
               "RelativeDocumentMoniker": "AskOnline\\appsettings.json",
@@ -323,33 +461,18 @@
               "RelativeToolTip": "AskOnline\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-23T15:05:55.431Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-23T15:05:55.431Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\User.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Models\\User.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Models\\User.cs",
-              "RelativeToolTip": "AskOnline\\Models\\User.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T15:01:10.346Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 27,
               "Title": "AskOnline",
               "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\AskOnline.csproj",
               "RelativeDocumentMoniker": "AskOnline\\AskOnline.csproj",
               "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\AskOnline.csproj",
               "RelativeToolTip": "AskOnline\\AskOnline.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-23T14:47:42.948Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-23T14:47:42.948Z"
             }
           ]
         }

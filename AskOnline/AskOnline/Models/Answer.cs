@@ -14,5 +14,11 @@ namespace AskOnline.Models
 
         public int UserId { get; set; }
         public User? User { get; set; }
+
+        // Navigation property for ratings
+        public ICollection<AnswerRating> Ratings { get; set; } = new List<AnswerRating>();
+
+        // Computed property for score (optional, for convenience)
+        public int Score => Ratings?.Count(r => r.IsUpvote) - Ratings?.Count(r => !r.IsUpvote) ?? 0;
     }
 }

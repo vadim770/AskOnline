@@ -29,7 +29,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Answer"
+                    "$ref": "#/components/schemas/AnswerResponseDto"
                   }
                 }
               },
@@ -37,7 +37,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Answer"
+                    "$ref": "#/components/schemas/AnswerResponseDto"
                   }
                 }
               },
@@ -45,7 +45,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Answer"
+                    "$ref": "#/components/schemas/AnswerResponseDto"
                   }
                 }
               }
@@ -200,7 +200,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Question"
+                    "$ref": "#/components/schemas/QuestionResponseDto"
                   }
                 }
               },
@@ -208,7 +208,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Question"
+                    "$ref": "#/components/schemas/QuestionResponseDto"
                   }
                 }
               },
@@ -216,7 +216,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Question"
+                    "$ref": "#/components/schemas/QuestionResponseDto"
                   }
                 }
               }
@@ -293,17 +293,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Question"
+                  "$ref": "#/components/schemas/QuestionResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Question"
+                  "$ref": "#/components/schemas/QuestionResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Question"
+                  "$ref": "#/components/schemas/QuestionResponseDto"
                 }
               }
             }
@@ -313,6 +313,243 @@
       "delete": {
         "tags": [
           "Questions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Ratings": {
+      "post": {
+        "tags": [
+          "Ratings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ratings/answer/{answerId}": {
+      "delete": {
+        "tags": [
+          "Ratings"
+        ],
+        "parameters": [
+          {
+            "name": "answerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Ratings"
+        ],
+        "parameters": [
+          {
+            "name": "answerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerScoreDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerScoreDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerScoreDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Tags": {
+      "post": {
+        "tags": [
+          "Tags"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TagDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TagDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TagDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Tags/{id}": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tags"
         ],
         "parameters": [
           {
@@ -508,6 +745,49 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "ratings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerRating"
+            },
+            "nullable": true
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AnswerRating": {
+        "type": "object",
+        "properties": {
+          "ratingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "answerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isUpvote": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "answer": {
+            "$ref": "#/components/schemas/Answer"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false
@@ -545,9 +825,50 @@
             "type": "integer",
             "format": "int32"
           },
-          "userId": {
+          "user": {
+            "$ref": "#/components/schemas/UserPublicDto"
+          },
+          "upvoteCount": {
             "type": "integer",
             "format": "int32"
+          },
+          "downvoteCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentUserVote": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AnswerScoreDto": {
+        "type": "object",
+        "properties": {
+          "answerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "upvoteCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "downvoteCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userVote": {
+            "type": "boolean",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -598,6 +919,13 @@
               "$ref": "#/components/schemas/Answer"
             },
             "nullable": true
+          },
+          "questionTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionTag"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -611,6 +939,13 @@
           },
           "body": {
             "type": "string",
+            "nullable": true
+          },
+          "tagNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },
@@ -635,9 +970,137 @@
             "type": "string",
             "format": "date-time"
           },
-          "userId": {
+          "user": {
+            "$ref": "#/components/schemas/UserPublicDto"
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerResponseDto"
+            },
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionTag": {
+        "type": "object",
+        "properties": {
+          "questionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "question": {
+            "$ref": "#/components/schemas/Question"
+          },
+          "tagId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tag": {
+            "$ref": "#/components/schemas/Tag"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RatingRequestDto": {
+        "type": "object",
+        "properties": {
+          "answerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isUpvote": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RatingResponseDto": {
+        "type": "object",
+        "properties": {
+          "ratingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "answerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isUpvote": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "tagId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "questionTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionTag"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TagCreateDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TagDto": {
+        "type": "object",
+        "properties": {
+          "tagId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -677,6 +1140,27 @@
             "items": {
               "$ref": "#/components/schemas/Answer"
             },
+            "nullable": true
+          },
+          "answerRatings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerRating"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserPublicDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "username": {
+            "type": "string",
             "nullable": true
           }
         },

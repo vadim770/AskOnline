@@ -98,29 +98,65 @@ namespace AskOnline.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var isAdmin = User.IsInRole(Roles.Admin);
-
-            if (!isAdmin && currentUserId != id.ToString())
-                return Forbid();
 
             var user = await _context.Users
                 .Include(u => u.Questions)
+                    .ThenInclude(q => q.Answers)
+                .Include(u => u.Questions)
+                    .ThenInclude(q => q.QuestionTags)
                 .Include(u => u.Answers)
+                    .ThenInclude(a => a.Ratings)
                 .FirstOrDefaultAsync(u => u.UserId == id);
 
             if (user == null)
                 return NotFound();
 
-            // prevent deleting admins
-            if (user.Role == Roles.Admin)
-                return BadRequest("Admin accounts cannot be deleted.");
+            if (!isAdmin && currentUserId != id)
+                return Forbid();
 
+            if (user.Role == Roles.Admin && !isAdmin)
+                return Forbid(); // Prevent users from deleting admins
+
+            // Delete ratings created by the user
+            var userRatings = await _context.AnswerRatings
+                .Where(r => r.UserId == id)
+                .ToListAsync();
+            _context.AnswerRatings.RemoveRange(userRatings);
+
+            // Delete answers to user's questions
+            var questionIds = user.Questions.Select(q => q.QuestionId).ToList();
+            var relatedAnswers = await _context.Answers
+                .Where(a => questionIds.Contains(a.QuestionId))
+                .Include(a => a.Ratings)
+                .ToListAsync();
+
+            // Delete ratings on those answers
+            var answerRatings = relatedAnswers.SelectMany(a => a.Ratings).ToList();
+            _context.AnswerRatings.RemoveRange(answerRatings);
+
+            // Delete answers to user's questions
+            _context.Answers.RemoveRange(relatedAnswers);
+
+            // Delete user's own answers
+            _context.Answers.RemoveRange(user.Answers);
+
+            // Delete question-tag links
+            var questionTags = user.Questions.SelectMany(q => q.QuestionTags).ToList();
+            _context.QuestionTags.RemoveRange(questionTags);
+
+            // Delete user's questions
+            _context.Questions.RemoveRange(user.Questions);
+
+            // Finally, delete user
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
 
+            await _context.SaveChangesAsync();
             return NoContent();
         }
+
+
 
     }
 }

@@ -11,5 +11,6 @@
         public User? User { get; set; }
 
         public ICollection<Answer>? Answers { get; set; }
+        public ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>();
     }
 }

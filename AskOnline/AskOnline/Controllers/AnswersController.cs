@@ -4,6 +4,7 @@ using AskOnline.Data;
 using AskOnline.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using AskOnline.Dtos;
 
 namespace AskOnline.Controllers
 {
@@ -20,14 +21,25 @@ namespace AskOnline.Controllers
 
         // GET: api/Answers/by-question/3
         [HttpGet("by-question/{questionId}")]
-        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswersForQuestion(int questionId)
+        public async Task<ActionResult<IEnumerable<AnswerResponseDto>>> GetAnswersForQuestion(int questionId)
         {
             var answers = await _context.Answers
                 .Where(a => a.QuestionId == questionId)
                 .Include(a => a.User)
                 .ToListAsync();
 
-            return Ok(answers);
+            var isAdmin = User.Identity.IsAuthenticated && User.IsInRole(Roles.Admin);
+
+            var answerDtos = answers.Select(a => new AnswerResponseDto
+            {
+                AnswerId = a.AnswerId,
+                Body = a.Body,
+                CreatedAt = a.CreatedAt,
+                QuestionId = a.QuestionId,
+                User = MapUserDto(a.User, isAdmin)
+            }).ToList();
+
+            return Ok(answerDtos);
         }
 
         // POST: api/Answers
@@ -54,13 +66,20 @@ namespace AskOnline.Controllers
             _context.Answers.Add(answer);
             await _context.SaveChangesAsync();
 
+            // Load the user information for the response
+            var answerWithUser = await _context.Answers
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(a => a.AnswerId == answer.AnswerId);
+
+            var isAdmin = User.IsInRole(Roles.Admin);
+
             var response = new AnswerResponseDto
             {
-                AnswerId = answer.AnswerId,
-                Body = answer.Body,
-                CreatedAt = answer.CreatedAt,
-                QuestionId = answer.QuestionId,
-                UserId = answer.UserId
+                AnswerId = answerWithUser.AnswerId,
+                Body = answerWithUser.Body,
+                CreatedAt = answerWithUser.CreatedAt,
+                QuestionId = answerWithUser.QuestionId,
+                User = MapUserDto(answerWithUser.User, isAdmin)
             };
 
             return CreatedAtAction(nameof(GetAnswersForQuestion), new { questionId = answer.QuestionId }, response);
@@ -87,7 +106,25 @@ namespace AskOnline.Controllers
             return NoContent();
         }
 
+        private UserPublicDto MapUserDto(User user, bool isAdmin)
+        {
+            if (isAdmin)
+            {
+                return new UserAdminDto
+                {
+                    UserId = user.UserId,
+                    Username = user.Username,
+                    Email = user.Email,
+                    Role = user.Role,
+                    CreatedAt = user.CreatedAt
+                };
+            }
 
-
+            return new UserPublicDto
+            {
+                UserId = user.UserId,
+                Username = user.Username
+            };
+        }
     }
 }
