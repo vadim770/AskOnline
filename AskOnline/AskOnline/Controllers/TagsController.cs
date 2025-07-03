@@ -1,6 +1,7 @@
 ﻿using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
+using AskOnline.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,30 @@ namespace AskOnline.Controllers
     public class TagsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly TagService _tagService;
 
-        public TagsController(AppDbContext context)
+        public TagsController(AppDbContext context, TagService tagService)
         {
             _context = context;
+            _tagService = tagService;
         }
+
+        [Authorize]
+        [HttpPost("add-to-question")]
+        public async Task<IActionResult> AddTagToQuestion(AddTagToQuestionRequestDto request)
+        {
+            var result = await _tagService.AddTagToQuestionAsync(request.QuestionId, request.TagName);
+
+            return result switch
+            {
+                null => Ok("Tag added successfully."),
+                "Question not found." => NotFound(result),
+                "Forbidden" => Forbid(),
+                "Tag already associated with question." => BadRequest(result),
+                _ => BadRequest("Unexpected error.")
+            };
+        }
+
 
         // POST: api/Tags
         [Authorize]
@@ -26,57 +46,33 @@ namespace AskOnline.Controllers
             if (string.IsNullOrWhiteSpace(dto.Name))
                 return BadRequest("Tag name is required.");
 
-            var exists = _context.Tags.Any(t => t.Name.ToLower() == dto.Name.ToLower());
-            if (exists)
+            var result = await _tagService.CreateTagAsync(dto.Name.Trim());
+            if (result == null)
                 return Conflict("Tag with that name already exists.");
 
-            var tag = new Tag
-            {
-                Name = dto.Name.Trim(),
-                Description = dto.Description.Trim()
-            };
-
-            _context.Tags.Add(tag);
-            await _context.SaveChangesAsync();
-
-            var result = new TagDto
-            {
-                TagId = tag.TagId,
-                Name = tag.Name,
-                Description = tag.Description
-            };
-
-            return CreatedAtAction(nameof(GetTag), new { id = tag.TagId }, result);
+            return CreatedAtAction(nameof(GetTag), new { id = result.TagId }, result);
         }
+
 
         // GET: api/Tags/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TagDto>> GetTag(int id)
         {
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag == null) return NotFound();
+            var tagDto = await _tagService.GetTagByIdAsync(id);
+            if (tagDto == null)
+                return NotFound();
 
-            return new TagDto
-            {
-                TagId = tag.TagId,
-                Name = tag.Name,
-                Description = tag.Description
-            };
+            return Ok(tagDto);
         }
 
         // GET: api/Tags
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TagDto>>> GetTags()
         {
-            var tags = _context.Tags.Select(t => new TagDto
-            {
-                TagId = t.TagId,
-                Name = t.Name,
-                Description = t.Description
-            });
-
-            return Ok(await tags.ToListAsync());
+            var tagDtos = await _tagService.GetAllTagsAsync();
+            return Ok(tagDtos);
         }
+
 
         // DELETE: api/tags/{id}
         [Authorize(Roles = Roles.Admin)] // Only admins can delete tags
@@ -99,6 +95,18 @@ namespace AskOnline.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent(); // 204 No Content
+        }
+
+        // DELETE: api/Tags/remove-from-question?questionId=1&tagId=2
+        [Authorize]
+        [HttpDelete("remove-from-question")]
+        public async Task<IActionResult> RemoveTagFromQuestion(int questionId, int tagId)
+        {
+            var success = await _tagService.RemoveTagFromQuestionAsync(questionId, tagId);
+            if (!success)
+                return NotFound("Tag not associated with the question.");
+
+            return NoContent(); // 204
         }
 
 

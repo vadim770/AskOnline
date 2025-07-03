@@ -13,10 +13,12 @@ namespace AskOnline.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly UserService _userService;
 
-        public UsersController(AppDbContext context)
+        public UsersController(AppDbContext context, UserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         // GET: api/Users
@@ -24,31 +26,10 @@ namespace AskOnline.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
         {
-            var users = await _context.Users.ToListAsync();
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var isAdmin = User.IsInRole(Roles.Admin);
-
-            var response = users.Select(user =>
-            {
-                var dto = new UserResponseDto
-                {
-                    UserId = user.UserId,
-                    Username = user.Username,
-                    Role = isAdmin ? user.Role : "User"
-                };
-
-                if (currentUserId == user.UserId.ToString() || isAdmin)
-                {
-                    dto.Email = user.Email;
-                    dto.CreatedAt = user.CreatedAt;
-                }
-
-                return dto;
-            });
-
-            return Ok(response);
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
         }
+
 
 
         // GET: api/Users/1
@@ -56,29 +37,11 @@ namespace AskOnline.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserResponseDto>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-                return NotFound();
-
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = User.IsInRole(Roles.Admin);
-
-            var response = new UserResponseDto
-            {
-                UserId = user.UserId,
-                Username = user.Username,
-                Role = user.Role
-            };
-
-            if (currentUserId == user.UserId.ToString() || isAdmin)
-            {
-                // Show more info if user is owner or admin
-                response.Email = user.Email;
-                response.CreatedAt = user.CreatedAt;
-            }
-
-            return Ok(response);
+            var dto = await _userService.GetUserByIdAsync(id);
+            return dto == null ? NotFound() : Ok(dto);
         }
+
+
 
 
 

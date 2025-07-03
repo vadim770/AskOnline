@@ -334,6 +334,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AskOnline.Controllers.TagsController",
+    "Method": "AddTagToQuestion",
+    "RelativePath": "api/Tags/add-to-question",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AskOnline.Dtos.AddTagToQuestionRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AskOnline.Controllers.UsersController",
     "Method": "GetUsers",
     "RelativePath": "api/Users",

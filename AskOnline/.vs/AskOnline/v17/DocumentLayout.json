@@ -1,26 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\",
+  "WorkspaceRootPath": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\services\\tagservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\tagservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\controllers\\tagscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\tagscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\dtos\\tagdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\tagdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\source\\repos\\askonline\\askonline\\dtos\\answerresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\answerresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,78 +25,65 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 277,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 262,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Program.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Program.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Program.cs",
-              "RelativeToolTip": "AskOnline\\Program.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T15:21:00.585Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AnswersController.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AnswersController.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Controllers\\AnswersController.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Controllers\\AnswersController.cs",
-              "RelativeToolTip": "AskOnline\\Controllers\\AnswersController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAwDEAAAAkAAAAAAAAAA==",
+              "Title": "TagService.cs",
+              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Services\\TagService.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Services\\TagService.cs",
+              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Services\\TagService.cs",
+              "RelativeToolTip": "AskOnline\\Services\\TagService.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAAwKgAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T08:39:44.997Z",
+              "WhenOpened": "2025-06-30T16:15:04.962Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Services\\UserService.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Services\\UserService.cs",
-              "RelativeToolTip": "AskOnline\\Services\\UserService.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAcwB4AAAAAAAAAAAAAAA==",
+              "Title": "Tag.cs",
+              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Models\\Tag.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Models\\Tag.cs",
+              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Models\\Tag.cs",
+              "RelativeToolTip": "AskOnline\\Models\\Tag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T08:49:21.021Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AnswerResponseDto.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerResponseDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\AnswerResponseDto.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Dtos\\AnswerResponseDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\AnswerResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T08:20:56.029Z",
+              "WhenOpened": "2025-06-30T17:54:09.829Z",
               "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedWidth": 123,
+          "DockedWidth": 149,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AnswerService.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Services\\AnswerService.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Services\\AnswerService.cs",
-              "ToolTip": "D:\\Users\\Skynet\\source\\repos\\AskOnline\\AskOnline\\Services\\AnswerService.cs",
-              "RelativeToolTip": "AskOnline\\Services\\AnswerService.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAowC4AAAAmAAAAAAAAAA==",
+              "Title": "TagsController.cs",
+              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Controllers\\TagsController.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Controllers\\TagsController.cs",
+              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Controllers\\TagsController.cs",
+              "RelativeToolTip": "AskOnline\\Controllers\\TagsController.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAAAG4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T08:14:11.814Z",
+              "WhenOpened": "2025-06-30T17:25:53.162Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TagDto.cs",
+              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Dtos\\TagDto.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\TagDto.cs",
+              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Dtos\\TagDto.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\TagDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T17:50:29.789Z",
               "EditorCaption": ""
             }
           ]

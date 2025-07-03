@@ -441,6 +441,37 @@
         }
       }
     },
+    "/api/Tags/add-to-question": {
+      "post": {
+        "tags": [
+          "Tags"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTagToQuestionRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTagToQuestionRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTagToQuestionRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Tags": {
       "post": {
         "tags": [
@@ -717,6 +748,20 @@
   },
   "components": {
     "schemas": {
+      "AddTagToQuestionRequestDto": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tagName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Answer": {
         "type": "object",
         "properties": {
@@ -826,7 +871,7 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/UserPublicDto"
+            "$ref": "#/components/schemas/UserResponseDto"
           },
           "upvoteCount": {
             "type": "integer",
@@ -971,7 +1016,7 @@
             "format": "date-time"
           },
           "user": {
-            "$ref": "#/components/schemas/UserPublicDto"
+            "$ref": "#/components/schemas/UserResponseDto"
           },
           "answers": {
             "type": "array",
@@ -1055,10 +1100,6 @@
             "type": "string",
             "nullable": true
           },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -1095,10 +1136,6 @@
             "format": "int32"
           },
           "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
             "type": "string",
             "nullable": true
           }
@@ -1152,20 +1189,6 @@
         },
         "additionalProperties": false
       },
-      "UserPublicDto": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "username": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "UserRegisterRequest": {
         "type": "object",
         "properties": {
@@ -1199,17 +1222,17 @@
             "type": "string",
             "nullable": true
           },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "email": {
             "type": "string",
             "nullable": true
           },
           "role": {
             "type": "string",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },

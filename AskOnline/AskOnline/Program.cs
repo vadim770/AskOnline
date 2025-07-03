@@ -77,6 +77,10 @@ builder.Services.AddHttpContextAccessor();
 // Register services
 builder.Services.AddScoped<AnswerService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TagService>();
+builder.Services.AddScoped<QuestionService>();
+
+
 
 var app = builder.Build();
 
