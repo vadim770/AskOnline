@@ -77,7 +77,7 @@
     "Parameters": [
       {
         "Name": "login",
-        "Type": "AskOnline.Controllers.LoginRequest",
+        "Type": "AskOnline.Dtos.LoginRequest",
         "IsRequired": true
       }
     ],
@@ -350,6 +350,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AskOnline.Controllers.TagsController",
+    "Method": "RemoveTagFromQuestion",
+    "RelativePath": "api/Tags/remove-from-question",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "questionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "tagId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AskOnline.Controllers.UsersController",
     "Method": "GetUsers",
     "RelativePath": "api/Users",
@@ -360,32 +381,6 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[AskOnline.Dtos.UserResponseDto, AskOnline, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "AskOnline.Controllers.UsersController",
-    "Method": "PostUser",
-    "RelativePath": "api/Users",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "user",
-        "Type": "AskOnline.Models.User",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "AskOnline.Models.User",
         "MediaTypes": [
           "text/plain",
           "application/json",

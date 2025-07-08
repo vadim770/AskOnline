@@ -79,7 +79,8 @@ builder.Services.AddScoped<AnswerService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<QuestionService>();
-
+builder.Services.AddScoped<RatingService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 var app = builder.Build();

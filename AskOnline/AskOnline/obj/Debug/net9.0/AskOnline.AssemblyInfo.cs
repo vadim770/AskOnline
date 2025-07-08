@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AskOnline")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5987453976e8383ac2b4f25c1fc2e48a6a9f5c65")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8350c0ee1566638e5159036bfa020a97ccf6fe6")]
 [assembly: System.Reflection.AssemblyProductAttribute("AskOnline")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AskOnline")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

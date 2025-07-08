@@ -1,22 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\",
+  "WorkspaceRootPath": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\controllers\\tagscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\tagscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\website\\askonline\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\website\\askonline\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\services\\tagservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\tagservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\website\\askonline\\src\\card.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\website\\askonline\\src\\card.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\dtos\\tagdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\tagdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\website\\askonline\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\website\\askonline\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|c:\\users\\mentat\\documents\\github\\askonline\\askonline\\askonline\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\website\\askonline\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\website\\askonline\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,65 +25,59 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 206,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TagService.cs",
-              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Services\\TagService.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Services\\TagService.cs",
-              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Services\\TagService.cs",
-              "RelativeToolTip": "AskOnline\\Services\\TagService.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAAwJAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T16:15:04.962Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Tag.cs",
-              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Models\\Tag.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Models\\Tag.cs",
-              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Models\\Tag.cs",
-              "RelativeToolTip": "AskOnline\\Models\\Tag.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T17:54:09.829Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 205,
+          "DockedWidth": 270,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TagsController.cs",
-              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Controllers\\TagsController.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Controllers\\TagsController.cs",
-              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Controllers\\TagsController.cs",
-              "RelativeToolTip": "AskOnline\\Controllers\\TagsController.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAmwEoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T17:25:53.162Z",
+              "Title": "index.css",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\index.css",
+              "RelativeDocumentMoniker": "AskOnline\\Website\\askonline\\src\\index.css",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\index.css",
+              "RelativeToolTip": "AskOnline\\Website\\askonline\\src\\index.css",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-04T16:59:41.034Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Card.jsx",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\Card.jsx",
+              "RelativeDocumentMoniker": "AskOnline\\Website\\askonline\\src\\Card.jsx",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\Card.jsx",
+              "RelativeToolTip": "AskOnline\\Website\\askonline\\src\\Card.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-07-04T16:42:00.349Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "TagDto.cs",
-              "DocumentMoniker": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Dtos\\TagDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\TagDto.cs",
-              "ToolTip": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\Dtos\\TagDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\TagDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T17:50:29.789Z",
+              "Title": "App.jsx",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\App.jsx",
+              "RelativeDocumentMoniker": "AskOnline\\Website\\askonline\\src\\App.jsx",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\App.jsx",
+              "RelativeToolTip": "AskOnline\\Website\\askonline\\src\\App.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-07-04T16:10:14.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "main.jsx",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\main.jsx",
+              "RelativeDocumentMoniker": "AskOnline\\Website\\askonline\\src\\main.jsx",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Website\\askonline\\src\\main.jsx",
+              "RelativeToolTip": "AskOnline\\Website\\askonline\\src\\main.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-07-04T16:06:34.452Z",
               "EditorCaption": ""
             }
           ]

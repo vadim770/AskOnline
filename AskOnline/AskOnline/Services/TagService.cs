@@ -78,7 +78,21 @@ namespace AskOnline.Services
             };
         }
 
+        public async Task<bool> DeleteTagAsync(int tagId)
+        {
+            var tag = await _context.Tags
+                .Include(t => t.QuestionTags)
+                .FirstOrDefaultAsync(t => t.TagId == tagId);
 
+            if (tag == null)
+                return false;
+
+            _context.QuestionTags.RemoveRange(tag.QuestionTags); // detach from questions
+            _context.Tags.Remove(tag); // delete tag
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<List<QuestionTag>> GetOrCreateQuestionTagsAsync(List<string> tagNames, Question question)
         {

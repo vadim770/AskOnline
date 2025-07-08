@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AskOnline.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250630103918_InitialCreate")]
+    [Migration("20250703124611_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -139,10 +139,6 @@ namespace AskOnline.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

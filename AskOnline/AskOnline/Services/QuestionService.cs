@@ -76,7 +76,7 @@ namespace AskOnline.Services
                     .Select(a => _answerService.MapAnswerToDto(a))
                     .ToList();
 
-                result.Add(MapQuestionToDto(q));
+                result.Add(MapQuestionToDto(q, answerDtos));
             }
 
             return result;
@@ -104,7 +104,7 @@ namespace AskOnline.Services
                 .Select(a => _answerService.MapAnswerToDto(a))
                 .ToList();
 
-            return MapQuestionToDto(question);
+            return MapQuestionToDto(question, answerDtos);
         }
 
         public async Task<bool> DeleteQuestionAsync(int questionId)
@@ -127,10 +127,11 @@ namespace AskOnline.Services
             return true;
         }
 
-        public QuestionResponseDto MapQuestionToDto(Question question)
+        public QuestionResponseDto MapQuestionToDto(
+            Question question,
+            List<AnswerResponseDto>? answerDtos = null
+        )
         {
-            var isAdmin = _userService.IsCurrentUserAdmin();
-
             return new QuestionResponseDto
             {
                 QuestionId = question.QuestionId,
@@ -138,7 +139,7 @@ namespace AskOnline.Services
                 Body = question.Body,
                 CreatedAt = question.CreatedAt,
                 User = _userService.MapUserDto(question.User),
-                Answers = new List<AnswerResponseDto>(),
+                Answers = answerDtos ?? new List<AnswerResponseDto>(),
                 Tags = question.QuestionTags.Select(qt => new TagDto
                 {
                     TagId = qt.Tag.TagId,
@@ -146,6 +147,8 @@ namespace AskOnline.Services
                 }).ToList()
             };
         }
+
+
 
 
     }

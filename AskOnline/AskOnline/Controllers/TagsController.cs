@@ -12,12 +12,10 @@ namespace AskOnline.Controllers
     [ApiController]
     public class TagsController : ControllerBase
     {
-        private readonly AppDbContext _context;
         private readonly TagService _tagService;
 
-        public TagsController(AppDbContext context, TagService tagService)
+        public TagsController(TagService tagService)
         {
-            _context = context;
             _tagService = tagService;
         }
 
@@ -79,32 +77,21 @@ namespace AskOnline.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTag(int id)
         {
-            var tag = await _context.Tags
-                .Include(t => t.QuestionTags)
-                .FirstOrDefaultAsync(t => t.TagId == id);
-
-            if (tag == null)
+            var success = await _tagService.DeleteTagAsync(id);
+            if (!success)
                 return NotFound("Tag not found.");
 
-            // Remove the links to questions
-            _context.QuestionTags.RemoveRange(tag.QuestionTags);
-
-            // Remove the tag itself
-            _context.Tags.Remove(tag);
-
-            await _context.SaveChangesAsync();
-
-            return NoContent(); // 204 No Content
+            return NoContent(); // 204
         }
 
-        // DELETE: api/Tags/remove-from-question?questionId=1&tagId=2
+        // DELETE: api/Tags/remove-from-question
         [Authorize]
         [HttpDelete("remove-from-question")]
         public async Task<IActionResult> RemoveTagFromQuestion(int questionId, int tagId)
         {
             var success = await _tagService.RemoveTagFromQuestionAsync(questionId, tagId);
             if (!success)
-                return NotFound("Tag not associated with the question.");
+                return NotFound("Can't remove");
 
             return NoContent(); // 204
         }
