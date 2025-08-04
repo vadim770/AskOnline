@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj": {}
+    "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj": {}
   },
   "projects": {
-    "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj": {
+    "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj",
+        "projectUniqueName": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj",
         "projectName": "AskOnline",
-        "projectPath": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj",
-        "packagesPath": "C:\\Users\\Skynet\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\obj\\",
+        "projectPath": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\AskOnline.csproj",
+        "packagesPath": "C:\\Users\\Mentat\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mentat\\Documents\\GitHub\\AskOnline\\AskOnline\\AskOnline\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Skynet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mentat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -93,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
