@@ -115,8 +115,14 @@ public class UserService
     {
         var user = _httpContextAccessor.HttpContext?.User;
         var userIdClaim = user?.FindFirst(ClaimTypes.NameIdentifier);
-        return userIdClaim != null ? int.Parse(userIdClaim.Value) : (int?)null;
+
+        if (userIdClaim == null)
+            return null;
+
+        return int.TryParse(userIdClaim.Value, out var id) ? id : null;
     }
+
+
 
     public UserResponseDto MapUserDto(User user)
     {

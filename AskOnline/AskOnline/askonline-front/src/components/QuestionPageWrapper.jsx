@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import QuestionPage from "./QuestionPage"; // adjust path as needed
+import QuestionPage from "../pages/QuestionPage.jsx";
+
+
 
 export default function QuestionPageWrapper() {
   const { id } = useParams(); // Get questionId from URL
@@ -22,10 +24,17 @@ export default function QuestionPageWrapper() {
         setQuestion(questionData);
 
         // Fetch answers for this question
-        const answersRes = await fetch(`${apiUrl}/questions/${id}/answers`);
-        if (!answersRes.ok) throw new Error("Failed to fetch answers");
-        const answersData = await answersRes.json();
+        const answersRes = await fetch(`${apiUrl}/Answers/by-question/${id}`);
+        console.log("Answers response:", answersRes.status, answersRes.statusText);
+
+        if (!answersRes.ok) throw new Error(`Failed to fetch answers (status: ${answersRes.status})`);
+
+        let answersData = [];
+        if (answersRes.status !== 204) {
+          answersData = await answersRes.json();
+        }
         setAnswers(answersData);
+
 
       } catch (err) {
         setError(err.message);

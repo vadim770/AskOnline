@@ -23,11 +23,9 @@ namespace AskOnline.Services
         public async Task<QuestionResponseDto?> CreateQuestionAsync(QuestionRequestDto request)
         {
             var userId = _userService.GetCurrentUserId();
-            if (userId == null)
-                return null;
 
             // Make sure user exists
-            var userExists = await _context.Users.AnyAsync(u => u.UserId == userId.Value);
+            var userExists = await _context.Users.AnyAsync(u => u.UserId == userId);
             if (!userExists)
                 return null;
 
@@ -52,6 +50,7 @@ namespace AskOnline.Services
 
             return MapQuestionToDto(fullQuestion);
         }
+
 
         public async Task<List<QuestionResponseDto>> GetAllQuestionsAsync()
         {
@@ -148,6 +147,41 @@ namespace AskOnline.Services
             };
         }
 
+        public async Task<List<QuestionResponseDto>> GetQuestionsByUserIdAsync(int userId)
+        {
+            try
+            {
+                var questions = await _context.Questions
+                    .Where(q => q.UserId == userId)
+                    .Include(q => q.User)
+                    .Include(q => q.Answers)
+                    .Include(q => q.QuestionTags)
+                        .ThenInclude(qt => qt.Tag)
+                    .ToListAsync();
+
+                if (questions == null || !questions.Any())
+                    return new List<QuestionResponseDto>();
+
+                var result = new List<QuestionResponseDto>();
+                foreach (var q in questions)
+                {
+                    if (q == null) continue; // Skip null questions
+
+                    var answerDtos = q.Answers?
+                        .Where(a => a != null) // Filter out null answers
+                        .Select(a => _answerService.MapAnswerToDto(a))
+                        .ToList() ?? new List<AnswerResponseDto>();
+
+                    result.Add(MapQuestionToDto(q, answerDtos));
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception here
+                throw new Exception($"Error retrieving questions for user {userId}: {ex.Message}", ex);
+            }
+        }
 
 
 

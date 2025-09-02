@@ -1,38 +1,78 @@
-import { Link } from "react-router-dom";
-import { getUserFromToken, logout } from "../utils/auth";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
-  const user = getUserFromToken();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleLogout = () => {
+    // Manual logout - silent, no message popup
+    logout();
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery(""); // Clear search after navigation
+    }
+  };
 
   return (
-    <nav className="bg-gray-800 text-white p-4 flex justify-between">
-      <div>
-        <Link to="/" className="mr-4 hover:underline">
-          Home
-        </Link>
-        {!user && (
+    <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
+      <Link to="/" className="font-bold text-lg">
+        AskOnline
+      </Link>
+      
+      <form onSubmit={handleSearch} className="flex-1 max-w-md mx-8">
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search questions and tags..."
+            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+          >
+            🔍
+          </button>
+        </div>
+      </form>
+
+      <div className="flex items-center gap-4">
+        {user ? (
           <>
-            <Link to="/login" className="mr-4 hover:underline">
-              Login
+            <Link
+              to="/ask"
+              className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600"
+            >
+              Ask Question
             </Link>
-            <Link to="/signup" className="hover:underline">
-              Sign Up
+            <Link
+              to="/profile"
+              className="bg-gray-600 px-3 py-1 rounded hover:bg-gray-700"
+            >
+              👤 {user.username}
             </Link>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 px-3 py-1 rounded hover:bg-red-600"
+            >
+              Log Out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Log In</Link>
+            <Link to="/signup">Sign Up</Link>
           </>
         )}
       </div>
-
-      {user && (
-        <div className="flex items-center gap-4">
-          <span className="text-sm">👤 {user.username}</span>
-          <button
-            onClick={logout}
-            className="bg-red-500 px-3 py-1 rounded hover:bg-red-600"
-          >
-            Log Out
-          </button>
-        </div>
-      )}
     </nav>
   );
 }

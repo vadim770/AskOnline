@@ -1,12 +1,140 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext"; // adjust path if needed
+import { useAuth, AuthContext } from "../context/AuthContext.jsx";
+import { useNavigate } from "react-router-dom";
+import { createApi } from "../utils/api";
+import { Link } from "react-router-dom";
+import Tag from "../components/Tag.jsx";
+import Answer from "../components/Answer.jsx";
 
 export default function QuestionPage({ question, answers, setAnswers }) {
-  const { user } = useContext(AuthContext); // Get the logged-in user
+  const { user } = useContext(AuthContext);
   const [newAnswer, setNewAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [votingAnswers, setVotingAnswers] = useState(new Set()); // Track which answers are being voted on
+  const navigate = useNavigate();
+  const apiFetch = createApi(navigate);
 
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  const date = new Date(question.createdAt);
+  const formattedDate = date.toLocaleDateString();
+
+  const handleDelete = async (questionId) => {
+    if (!window.confirm("Are you sure you want to delete this question?")) return;
+
+    try {
+      const storedUser = localStorage.getItem("user");
+      const token = storedUser ? JSON.parse(storedUser).token : null;
+
+      if (!token) {
+        alert("You must be logged in to delete a question.");
+        return;
+      }
+
+      const res = await fetch(`${apiUrl}/questions/${questionId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 401) {
+        alert("Your session has expired. Please login again.");
+        logout();
+        navigate("/login");
+        return;
+      }
+
+      if (!res.ok) {
+        const errorMsg = await res.text();
+        throw new Error(errorMsg || "Failed to delete question");
+      }
+
+      alert("Question deleted successfully.");
+      navigate("/");
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("Error deleting question: " + error.message);
+    }
+  };
+
+  const handleVote = async (answerId, isUpvote) => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      const token = storedUser ? JSON.parse(storedUser).token : null;
+
+      if (!token) {
+        alert("Please log in to vote.");
+        return;
+      }
+      const currentAnswer = answers.find(a => a.answerId === answerId);
+      const currentVote = currentAnswer?.currentUserVote;
+
+      const isCancellation = (isUpvote && currentVote === true) || (!isUpvote && currentVote === false);
+
+      let res;
+      if (isCancellation) {
+        // If it's a cancellation, send a DELETE request
+        res = await fetch(`${apiUrl}/ratings/answer/${answerId}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } else {
+        // Otherwise, send a POST request for a new vote
+        res = await fetch(`${apiUrl}/ratings`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ answerId, isUpvote }),
+        });
+      }
+
+      if (!res.ok) {
+        const errMsg = await res.text();
+        throw new Error(errMsg || "Failed to vote");
+      }
+
+      // After voting, fetch the updated score
+      const scoreRes = await fetch(`${apiUrl}/ratings/answer/${answerId}`);
+      if (!scoreRes.ok) {
+        throw new Error("Failed to fetch updated answer score");
+      }
+
+      const updatedScore = await scoreRes.json();
+
+      // Update the answers list with the new score info
+      setAnswers(prev =>
+        prev.map(a =>
+          a.answerId === answerId
+            ? {
+                ...a,
+                totalScore: updatedScore.totalScore,
+                // Map the backend string to a boolean for the UI
+                currentUserVote: updatedScore.userVote === true
+                  ? true
+                  : updatedScore.userVote === false
+                  ? false
+                  : null,
+              }
+            : a
+        )
+      );
+    } catch (err) {
+      console.error("Vote error:", err.message);
+      alert("Error voting: " + err.message);
+    } finally {
+      // Remove the answer ID from the voting set
+      setVotingAnswers(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(answerId);
+        return newSet;
+      });
+    }
+  };
+
+
 
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
@@ -39,57 +167,110 @@ export default function QuestionPage({ question, answers, setAnswers }) {
     }
   };
 
-
   if (!question) {
-  return <p>Loading question...</p>; // or some loading UI
+    return <p>Loading question...</p>;
   }
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-4">
-      <h1 className="text-3xl font-bold mb-2">{question.title}</h1>
-      <p className="mb-6 text-gray-700">{question.body}</p>
+      {/* Question Header */}
+      <div className="mb-6">
+        <div className="flex justify-between items-start mb-2">
+          <h1 className="text-3xl font-bold">{question.title}</h1>
+          {user && (user.username === question.user.username || user.role === "Admin") && (
+            <button
+              onClick={() => handleDelete(question.questionId)}
+              className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+            >
+              Delete Question
+            </button>
+          )}
+        </div>
+        
+        <div className="text-sm text-gray-500 mb-4">
+          Asked by{" "}
+          {question.user ? (
+            <Link
+              to={`/profile/${question.user.userId}`}
+              className="text-blue-500 hover:underline"
+            >
+              {question.user.username}
+            </Link>
+          ) : (
+            <span>Unknown User</span>
+          )}
+          {" • "}
+          {formattedDate}
+        </div>
 
-      <h2 className="text-xl font-semibold mb-3">Answers ({answers.length})</h2>
-      {answers.length === 0 ? (
-        <p>No answers yet.</p>
-      ) : (
-        <ul className="space-y-4">
-          {answers.map((a) => (
-            <li key={a.answerId} className="border-l-4 border-blue-600 pl-4">
-              <p>{a.body}</p>
-              <p className="text-sm text-gray-500">By {a.authorUsername}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+        <p className="mb-4 text-gray-700">{question.body}</p>
 
-      {user ? (
-        <form onSubmit={handleAnswerSubmit} className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Your Answer</h3>
-          <textarea
-            className="w-full p-2 border rounded mb-2"
-            rows="4"
-            placeholder="Write your answer..."
-            value={newAnswer}
-            onChange={(e) => setNewAnswer(e.target.value)}
-            required
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            disabled={submitting}
-          >
-            {submitting ? "Submitting..." : "Post Answer"}
-          </button>
-        </form>
-      ) : (
-        <p className="mt-6 text-gray-600">
-          <a href="/login" className="text-blue-600 underline">
-            Log in
-          </a>{" "}
-          to post an answer.
-        </p>
-      )}
+        {/* Tags */}
+        {question.tags && question.tags.length > 0 && (
+          <div className="mb-6">
+            <h3 className="font-semibold mb-2">Tags:</h3>
+            <div className="flex flex-wrap gap-2">
+              {question.tags.map(tag => (
+                <Tag key={tag.tagId} name={tag.name} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Answers Section */}
+      <div className="border-t pt-6">
+        <h2 className="text-xl font-semibold mb-4">Answers ({answers.length})</h2>
+        
+        {answers.length === 0 ? (
+          <p className="text-gray-600 mb-6">No answers yet. Be the first to answer!</p>
+        ) : (
+          <div className="space-y-4 mb-6">
+            {answers.map((answer) => (
+              <Answer
+                key={answer.answerId}
+                answer={answer}
+                handleVote={handleVote}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Answer Form */}
+        {user ? (
+          <form onSubmit={handleAnswerSubmit} className="mt-6">
+            <h3 className="text-lg font-semibold mb-2">Your Answer</h3>
+            <textarea
+              className="w-full p-3 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows="5"
+              placeholder="Write your answer..."
+              value={newAnswer}
+              onChange={(e) => setNewAnswer(e.target.value)}
+              required
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={submitting || !newAnswer.trim()}
+            >
+              {submitting ? "Submitting..." : "Post Answer"}
+            </button>
+          </form>
+        ) : (
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg text-center">
+            <p className="text-gray-600">
+              <Link to="/login" className="text-blue-600 hover:underline font-medium">
+                Log in
+              </Link>{" "}
+              or{" "}
+              <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+                sign up
+              </Link>{" "}
+              to post an answer.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

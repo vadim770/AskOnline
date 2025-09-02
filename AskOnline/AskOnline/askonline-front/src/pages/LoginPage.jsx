@@ -1,6 +1,6 @@
 // src/pages/LoginPage.jsx
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext"; // import this
+import { useAuth, AuthContext } from "../context/AuthContext.jsx";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

@@ -90,11 +90,11 @@ namespace AskOnline.Services
             var downvotes = answer.Ratings?.Count(r => !r.IsUpvote) ?? 0;
 
             bool? userVote = null;
-            if (currentUserId.HasValue)
+            if (answer.Ratings != null && currentUserId.HasValue)
             {
-                userVote = answer.Ratings?
-                    .FirstOrDefault(r => r.UserId == currentUserId.Value)
-                    ?.IsUpvote;
+                var rating = answer.Ratings.FirstOrDefault(r => r.UserId == currentUserId.Value);
+                if (rating != null)
+                    userVote = rating.IsUpvote;
             }
 
             return new AnswerResponseDto
@@ -103,13 +103,28 @@ namespace AskOnline.Services
                 Body = answer.Body,
                 CreatedAt = answer.CreatedAt,
                 QuestionId = answer.QuestionId,
-                User = _userService.MapUserDto(answer.User),
+                User = answer.User != null ? _userService.MapUserDto(answer.User) : null,
                 UpvoteCount = upvotes,
                 DownvoteCount = downvotes,
                 TotalScore = upvotes - downvotes,
                 CurrentUserVote = userVote
             };
         }
+
+
+        public async Task<List<AnswerResponseDto>> GetAnswersByUserIdAsync(int userId)
+        {
+            var answers = await _context.Answers
+                .Where(a => a.UserId == userId)
+                .Include(a => a.User)
+                .Include(a => a.Ratings)
+                .Include(a => a.Question)
+                .ToListAsync();
+
+            return answers.Select(a => MapAnswerToDto(a)).ToList();
+        }
+
+
 
     }
 }

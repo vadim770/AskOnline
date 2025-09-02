@@ -26,7 +26,7 @@ public class RatingService
             return null;
 
         var existingRating = await _context.AnswerRatings
-            .FirstOrDefaultAsync(r => r.AnswerId == request.AnswerId && r.UserId == userId.Value);
+            .FirstOrDefaultAsync(r => r.AnswerId == request.AnswerId && r.UserId == userId);
 
         if (existingRating != null)
         {
@@ -63,7 +63,7 @@ public class RatingService
             return false;
 
         var rating = await _context.AnswerRatings
-            .FirstOrDefaultAsync(ar => ar.AnswerId == answerId && ar.UserId == userId.Value);
+            .FirstOrDefaultAsync(ar => ar.AnswerId == answerId && ar.UserId == userId);
 
         if (rating == null)
             return false;
@@ -86,7 +86,7 @@ public class RatingService
         var userId = _userService.GetCurrentUserId();
         if (userId != null)
         {
-            var userRating = ratings.FirstOrDefault(r => r.UserId == userId.Value);
+            var userRating = ratings.FirstOrDefault(r => r.UserId == userId);
             userVote = userRating?.IsUpvote;
         }
 

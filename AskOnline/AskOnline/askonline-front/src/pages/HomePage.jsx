@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Question from "../components/Question";
 
 export default function HomePage() {
   const [recentQuestions, setRecentQuestions] = useState([]);
@@ -14,8 +15,6 @@ export default function HomePage() {
         return res.json();
       })
       .then(data => {
-        // Optionally sort by created date if backend doesn't sort
-        // data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setRecentQuestions(data);
         setLoading(false);
       })
@@ -25,6 +24,8 @@ export default function HomePage() {
       });
   }, [apiUrl]);
 
+
+  
   return (
     <div className="max-w-4xl mx-auto mt-10 p-4">
       <h1 className="text-3xl font-bold mb-6">Recent Questions</h1>
@@ -34,16 +35,10 @@ export default function HomePage() {
 
       {!loading && !error && recentQuestions.length === 0 && <p>No questions found.</p>}
 
-      <ul>
-        {recentQuestions.map(q => (
-          <li key={q.questionId} className="mb-4 border-b pb-2">
-            <Link
-              to={`/questions/${q.questionId}`}
-              className="text-blue-600 font-semibold hover:underline"
-            >
-              {q.title}
-            </Link>
-            <p className="text-gray-700">{q.body.length > 100 ? q.body.slice(0, 100) + "..." : q.body}</p>
+      <ul className="space-y-6">
+        {recentQuestions.map((q) => (
+          <li key={q.questionId}>
+            <Question question={q} />
           </li>
         ))}
       </ul>
