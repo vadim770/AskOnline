@@ -8,7 +8,6 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleLogout = () => {
-    // Manual logout - silent, no message popup
     logout();
   };
 
@@ -16,7 +15,7 @@ export default function Navbar() {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery(""); // Clear search after navigation
+      setSearchQuery(""); // clear search after navigation
     }
   };
 

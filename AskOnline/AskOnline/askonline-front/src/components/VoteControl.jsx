@@ -1,4 +1,6 @@
-const VoteControl = ({ score, onUpvote, onDownvote, currentUserVote }) => {
+import { ThumbsUp, ThumbsDown } from "lucide-react";
+
+export default function VoteControl({ score, onUpvote, onDownvote, currentUserVote }) {
   return (
     <div className="flex flex-col items-center">
       <button

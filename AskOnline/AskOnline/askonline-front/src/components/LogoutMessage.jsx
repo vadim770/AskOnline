@@ -1,4 +1,3 @@
-// src/components/LogoutMessage.jsx
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 

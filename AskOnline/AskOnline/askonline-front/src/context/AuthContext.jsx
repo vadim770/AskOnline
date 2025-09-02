@@ -1,9 +1,8 @@
-// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-// Create the context
+// create the context
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -14,12 +13,12 @@ export const AuthProvider = ({ children }) => {
     if (stored) {
       try {
         const userData = JSON.parse(stored);
-        // Check if token is expired on initial load
+        // check if token is expired on initial load
         if (userData.token) {
           const decoded = jwtDecode(userData.token);
           const currentTime = Date.now() / 1000;
           if (decoded.exp < currentTime) {
-            // Token expired, clear it
+            // token expired, clear it
             localStorage.removeItem("user");
             return null;
           }
@@ -35,23 +34,23 @@ export const AuthProvider = ({ children }) => {
   
   const [logoutReason, setLogoutReason] = useState(null);
 
-  // Function to check if token is expired
+  // function to check if token is expired
   const isTokenExpired = useCallback((token) => {
     try {
       const decoded = jwtDecode(token);
       const currentTime = Date.now() / 1000;
       return decoded.exp < currentTime;
     } catch (error) {
-      return true; // If we can't decode, consider it expired
+      return true; // if we cant decode, consider it expired
     }
   }, []);
 
-  // Function to logout user due to token expiration
+  // function to logout user due to token expiration
   const logoutDueToExpiration = useCallback(() => {
     logoutWithMessage("Your session has expired. Please login again.");
   }, []);
 
-  // Listen for token expiration events from API calls
+  // listen for token expiration events from api calls
   useEffect(() => {
     const handleTokenExpired = (event) => {
       const message = event.detail?.message || "Your session has expired. Please login again.";
@@ -63,9 +62,9 @@ export const AuthProvider = ({ children }) => {
     return () => {
       window.removeEventListener('tokenExpired', handleTokenExpired);
     };
-  }, []); // Remove logoutDueToExpiration dependency since we're now using logoutWithMessage directly
+  }, []); // remove logoutDueToExpiration dependency since we're now using logoutWithMessage directly
 
-  // Check token expiration periodically
+  // check token expiration periodically
   useEffect(() => {
     if (!user?.token) return;
 
@@ -75,10 +74,10 @@ export const AuthProvider = ({ children }) => {
       }
     };
 
-    // Check immediately
+    // check immediately
     checkTokenExpiration();
 
-    // Set up interval to check every minute
+    // set up interval to check every minute
     const interval = setInterval(checkTokenExpiration, 60000);
 
     return () => clearInterval(interval);
@@ -88,7 +87,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const decoded = jwtDecode(token);
       
-      // Check if token is already expired
+      // check if token is already expired
       const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
         setLogoutReason("The provided token has already expired. Please login again.");
@@ -101,36 +100,34 @@ export const AuthProvider = ({ children }) => {
         username: decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
         email: decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],
         role: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
-        exp: decoded.exp, // Store expiration time for easy access
+        exp: decoded.exp, // store expiration time for easy access
       };
       
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
-      setLogoutReason(null); // Clear any previous logout reasons
+      setLogoutReason(null); // clear any previous logout reasons
     } catch (error) {
       console.error("Failed to decode token:", error);
       setLogoutReason("Invalid token provided. Please try logging in again.");
     }
   };
 
-  // Updated logout function with better handling
   const logout = (reason = null, showMessage = false) => {
     localStorage.removeItem("user");
     setUser(null);
     
-    // Only set logout reason if we want to show a message
+    // only set logout reason if we want to show a message
     if (showMessage && reason) {
-      // Ensure reason is always a string
+      // ensure reason is always a string
       const messageText = typeof reason === 'string' ? reason : 'You have been logged out.';
       setLogoutReason(messageText);
       navigate("/login");
     } else if (showMessage) {
-      // Default message for manual logout if showMessage is true but no reason provided
+      // default message for manual logout if showMessage is true but no reason provided
       setLogoutReason("You have been logged out successfully.");
       navigate("/login");
     } else {
-      // Silent logout (manual logout from navbar, etc.)
-      // Don't set logoutReason, just navigate if on a protected route
+      // dont set logoutReason, just navigate if on a protected route
       const currentPath = window.location.pathname;
       const publicPaths = ['/', '/login', '/signup'];
       if (!publicPaths.includes(currentPath)) {
@@ -139,7 +136,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Separate function for automatic logouts (timeouts, expiration, etc.)
+  // separate function for automatic logouts (timeouts, expiration, etc.)
   const logoutWithMessage = (message) => {
     logout(message, true);
   };
@@ -149,7 +146,7 @@ export const AuthProvider = ({ children }) => {
       user, 
       login, 
       logout, 
-      logoutWithMessage, // New function for automatic logouts
+      logoutWithMessage,
       logoutReason, 
       setLogoutReason,
       isTokenExpired 
@@ -159,5 +156,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook for using auth context
+
 export const useAuth = () => useContext(AuthContext);

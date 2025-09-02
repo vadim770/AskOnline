@@ -1,4 +1,3 @@
-// src/utils/apiClient.js
 import { jwtDecode } from "jwt-decode";
 
 class ApiClient {
@@ -6,7 +5,6 @@ class ApiClient {
     this.baseURL = 'http://localhost:5230/api';
   }
 
-  // Get auth headers
   getAuthHeaders() {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     if (user?.token) {
@@ -20,7 +18,6 @@ class ApiClient {
     };
   }
 
-  // Check if token is expired
   isTokenExpired(token) {
     try {
       const decoded = jwtDecode(token);
@@ -31,20 +28,16 @@ class ApiClient {
     }
   }
 
-  // Handle token expiration - updated to pass proper message
   handleTokenExpiration() {
     localStorage.removeItem('user');
-    // Trigger logout with message in AuthContext
     window.dispatchEvent(new CustomEvent('tokenExpired', {
       detail: { message: "Your session expired during the request. Please login again." }
     }));
   }
 
-  // Generic fetch method
   async fetch(endpoint, options = {}) {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     
-    // Check token expiration before making request
     if (user?.token && this.isTokenExpired(user.token)) {
       this.handleTokenExpiration();
       throw new Error('Token expired');
@@ -61,7 +54,6 @@ class ApiClient {
     try {
       const response = await fetch(`${this.baseURL}${endpoint}`, config);
       
-      // Handle 401 responses (unauthorized)
       if (response.status === 401) {
         this.handleTokenExpiration();
         throw new Error('Unauthorized - token may have expired');
@@ -73,7 +65,6 @@ class ApiClient {
     }
   }
 
-  // Convenience methods
   async get(endpoint) {
     return this.fetch(endpoint);
   }

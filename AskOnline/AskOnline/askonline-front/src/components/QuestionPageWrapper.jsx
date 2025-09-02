@@ -5,7 +5,7 @@ import QuestionPage from "../pages/QuestionPage.jsx";
 
 
 export default function QuestionPageWrapper() {
-  const { id } = useParams(); // Get questionId from URL
+  const { id } = useParams(); // get questionId from url
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,15 +17,20 @@ export default function QuestionPageWrapper() {
       try {
         setLoading(true);
         
-        // Fetch the question
         const questionRes = await fetch(`${apiUrl}/questions/${id}`);
         if (!questionRes.ok) throw new Error("Failed to fetch question");
         const questionData = await questionRes.json();
         setQuestion(questionData);
 
-        // Fetch answers for this question
-        const answersRes = await fetch(`${apiUrl}/Answers/by-question/${id}`);
-        console.log("Answers response:", answersRes.status, answersRes.statusText);
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const token = storedUser?.token || null;
+
+        const answersRes = await fetch(`${apiUrl}/Answers/by-question/${id}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        
 
         if (!answersRes.ok) throw new Error(`Failed to fetch answers (status: ${answersRes.status})`);
 
@@ -34,8 +39,6 @@ export default function QuestionPageWrapper() {
           answersData = await answersRes.json();
         }
         setAnswers(answersData);
-
-
       } catch (err) {
         setError(err.message);
       } finally {

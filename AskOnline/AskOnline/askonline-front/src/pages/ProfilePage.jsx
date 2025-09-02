@@ -24,9 +24,8 @@ export default function ProfilePage() {
       try {
         setLoading(true);
         setError(null);
-        const userId = id || user.userId; // use param if available, else logged-in user
+        const userId = id || user.userId;
         
-        // Fetch profile info
         const profileUrl = `${apiUrl}/users/${userId}`;
         
         const uRes = await fetch(profileUrl, {
@@ -42,15 +41,13 @@ export default function ProfilePage() {
         const uData = await uRes.json();
         setProfile(uData);
         
-        // Fetch questions
         const qRes = await fetch(`${apiUrl}/users/${userId}/questions`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         if (!qRes.ok) throw new Error("Failed to fetch questions");
         const qData = await qRes.json();
         setQuestions(qData || []);
-        
-        // Fetch answers
+
         const aRes = await fetch(`${apiUrl}/users/${userId}/answers`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });

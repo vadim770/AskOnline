@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-// Create a wrapper for fetch calls
+// create a wrapper for fetch calls
 export function createApi(navigate) {
   return async function apiFetch(url, options = {}) {
     const token = localStorage.getItem("token");
@@ -15,7 +15,7 @@ export function createApi(navigate) {
     });
 
     if (res.status === 401) {
-      // Token expired or invalid → logout and redirect
+      // token expired or invalid, logout and redirect
       localStorage.removeItem("token");
       navigate("/login");
       return null;

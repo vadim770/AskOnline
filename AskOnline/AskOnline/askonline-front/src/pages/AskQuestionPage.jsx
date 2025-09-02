@@ -21,7 +21,6 @@ export default function AskQuestionPage() {
   const validateTags = (tagsArray) => {
     if (tagsArray.length === 0) return "At least one tag is required.";
     if (tagsArray.length > 5) return "You can add up to 5 tags only.";
-    // Optional: add more validation for tag format, length etc.
     return null;
   };
 
@@ -29,7 +28,6 @@ export default function AskQuestionPage() {
     e.preventDefault();
     setError("");
 
-    // Parse tagsInput into array of trimmed non-empty tags
     const tagsArray = tagsInput
       .split(",")
       .map(t => t.trim())

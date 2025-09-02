@@ -1,4 +1,3 @@
-// src/pages/LoginPage.jsx
 import { useState } from "react";
 import { useAuth, AuthContext } from "../context/AuthContext.jsx";
 
@@ -10,7 +9,7 @@ export default function LoginPage() {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const { login } = useAuth(); // use login function from context
+  const { login } = useAuth(); // use login function from authcontext
   console.log("API URL:", import.meta.env.VITE_API_URL);
 
   
@@ -37,7 +36,6 @@ export default function LoginPage() {
       login(data.token); // save token in context/localStorage
       setSuccess("Logged in successfully!");
 
-      // Optional: Redirect to homepage or dashboard
       window.location.href = "/";
     } catch (err) {
       console.error("Login error:", err);

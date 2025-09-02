@@ -10,7 +10,7 @@ export default function QuestionPage({ question, answers, setAnswers }) {
   const { user } = useContext(AuthContext);
   const [newAnswer, setNewAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [votingAnswers, setVotingAnswers] = useState(new Set()); // Track which answers are being voted on
+  const [votingAnswers, setVotingAnswers] = useState(new Set()); // track which answers are being voted on
   const navigate = useNavigate();
   const apiFetch = createApi(navigate);
 
@@ -59,82 +59,61 @@ export default function QuestionPage({ question, answers, setAnswers }) {
   };
 
   const handleVote = async (answerId, isUpvote) => {
-    try {
-      const storedUser = localStorage.getItem("user");
-      const token = storedUser ? JSON.parse(storedUser).token : null;
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const token = storedUser?.token;
 
-      if (!token) {
-        alert("Please log in to vote.");
-        return;
-      }
-      const currentAnswer = answers.find(a => a.answerId === answerId);
-      const currentVote = currentAnswer?.currentUserVote;
-
-      const isCancellation = (isUpvote && currentVote === true) || (!isUpvote && currentVote === false);
-
-      let res;
-      if (isCancellation) {
-        // If it's a cancellation, send a DELETE request
-        res = await fetch(`${apiUrl}/ratings/answer/${answerId}`, {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } else {
-        // Otherwise, send a POST request for a new vote
-        res = await fetch(`${apiUrl}/ratings`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ answerId, isUpvote }),
-        });
-      }
-
-      if (!res.ok) {
-        const errMsg = await res.text();
-        throw new Error(errMsg || "Failed to vote");
-      }
-
-      // After voting, fetch the updated score
-      const scoreRes = await fetch(`${apiUrl}/ratings/answer/${answerId}`);
-      if (!scoreRes.ok) {
-        throw new Error("Failed to fetch updated answer score");
-      }
-
-      const updatedScore = await scoreRes.json();
-
-      // Update the answers list with the new score info
-      setAnswers(prev =>
-        prev.map(a =>
-          a.answerId === answerId
-            ? {
-                ...a,
-                totalScore: updatedScore.totalScore,
-                // Map the backend string to a boolean for the UI
-                currentUserVote: updatedScore.userVote === true
-                  ? true
-                  : updatedScore.userVote === false
-                  ? false
-                  : null,
-              }
-            : a
-        )
-      );
-    } catch (err) {
-      console.error("Vote error:", err.message);
-      alert("Error voting: " + err.message);
-    } finally {
-      // Remove the answer ID from the voting set
-      setVotingAnswers(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(answerId);
-        return newSet;
-      });
+    if (!token) {
+      alert("You must be logged in to vote!");
+      return;
     }
+    setAnswers(prevAnswers =>
+      prevAnswers.map(a => {
+        if (a.answerId !== answerId) return a;
+
+        const currentVote = a.currentUserVote; // true | false | null
+        let newVote = currentVote;
+        let scoreChange = 0;
+
+        if (
+          (isUpvote && currentVote === true) ||
+          (!isUpvote && currentVote === false)
+        ) {
+          fetch(`${apiUrl}/ratings/answer/${answerId}`, {
+            method: "DELETE",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+            },
+          });
+
+          newVote = null;
+          scoreChange = isUpvote ? -1 : 1;
+        }
+        else {
+          fetch(`${apiUrl}/ratings`, {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${user.token}`
+            },
+            body: JSON.stringify({ answerId, isUpvote }),
+          });
+
+          if (currentVote === null) {
+            scoreChange = isUpvote ? 1 : -1;
+          } else {
+            scoreChange = isUpvote ? 2 : -2;
+          }
+
+          newVote = isUpvote;
+        }
+        return {
+          ...a,
+          currentUserVote: newVote,
+          totalScore: a.totalScore + scoreChange,
+        };
+      })
+    );
   };
-
-
 
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
@@ -221,7 +200,6 @@ export default function QuestionPage({ question, answers, setAnswers }) {
       {/* Answers Section */}
       <div className="border-t pt-6">
         <h2 className="text-xl font-semibold mb-4">Answers ({answers.length})</h2>
-        
         {answers.length === 0 ? (
           <p className="text-gray-600 mb-6">No answers yet. Be the first to answer!</p>
         ) : (
