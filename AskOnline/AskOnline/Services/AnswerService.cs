@@ -124,7 +124,29 @@ namespace AskOnline.Services
             return answers.Select(a => MapAnswerToDto(a)).ToList();
         }
 
+        public async Task<AnswerUpdateDto?> UpdateAnswerAsync(int id, AnswerUpdateDto dto)
+        {
+            var userId = _userService.GetCurrentUserId();
+            var isAdmin = _userService.IsCurrentUserAdmin();
 
+            var answer = await _context.Answers
+                .FirstOrDefaultAsync(a => a.AnswerId == id);
+
+            if (answer == null)
+                return null;
+
+            if (!isAdmin && userId != answer.UserId)
+                throw new UnauthorizedAccessException("User is not authorized to update this answer.");
+
+            answer.Body = dto.Body;
+
+            await _context.SaveChangesAsync();
+
+            return new AnswerUpdateDto
+            {
+                Body = answer.Body
+            };
+        }
 
     }
 }

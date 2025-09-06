@@ -183,7 +183,32 @@ namespace AskOnline.Services
             }
         }
 
+        public async Task<QuestionUpdateDto?> UpdateQuestionAsync(int id, QuestionUpdateDto dto)
+        {
+            var userId = _userService.GetCurrentUserId();
+            var isAdmin = _userService.IsCurrentUserAdmin();
 
+            var question = await _context.Questions
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .FirstOrDefaultAsync(q => q.QuestionId == id);
 
+            if (question == null)
+                return null;
+
+            if (!isAdmin && userId != question.UserId)
+                throw new UnauthorizedAccessException("User is not authorized to update this question.");
+
+            question.Body = dto.Body;
+            question.Title = dto.Title;
+
+            await _context.SaveChangesAsync();
+
+            return new QuestionUpdateDto
+            {
+                Title = question.Title,
+                Body = question.Body
+            };
+        }
     }
 }

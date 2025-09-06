@@ -62,15 +62,15 @@ namespace AskOnline.Data
             .HasOne(ar => ar.Answer)
             .WithMany(a => a.Ratings)
             .HasForeignKey(ar => ar.AnswerId)
-            .OnDelete(DeleteBehavior.Cascade); // Delete ratings when answer is deleted
+            .OnDelete(DeleteBehavior.Cascade); // delete ratings when answer is deleted
 
             modelBuilder.Entity<AnswerRating>()
                 .HasOne(ar => ar.User)
                 .WithMany(u => u.AnswerRatings)
                 .HasForeignKey(ar => ar.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // Don't allow deleting users with ratings
+                .OnDelete(DeleteBehavior.Restrict); // don't allow deleting users with ratings
 
-            // Ensure one vote per user per answer
+            // ensure one vote per user per answer
             modelBuilder.Entity<AnswerRating>()
                 .HasIndex(ar => new { ar.AnswerId, ar.UserId })
                 .IsUnique();

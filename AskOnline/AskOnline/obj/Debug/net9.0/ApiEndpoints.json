@@ -43,6 +43,27 @@
   },
   {
     "ContainingType": "AskOnline.Controllers.AnswersController",
+    "Method": "UpdateAnswer",
+    "RelativePath": "api/Answers/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "AskOnline.Dtos.AnswerUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AskOnline.Controllers.AnswersController",
     "Method": "GetAnswersForQuestion",
     "RelativePath": "api/Answers/by-question/{questionId}",
     "HttpMethod": "GET",
@@ -182,6 +203,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AskOnline.Controllers.QuestionsController",
+    "Method": "UpdateQuestion",
+    "RelativePath": "api/Questions/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "AskOnline.Dtos.QuestionUpdateDto",
         "IsRequired": true
       }
     ],

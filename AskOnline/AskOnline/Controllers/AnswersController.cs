@@ -48,6 +48,22 @@ namespace AskOnline.Controllers
             return await _answerService.DeleteAnswerAsync(id);
         }
 
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAnswer(int id, AnswerUpdateDto dto)
+        {
+            try
+            {
+                var updated = await _answerService.UpdateAnswerAsync(id, dto);
+                if (updated == null)
+                    return NotFound();
 
+                return Ok(updated);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+        }
     }
 }

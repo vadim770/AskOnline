@@ -211,6 +211,7 @@ export default function QuestionPage({ question, answers, setAnswers }) {
                 handleVote={handleVote}
               />
             ))}
+            
           </div>
         )}
 

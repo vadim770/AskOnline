@@ -80,8 +80,8 @@ return (
     <p>Username: {profile.username}</p>
     <p>Joined: {new Date(profile.createdAt).toLocaleDateString()}</p>
 
-    {/* Private info (only own profile) */}
-    {isOwnProfile && <p>Email: {profile.email}</p>}
+    {/* Private info */}
+    {(isOwnProfile || user.role == "Admin") && <p>Email: {profile.email}</p>}
 
     <div className="mt-6">
       <h2 className="text-xl font-semibold mb-2">Questions</h2>

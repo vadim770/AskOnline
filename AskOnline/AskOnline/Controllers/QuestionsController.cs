@@ -78,6 +78,23 @@ namespace AskOnline.Controllers
         }
 
 
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateQuestion(int id, QuestionUpdateDto dto)
+        {
+            try
+            {
+                var updated = await _questionService.UpdateQuestionAsync(id, dto);
+                if (updated == null)
+                    return NotFound();
+
+                return Ok(updated);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+        }
 
 
 
