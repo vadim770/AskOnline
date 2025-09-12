@@ -180,7 +180,7 @@ namespace AskOnline.Services
             _context.QuestionTags.Remove(questionTag);
             await _context.SaveChangesAsync();
 
-            // maybe need to use cleanup unused tags
+            await CleanupUnusedTagsAsync();
 
             return true;
         }

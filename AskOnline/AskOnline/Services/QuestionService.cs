@@ -24,7 +24,6 @@ namespace AskOnline.Services
         {
             var userId = _userService.GetCurrentUserId();
 
-            // Make sure user exists
             var userExists = await _context.Users.AnyAsync(u => u.UserId == userId);
             if (!userExists)
                 return null;
@@ -165,10 +164,10 @@ namespace AskOnline.Services
                 var result = new List<QuestionResponseDto>();
                 foreach (var q in questions)
                 {
-                    if (q == null) continue; // Skip null questions
+                    if (q == null) continue; // skip null questions
 
                     var answerDtos = q.Answers?
-                        .Where(a => a != null) // Filter out null answers
+                        .Where(a => a != null) // filter out null answers
                         .Select(a => _answerService.MapAnswerToDto(a))
                         .ToList() ?? new List<AnswerResponseDto>();
 
@@ -178,7 +177,6 @@ namespace AskOnline.Services
             }
             catch (Exception ex)
             {
-                // Log the exception here
                 throw new Exception($"Error retrieving questions for user {userId}: {ex.Message}", ex);
             }
         }
@@ -187,7 +185,6 @@ namespace AskOnline.Services
         {
             var userId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
-
             var question = await _context.Questions
                 .Include(q => q.QuestionTags)
                     .ThenInclude(qt => qt.Tag)
@@ -196,19 +193,56 @@ namespace AskOnline.Services
             if (question == null)
                 return null;
 
-            if (!isAdmin && userId != question.UserId)
+            if (!isAdmin && question.UserId != userId)
                 throw new UnauthorizedAccessException("User is not authorized to update this question.");
 
-            question.Body = dto.Body;
             question.Title = dto.Title;
+            question.Body = dto.Body;
+
+            var incomingTagNames = dto.Tags
+                .Select(name => name.Trim())
+                .Where(name => !string.IsNullOrEmpty(name))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            var currentTagNames = question.QuestionTags
+                .Select(qt => qt.Tag.Name)
+                .ToList();
+
+            var tagsToRemove = question.QuestionTags
+                .Where(qt => !incomingTagNames.Contains(qt.Tag.Name, StringComparer.OrdinalIgnoreCase))
+                .ToList();
+
+            var tagNamesToAdd = incomingTagNames
+                .Where(tagName => !currentTagNames.Contains(tagName, StringComparer.OrdinalIgnoreCase))
+                .ToList();
+
+            foreach (var questionTag in tagsToRemove)
+            {
+                question.QuestionTags.Remove(questionTag);
+                _context.QuestionTags.Remove(questionTag);
+            }
+
+            if (tagNamesToAdd.Any())
+            {
+                var newQuestionTags = await _tagService.GetOrCreateQuestionTagsAsync(tagNamesToAdd, question);
+                foreach (var newQuestionTag in newQuestionTags)
+                {
+                    question.QuestionTags.Add(newQuestionTag);
+                }
+            }
 
             await _context.SaveChangesAsync();
+
+            await _tagService.CleanupUnusedTagsAsync();
 
             return new QuestionUpdateDto
             {
                 Title = question.Title,
-                Body = question.Body
+                Body = question.Body,
+                Tags = question.QuestionTags.Select(qt => qt.Tag.Name).ToList()
             };
         }
+
     }
 }
