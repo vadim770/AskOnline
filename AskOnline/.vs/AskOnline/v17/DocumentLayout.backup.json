@@ -3,28 +3,24 @@
   "WorkspaceRootPath": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\questionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\questionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\questionratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\questionratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\dtos\\questionupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\questionupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\tagservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\tagservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\controllers\\questionratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\questionratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\answerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\dtos\\answerupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\answerupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\ratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\ratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,81 +29,77 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 270,
-          "SelectedChildIndex": 2,
+          "DockedWidth": 273,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TagService.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\TagService.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Services\\TagService.cs",
-              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\TagService.cs",
-              "RelativeToolTip": "AskOnline\\Services\\TagService.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAQwMYAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-06T14:40:38.629Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "QuestionUpdateDto.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Dtos\\QuestionUpdateDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\QuestionUpdateDto.cs",
-              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Dtos\\QuestionUpdateDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\QuestionUpdateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-06T14:34:07.895Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "QuestionService.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\QuestionService.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Services\\QuestionService.cs",
-              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\QuestionService.cs",
-              "RelativeToolTip": "AskOnline\\Services\\QuestionService.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAAAOsAAAAAAAAAAAAAAA==",
+              "Title": "QuestionRatingService.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\QuestionRatingService.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Services\\QuestionRatingService.cs",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\QuestionRatingService.cs",
+              "RelativeToolTip": "AskOnline\\Services\\QuestionRatingService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-06T14:33:02.282Z",
+              "WhenOpened": "2025-09-18T20:29:22.487Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "AnswerService.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\AnswerService.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Services\\AnswerService.cs",
-              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\AnswerService.cs",
-              "RelativeToolTip": "AskOnline\\Services\\AnswerService.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAAJEAAAANAAAAAAAAAA==",
+              "Title": "QuestionRatingsController.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Controllers\\QuestionRatingsController.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Controllers\\QuestionRatingsController.cs",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Controllers\\QuestionRatingsController.cs",
+              "RelativeToolTip": "AskOnline\\Controllers\\QuestionRatingsController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwCIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-05T16:42:11.045Z"
+              "WhenOpened": "2025-09-18T18:14:46.468Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 197,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Program.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Program.cs",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Program.cs",
+              "RelativeToolTip": "AskOnline\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T19:44:17.752Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AnswerUpdateDto.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Dtos\\AnswerUpdateDto.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Dtos\\AnswerUpdateDto.cs",
-              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Dtos\\AnswerUpdateDto.cs",
-              "RelativeToolTip": "AskOnline\\Dtos\\AnswerUpdateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA4AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "RatingController.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Controllers\\RatingController.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Controllers\\RatingController.cs",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Controllers\\RatingController.cs",
+              "RelativeToolTip": "AskOnline\\Controllers\\RatingController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-05T16:40:40.256Z"
+              "WhenOpened": "2025-09-18T18:15:23.179Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AnswersController.cs",
-              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Controllers\\AnswersController.cs",
-              "RelativeDocumentMoniker": "AskOnline\\Controllers\\AnswersController.cs",
-              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Controllers\\AnswersController.cs",
-              "RelativeToolTip": "AskOnline\\Controllers\\AnswersController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAowDsAAAAAAAAAAAAAAA==",
+              "Title": "RatingService.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\RatingService.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Services\\RatingService.cs",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\RatingService.cs",
+              "RelativeToolTip": "AskOnline\\Services\\RatingService.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-05T16:39:29.384Z"
+              "WhenOpened": "2025-09-18T18:16:31.783Z"
             }
           ]
         }

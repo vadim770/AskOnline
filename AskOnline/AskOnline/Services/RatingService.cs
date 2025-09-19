@@ -1,4 +1,4 @@
-﻿using AskOnline.Data;
+using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
 using Microsoft.EntityFrameworkCore;
@@ -75,6 +75,10 @@ public class RatingService
 
     public async Task<AnswerScoreDto?> GetAnswerScoreAsync(int answerId)
     {
+        var answerExists = await _context.Answers.AnyAsync(a => a.AnswerId == answerId);
+        if (!answerExists)
+            return null;
+
         var ratings = await _context.AnswerRatings
             .Where(ar => ar.AnswerId == answerId)
             .ToListAsync();

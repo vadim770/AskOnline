@@ -93,6 +93,34 @@ namespace AskOnline.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuestionRatings",
+                columns: table => new
+                {
+                    RatingId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    IsUpvote = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionRatings", x => x.RatingId);
+                    table.ForeignKey(
+                        name: "FK_QuestionRatings_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionRatings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "QuestionTags",
                 columns: table => new
                 {
@@ -144,6 +172,34 @@ namespace AskOnline.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AnswerId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comments_Answers_AnswerId",
+                        column: x => x.AnswerId,
+                        principalTable: "Answers",
+                        principalColumn: "AnswerId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AnswerRatings_AnswerId_UserId",
                 table: "AnswerRatings",
@@ -163,6 +219,27 @@ namespace AskOnline.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_UserId",
                 table: "Answers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AnswerId",
+                table: "Comments",
+                column: "AnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionRatings_QuestionId_UserId",
+                table: "QuestionRatings",
+                columns: new[] { "QuestionId", "UserId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionRatings_UserId",
+                table: "QuestionRatings",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -187,6 +264,12 @@ namespace AskOnline.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AnswerRatings");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "QuestionRatings");
 
             migrationBuilder.DropTable(
                 name: "QuestionTags");

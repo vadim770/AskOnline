@@ -12,8 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
         options.JsonSerializerOptions.WriteIndented = true;
+        options.JsonSerializerOptions.ReferenceHandler = null;
     });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -81,6 +81,9 @@ builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<RatingService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<CommentService>();
+builder.Services.AddScoped<QuestionRatingService>();
+
 
 builder.Services.AddCors(options =>
 {
@@ -92,12 +95,12 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        // Disable reference handling
-        options.JsonSerializerOptions.ReferenceHandler = null;
-    });
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        // Disable reference handling
+//        options.JsonSerializerOptions.ReferenceHandler = null;
+//    });
 
 
 

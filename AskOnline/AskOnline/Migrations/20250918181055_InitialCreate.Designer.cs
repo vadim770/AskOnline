@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AskOnline.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250703124611_InitialCreate")]
+    [Migration("20250918181055_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -85,6 +85,36 @@ namespace AskOnline.Migrations
                     b.ToTable("AnswerRatings");
                 });
 
+            modelBuilder.Entity("AskOnline.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
+
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("AskOnline.Models.Question", b =>
                 {
                     b.Property<int>("QuestionId")
@@ -112,6 +142,36 @@ namespace AskOnline.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("AskOnline.Models.QuestionRating", b =>
+                {
+                    b.Property<int>("RatingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUpvote")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RatingId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("QuestionId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("QuestionRatings");
                 });
 
             modelBuilder.Entity("AskOnline.Models.QuestionTag", b =>
@@ -222,6 +282,25 @@ namespace AskOnline.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("AskOnline.Models.Comment", b =>
+                {
+                    b.HasOne("AskOnline.Models.Answer", "Answer")
+                        .WithMany("Comments")
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AskOnline.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AskOnline.Models.Question", b =>
                 {
                     b.HasOne("AskOnline.Models.User", "User")
@@ -229,6 +308,25 @@ namespace AskOnline.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AskOnline.Models.QuestionRating", b =>
+                {
+                    b.HasOne("AskOnline.Models.Question", "Question")
+                        .WithMany("Ratings")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AskOnline.Models.User", "User")
+                        .WithMany("QuestionRatings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Question");
 
                     b.Navigation("User");
                 });
@@ -254,6 +352,8 @@ namespace AskOnline.Migrations
 
             modelBuilder.Entity("AskOnline.Models.Answer", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Ratings");
                 });
 
@@ -262,6 +362,8 @@ namespace AskOnline.Migrations
                     b.Navigation("Answers");
 
                     b.Navigation("QuestionTags");
+
+                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("AskOnline.Models.Tag", b =>
@@ -274,6 +376,8 @@ namespace AskOnline.Migrations
                     b.Navigation("AnswerRatings");
 
                     b.Navigation("Answers");
+
+                    b.Navigation("QuestionRatings");
 
                     b.Navigation("Questions");
                 });

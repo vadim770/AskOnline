@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function ProfilePage() {
-  const { id } = useParams(); // may be undefined if route is "/profile"
+  const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
@@ -19,7 +19,7 @@ export default function ProfilePage() {
       navigate("/login");
       return;
     }
-    
+
     const fetchProfileData = async () => {
       try {
         setLoading(true);
@@ -65,6 +65,31 @@ export default function ProfilePage() {
     
     fetchProfileData();
   }, [id, user, navigate, apiUrl]);
+
+  const handleDeleteAccount = async () => {
+  if (!window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) return;
+
+  try {
+    const res = await fetch(`${apiUrl}/users/${user.userId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText || "Failed to delete account");
+    }
+
+    alert("Your account has been deleted successfully.");
+    localStorage.removeItem("user"); // clear local storage
+    navigate("/"); // redirect to homepage
+    window.location.reload(); // force re-render/log out state
+  } catch (error) {
+    console.error("Delete account error:", error);
+    alert("Error deleting account: " + error.message);
+  }
+};
+
 
 if (loading) return <p>Loading profile...</p>;
 if (error) return <p className="text-red-500">{error}</p>;
@@ -122,7 +147,24 @@ return (
         </ul>
       )}
     </div>
+
+    {isOwnProfile && (
+  <div className="mt-8">
+    <button
+      onClick={handleDeleteAccount}
+      className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded border border-red-700 transition-colors duration-200"
+    >
+      Delete My Account
+    </button>
+    <p className="text-sm text-gray-500 mt-2">
+      This will permanently remove your account and all associated content.
+    </p>
   </div>
+    )}
+
+  </div>
+
+  
 );
 
 }

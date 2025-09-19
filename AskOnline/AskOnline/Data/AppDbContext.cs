@@ -1,4 +1,4 @@
-﻿using AskOnline.Models;
+using AskOnline.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AskOnline.Data
@@ -13,6 +13,9 @@ namespace AskOnline.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<QuestionTag> QuestionTags { get; set; }
         public DbSet<AnswerRating> AnswerRatings { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<QuestionRating> QuestionRatings { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,6 +73,12 @@ namespace AskOnline.Data
                 .HasForeignKey(ar => ar.UserId)
                 .OnDelete(DeleteBehavior.Restrict); // don't allow deleting users with ratings
 
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Answer)
+                .WithMany(a => a.Comments)
+                .HasForeignKey(c => c.AnswerId)
+                .OnDelete(DeleteBehavior.Cascade); // delete comments when answer is deleted
+
             // ensure one vote per user per answer
             modelBuilder.Entity<AnswerRating>()
                 .HasIndex(ar => new { ar.AnswerId, ar.UserId })
@@ -77,6 +86,26 @@ namespace AskOnline.Data
 
             modelBuilder.Entity<AnswerRating>()
                 .HasKey(ar => ar.RatingId);
+
+            modelBuilder.Entity<QuestionRating>()
+            .HasOne(qr => qr.Question)
+            .WithMany(q => q.Ratings)
+            .HasForeignKey(qr => qr.QuestionId)
+            .OnDelete(DeleteBehavior.Cascade); // delete ratings when question is deleted
+
+            modelBuilder.Entity<QuestionRating>()
+                .HasOne(qr => qr.User)
+                .WithMany(u => u.QuestionRatings)
+                .HasForeignKey(qr => qr.UserId)
+                .OnDelete(DeleteBehavior.Restrict); // don't allow deleting users with ratings
+
+            // ensure one vote per user per question
+            modelBuilder.Entity<QuestionRating>()
+                .HasIndex(qr => new { qr.QuestionId, qr.UserId })
+                .IsUnique();
+
+            modelBuilder.Entity<QuestionRating>()
+                .HasKey(qr => qr.RatingId);
         }
     }
 }

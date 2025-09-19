@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace AskOnline.Models
 {
@@ -19,5 +19,6 @@ namespace AskOnline.Models
 
         // Navigation property
         public ICollection<AnswerRating> AnswerRatings { get; set; } = new List<AnswerRating>();
+        public ICollection<QuestionRating> QuestionRatings { get; set; } = new List<QuestionRating>();
     }
 }

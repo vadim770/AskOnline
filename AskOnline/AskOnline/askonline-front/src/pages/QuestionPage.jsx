@@ -1,16 +1,16 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useAuth, AuthContext } from "../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { createApi } from "../utils/api";
 import { Link } from "react-router-dom";
 import Tag from "../components/Tag.jsx";
 import Answer from "../components/Answer.jsx";
+import VoteControl from "../components/VoteControl.jsx";
 
 export default function QuestionPage({ question, answers, setAnswers }) {
   const { user } = useContext(AuthContext);
   const [newAnswer, setNewAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [votingAnswers, setVotingAnswers] = useState(new Set()); // track which answers are being voted on
   const navigate = useNavigate();
   const apiFetch = createApi(navigate);
   const [isEditing, setIsEditing] = useState(false);
@@ -19,9 +19,17 @@ export default function QuestionPage({ question, answers, setAnswers }) {
   const [editedTags, setEditedTags] = useState(question.tags?.map(tag => tag.name) || []);
   const [tagInput, setTagInput] = useState("");
   const [tagError, setTagError] = useState("");
-
+  const [questionState, setQuestionState] = useState({ ...question, totalScore: question.totalScore || 0 });
 
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+  setQuestionState({
+    ...question,
+    totalScore: question.totalScore || 0,
+    currentUserVote: question.currentUserVote ?? null
+  });
+  }, [question]);
 
   const date = new Date(question.createdAt);
   const formattedDate = date.toLocaleDateString();
@@ -65,54 +73,127 @@ export default function QuestionPage({ question, answers, setAnswers }) {
     }
   };
 
-  const handleVote = async (answerId, isUpvote) => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const token = storedUser?.token;
+const handleQuestionVote = async (isUpvote) => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const token = storedUser?.token;
+  if (!token) {
+    alert("You must be logged in to vote!");
+    return;
+  }
 
-    if (!token) {
-      alert("You must be logged in to vote!");
+  const currentVote = questionState.currentUserVote; // Could be undefined initially
+  let newVote = currentVote;
+  let scoreChange = 0;
+
+  if ((isUpvote && currentVote === true) || (!isUpvote && currentVote === false)) {
+    // User is undoing their vote
+    try {
+      await fetch(`${apiUrl}/questionratings/question/${questionState.questionId}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` },
+      });
+      newVote = null;
+      scoreChange = isUpvote ? -1 : 1;
+    } catch (error) {
+      console.error("Error removing vote:", error);
       return;
     }
+  } else {
+    // User is casting a new vote or changing their vote
+    try {
+      await fetch(`${apiUrl}/questionratings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ 
+          questionId: questionState.questionId, 
+          isUpvote: isUpvote 
+        }),
+      });
+
+      // Fix the logic here - treat undefined the same as null
+      if (currentVote === null || currentVote === undefined) {
+        scoreChange = isUpvote ? 1 : -1; // New vote
+      } else {
+        scoreChange = isUpvote ? 2 : -2; // Changing vote
+      }
+      newVote = isUpvote;
+    } catch (error) {
+      console.error("Error casting vote:", error);
+      return;
+    }
+  }
+
+  setQuestionState(prevState => ({
+    ...prevState,
+    currentUserVote: newVote,
+    totalScore: prevState.totalScore + scoreChange,
+  }));
+};
+
+const handleVote = async (answerId, isUpvote) => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const token = storedUser?.token;
+  if (!token) {
+    alert("You must be logged in to vote!");
+    return;
+  }
+
+  // Find the current answer to get its vote state
+  const currentAnswer = answers.find(a => a.answerId === answerId);
+  if (!currentAnswer) return;
+
+  const currentVote = currentAnswer.currentUserVote;
+  let apiCall;
+
+  try {
+    if ((isUpvote && currentVote === true) || (!isUpvote && currentVote === false)) {
+      // Remove vote
+      apiCall = fetch(`${apiUrl}/ratings/answer/${answerId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`, // Fixed: use same token variable
+        },
+      });
+    } else {
+      // Add/change vote
+      apiCall = fetch(`${apiUrl}/ratings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // Fixed: use same token variable
+        },
+        body: JSON.stringify({ answerId, isUpvote }),
+      });
+    }
+
+    // Wait for API call to complete
+    const response = await apiCall;
+    if (!response.ok) {
+      throw new Error(`API call failed: ${response.status} ${response.statusText}`);
+    }
+
+    // Only update state if API call succeeded
     setAnswers(prevAnswers =>
       prevAnswers.map(a => {
         if (a.answerId !== answerId) return a;
-
-        const currentVote = a.currentUserVote; // true | false | null
-        let newVote = currentVote;
-        let scoreChange = 0;
-
-        if (
-          (isUpvote && currentVote === true) ||
-          (!isUpvote && currentVote === false)
-        ) {
-          fetch(`${apiUrl}/ratings/answer/${answerId}`, {
-            method: "DELETE",
-            headers: {
-              "Authorization": `Bearer ${token}`,
-            },
-          });
-
+        
+        let newVote, scoreChange;
+        
+        if ((isUpvote && currentVote === true) || (!isUpvote && currentVote === false)) {
           newVote = null;
           scoreChange = isUpvote ? -1 : 1;
-        }
-        else {
-          fetch(`${apiUrl}/ratings`, {
-            method: "POST",
-            headers: { 
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${user.token}`
-            },
-            body: JSON.stringify({ answerId, isUpvote }),
-          });
-
+        } else {
           if (currentVote === null) {
             scoreChange = isUpvote ? 1 : -1;
           } else {
             scoreChange = isUpvote ? 2 : -2;
           }
-
           newVote = isUpvote;
         }
+        
         return {
           ...a,
           currentUserVote: newVote,
@@ -120,7 +201,12 @@ export default function QuestionPage({ question, answers, setAnswers }) {
         };
       })
     );
-  };
+
+  } catch (error) {
+    console.error("Vote failed:", error);
+    alert("Failed to vote. Please try again.");
+  }
+};
 
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
@@ -242,58 +328,66 @@ export default function QuestionPage({ question, answers, setAnswers }) {
     <div className="max-w-4xl mx-auto mt-10 p-4">
       {/* Question Header */}
       <div className="mb-6">
-        <div className="flex justify-between items-start mb-2">
-          <h1 className="text-3xl font-bold">{question.title}</h1>
-            {user && (user.username === question.user.username || user.role === "Admin") && (
-              <div className="flex flex-col justify-start items-end gap-2">
-                <button
-                  onClick={() => handleDelete(question.questionId)}
-                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                >
-                  Delete Question
-                </button>
+        <div className="flex items-start gap-4">
+          <VoteControl
+            score={questionState.totalScore}
+            currentUserVote={questionState.currentUserVote}
+            onUpvote={() => handleQuestionVote(true)}
+            onDownvote={() => handleQuestionVote(false)}
+          />
+          <div className="flex-1">
+            <div className="flex justify-between items-start mb-2">
+              <h1 className="text-3xl font-bold">{question.title}</h1>
+              {user && (user.username === question.user.username || user.role === "Admin") && (
+                <div className="flex flex-col justify-start items-end gap-2">
+                  <button
+                    onClick={() => handleDelete(question.questionId)}
+                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                  >
+                    Delete Question
+                  </button>
 
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                  >
+                    Edit Question
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            <div className="text-sm text-gray-500 mb-4">
+              Asked by{" "}
+              {question.user ? (
+                <Link
+                  to={`/profile/${question.user.userId}`}
+                  className="text-blue-500 hover:underline"
                 >
-                  Edit Question
-                </button>
+                  {question.user.username}
+                </Link>
+              ) : (
+                <span>Unknown User</span>
+              )}
+              {" • "}
+              {formattedDate}
+            </div>
+
+            <p className="mb-4 text-gray-700">{question.body}</p>
+
+            {/* Tags */}
+            {question.tags && question.tags.length > 0 && (
+              <div className="mb-6">
+                <h3 className="font-semibold mb-2">Tags:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {question.tags.map(tag => (
+                    <Tag key={tag.tagId} name={tag.name} />
+                  ))}
+                </div>
               </div>
             )}
-
-
-        </div>
-        
-        <div className="text-sm text-gray-500 mb-4">
-          Asked by{" "}
-          {question.user ? (
-            <Link
-              to={`/profile/${question.user.userId}`}
-              className="text-blue-500 hover:underline"
-            >
-              {question.user.username}
-            </Link>
-          ) : (
-            <span>Unknown User</span>
-          )}
-          {" • "}
-          {formattedDate}
-        </div>
-
-        <p className="mb-4 text-gray-700">{question.body}</p>
-
-        {/* Tags */}
-        {question.tags && question.tags.length > 0 && (
-          <div className="mb-6">
-            <h3 className="font-semibold mb-2">Tags:</h3>
-            <div className="flex flex-wrap gap-2">
-              {question.tags.map(tag => (
-                <Tag key={tag.tagId} name={tag.name} />
-              ))}
-            </div>
           </div>
-        )}
+        </div>
       </div>
 
       {isEditing ? (
@@ -400,30 +494,39 @@ export default function QuestionPage({ question, answers, setAnswers }) {
     ) : null}
 
 
-      {/* Answers Section */}
-      <div className="border-t pt-6">
-        <h2 className="text-xl font-semibold mb-4">Answers ({answers.length})</h2>
-        {answers.length === 0 ? (
-          <p className="text-gray-600 mb-6">No answers yet. Be the first to answer!</p>
-        ) : (
-          <div className="space-y-4 mb-6">
-            {answers.map((answer) => (
-              <Answer
-                key={answer.answerId}
-                answer={answer}
-                handleVote={handleVote}
-              />
-            ))}
-            
-          </div>
-        )}
+    {/* Answers Section */}
+    <div className="border-t pt-8 mt-8">
+      {/* Title */}
+      <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+        Answers
+        <span className="text-gray-500 text-lg">({answers.length})</span>
+      </h2>
 
-        {/* Answer Form */}
-        {user ? (
-          <form onSubmit={handleAnswerSubmit} className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Your Answer</h3>
+      {/* Empty state */}
+      {answers.length === 0 ? (
+        <p className="text-gray-600 text-center py-6 bg-gray-50 rounded-xl shadow-inner">
+          No answers yet. Be the first to answer!
+        </p>
+      ) : (
+        <div className="space-y-5 mb-10">
+          {answers.map((answer) => (
+            <div
+              key={answer.answerId}
+              className="p-4 bg-white border rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            >
+              <Answer answer={answer} handleVote={handleVote} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Answer Form */}
+      {user ? (
+        <div className="bg-gray-50 p-6 rounded-xl shadow-sm">
+          <h3 className="text-xl font-semibold mb-3">Your Answer</h3>
+          <form onSubmit={handleAnswerSubmit}>
             <textarea
-              className="w-full p-3 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="5"
               placeholder="Write your answer..."
               value={newAnswer}
@@ -432,27 +535,29 @@ export default function QuestionPage({ question, answers, setAnswers }) {
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
               disabled={submitting || !newAnswer.trim()}
             >
               {submitting ? "Submitting..." : "Post Answer"}
             </button>
           </form>
-        ) : (
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg text-center">
-            <p className="text-gray-600">
-              <Link to="/login" className="text-blue-600 hover:underline font-medium">
-                Log in
-              </Link>{" "}
-              or{" "}
-              <Link to="/signup" className="text-blue-600 hover:underline font-medium">
-                sign up
-              </Link>{" "}
-              to post an answer.
-            </p>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="mt-6 p-5 bg-gray-100 rounded-xl text-center border">
+          <p className="text-gray-700">
+            <Link to="/login" className="text-blue-600 hover:underline font-semibold">
+              Log in
+            </Link>{" "}
+            or{" "}
+            <Link to="/signup" className="text-blue-600 hover:underline font-semibold">
+              sign up
+            </Link>{" "}
+            to post an answer.
+          </p>
+        </div>
+      )}
+    </div>
+
     </div>
   );
 }

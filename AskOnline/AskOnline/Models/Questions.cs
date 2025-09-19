@@ -1,4 +1,4 @@
-﻿namespace AskOnline.Models
+namespace AskOnline.Models
 {
     public class Question
     {
@@ -12,5 +12,6 @@
 
         public ICollection<Answer>? Answers { get; set; }
         public ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>();
+        public ICollection<QuestionRating> Ratings { get; set; } = new List<QuestionRating>();
     }
 }

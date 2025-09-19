@@ -1,4 +1,4 @@
-﻿using AskOnline.Data;
+using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
 using Microsoft.EntityFrameworkCore;
@@ -110,7 +110,9 @@ namespace AskOnline.Services
             var userId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var question = await _context.Questions.FindAsync(questionId);
+            var question = await _context.Questions
+                .Include(q => q.Ratings)
+                .FirstOrDefaultAsync(q => q.QuestionId == questionId);
             if (question == null)
                 return false;
 

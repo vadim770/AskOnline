@@ -13,43 +13,58 @@ export default function QuestionPageWrapper() {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const fetchQuestionAndAnswers = async () => {
-      try {
-        setLoading(true);
-        
-        const questionRes = await fetch(`${apiUrl}/questions/${id}`);
-        if (!questionRes.ok) throw new Error("Failed to fetch question");
-        const questionData = await questionRes.json();
-        setQuestion(questionData);
+  const fetchQuestionAndAnswers = async () => {
+    try {
+      setLoading(true);
+     
+      const questionRes = await fetch(`${apiUrl}/questions/${id}`);
+      if (!questionRes.ok) throw new Error("Failed to fetch question");
+      const questionData = await questionRes.json();
 
-        const storedUser = JSON.parse(localStorage.getItem("user"));
-        const token = storedUser?.token || null;
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      const token = storedUser?.token || null;
 
-        const answersRes = await fetch(`${apiUrl}/Answers/by-question/${id}`, {
-          headers: {
-            "Authorization": `Bearer ${token}`
+      // Fetch vote data if user is logged in
+      if (token) {
+        try {
+          const voteRes = await fetch(`${apiUrl}/questionratings/question/${id}`, {
+            headers: { "Authorization": `Bearer ${token}` }
+          });
+          if (voteRes.ok) {
+            const voteData = await voteRes.json();
+            questionData.totalScore = voteData.totalScore;
+            questionData.currentUserVote = voteData.userVote;
           }
-        });
-        
-
-        if (!answersRes.ok) throw new Error(`Failed to fetch answers (status: ${answersRes.status})`);
-
-        let answersData = [];
-        if (answersRes.status !== 204) {
-          answersData = await answersRes.json();
+        } catch (voteError) {
+          console.error("Failed to fetch vote data:", voteError);
+          // Continue without vote data
         }
-        setAnswers(answersData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
       }
-    };
 
-    if (id) {
-      fetchQuestionAndAnswers();
+      setQuestion(questionData);
+
+      const answersRes = await fetch(`${apiUrl}/Answers/by-question/${id}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+     
+      if (!answersRes.ok) throw new Error(`Failed to fetch answers (status: ${answersRes.status})`);
+      let answersData = [];
+      if (answersRes.status !== 204) {
+        answersData = await answersRes.json();
+      }
+      setAnswers(answersData);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-  }, [id, apiUrl]);
+  };
+  if (id) {
+    fetchQuestionAndAnswers();
+  }
+}, [id, apiUrl]);
 
   if (loading) return <p>Loading question...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;

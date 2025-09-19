@@ -496,7 +496,6 @@ D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\AskOnline.pdb
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\AskOnline.genruntimeconfig.cache
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\ref\AskOnline.dll
-D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Mentat\Documents\GitHub\AskOnline\AskOnline\AskOnline\bin\Debug\net9.0\askonline-front\package-lock.json
 C:\Users\Mentat\Documents\GitHub\AskOnline\AskOnline\AskOnline\bin\Debug\net9.0\askonline-front\package.json
 C:\Users\Mentat\Documents\GitHub\AskOnline\AskOnline\AskOnline\bin\Debug\net9.0\package-lock.json
@@ -510,3 +509,4 @@ D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\staticwebassets.build.json.cache
+D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
