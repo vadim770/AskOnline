@@ -182,11 +182,6 @@ export default function Answer({ answer, handleVote }) {
                         {/* Author Info */}
                         <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
-                                    <span className="text-white text-sm font-bold">
-                                        {currentAnswer.user?.username?.charAt(0).toUpperCase() || 'U'}
-                                    </span>
-                                </div>
                                 <div>
                                     <div className="flex items-center gap-2">
                                         <span className="text-sm text-gray-600">Answered by</span>
