@@ -13,22 +13,19 @@ namespace AskOnline.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _config;
         private readonly PasswordHasher<User> _hasher = new();
 
-        public AuthService(AppDbContext context, IConfiguration config)
+        public AuthService(IUnitOfWork unitOfWork, IConfiguration config)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _config = config;
         }
 
         public async Task<string?> RegisterAsync(UserRegisterRequest request)
         {
-            var existing = await _context.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Email.ToLower() == request.Email.ToLower());
-
+            var existing = await _unitOfWork.Users.GetByEmailAsync(request.Email.ToLower());
             if (existing != null)
                 return null;
 
@@ -45,17 +42,15 @@ namespace AskOnline.Services
                 PasswordHash = _hasher.HashPassword(null!, request.Password)
             };
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Users.AddAsync(user);
+            await _unitOfWork.SaveChangesAsync();
 
             return role;
         }
 
         public async Task<string?> LoginAsync(LoginRequest login)
         {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email.ToLower() == login.Email.ToLower());
-
+            var user = await _unitOfWork.Users.GetByEmailAsync(login.Email.ToLower());
             if (user == null)
                 return null;
 

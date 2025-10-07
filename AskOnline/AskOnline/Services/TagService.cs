@@ -1,18 +1,17 @@
-﻿using AskOnline.Data;
+using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace AskOnline.Services
 {
-    public class TagService
+    public class TagService : ITagService
     {
-        private readonly AppDbContext _context;
-        private readonly UserService _userService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
-        public TagService(AppDbContext context, UserService userService)
+        public TagService(IUnitOfWork unitOfWork, IUserService userService)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _userService = userService;
         }
 
@@ -21,18 +20,14 @@ namespace AskOnline.Services
             var userId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var question = await _context.Questions
-                .Include(q => q.QuestionTags)
-                .FirstOrDefaultAsync(q => q.QuestionId == questionId);
-
+            var question = await _unitOfWork.Questions.GetByIdAsync(questionId);
             if (question == null)
                 return "Question not found.";
 
             if (!isAdmin && question.UserId != userId)
                 return "Forbidden";
 
-            // Check if tag exists (case-insensitive)
-            var tag = await _context.Tags
+            var tag = await _unitOfWork.Tags
                 .FirstOrDefaultAsync(t => t.Name.ToLower() == tagName.ToLower());
 
             if (tag == null)
@@ -41,35 +36,36 @@ namespace AskOnline.Services
                 {
                     Name = tagName
                 };
-                _context.Tags.Add(tag);
-                await _context.SaveChangesAsync();
+                await _unitOfWork.Tags.AddAsync(tag);
+                await _unitOfWork.SaveChangesAsync();
             }
 
-            // Avoid duplicate tag
-            if (question.QuestionTags.Any(qt => qt.TagId == tag.TagId))
+            // Check if tag already associated
+            var questionTags = await _unitOfWork.QuestionTags.GetByQuestionIdAsync(questionId);
+            if (questionTags.Any(qt => qt.TagId == tag.TagId))
                 return "Tag already associated with question.";
 
-            _context.QuestionTags.Add(new QuestionTag
+            await _unitOfWork.QuestionTags.AddAsync(new QuestionTag
             {
-                QuestionId = question.QuestionId,
+                QuestionId = questionId,
                 TagId = tag.TagId
             });
+            await _unitOfWork.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
             return null; // success
         }
 
         public async Task<TagDto?> CreateTagAsync(string name)
         {
-            bool exists = await _context.Tags
-                .AnyAsync(t => t.Name.ToLower() == name.ToLower());
+            bool exists = await _unitOfWork.Tags
+                .ExistsAsync(t => t.Name.ToLower() == name.ToLower());
 
             if (exists)
                 return null;
 
             var tag = new Tag { Name = name };
-            _context.Tags.Add(tag);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Tags.AddAsync(tag);
+            await _unitOfWork.SaveChangesAsync();
 
             return new TagDto
             {
@@ -80,17 +76,17 @@ namespace AskOnline.Services
 
         public async Task<bool> DeleteTagAsync(int tagId)
         {
-            var tag = await _context.Tags
-                .Include(t => t.QuestionTags)
-                .FirstOrDefaultAsync(t => t.TagId == tagId);
-
+            var tag = await _unitOfWork.Tags.GetByIdAsync(tagId);
             if (tag == null)
                 return false;
 
-            _context.QuestionTags.RemoveRange(tag.QuestionTags); // detach from questions
-            _context.Tags.Remove(tag); // delete tag
+            // Delete all question-tag associations first
+            await _unitOfWork.QuestionTags.DeleteByQuestionIdAsync(tagId);
 
-            await _context.SaveChangesAsync();
+            // Delete the tag
+            await _unitOfWork.Tags.DeleteAsync(tagId);
+            await _unitOfWork.SaveChangesAsync();
+
             return true;
         }
 
@@ -101,10 +97,8 @@ namespace AskOnline.Services
                 .Distinct()
                 .ToList();
 
-            // Fetch existing tags (case-insensitive match)
-            var existingTags = await _context.Tags
-                .Where(t => normalizedNames.Contains(t.Name.ToLower()))
-                .ToListAsync();
+            var existingTags = await _unitOfWork.Tags
+                .FindAsync(t => normalizedNames.Contains(t.Name.ToLower()));
 
             var questionTags = new List<QuestionTag>();
 
@@ -119,8 +113,8 @@ namespace AskOnline.Services
                     {
                         Name = tagName
                     };
-                    _context.Tags.Add(tag);
-                    await _context.SaveChangesAsync();
+                    await _unitOfWork.Tags.AddAsync(tag);
+                    await _unitOfWork.SaveChangesAsync();
                 }
 
                 questionTags.Add(new QuestionTag
@@ -135,7 +129,7 @@ namespace AskOnline.Services
 
         public async Task<TagDto?> GetTagByIdAsync(int id)
         {
-            var tag = await _context.Tags.FindAsync(id);
+            var tag = await _unitOfWork.Tags.GetByIdAsync(id);
             if (tag == null)
                 return null;
 
@@ -148,13 +142,12 @@ namespace AskOnline.Services
 
         public async Task<List<TagDto>> GetAllTagsAsync()
         {
-            return await _context.Tags
-                .Select(t => new TagDto
-                {
-                    TagId = t.TagId,
-                    Name = t.Name
-                })
-                .ToListAsync();
+            var tags = await _unitOfWork.Tags.GetAllAsync();
+            return tags.Select(t => new TagDto
+            {
+                TagId = t.TagId,
+                Name = t.Name
+            }).ToList();
         }
 
         public async Task<bool> RemoveTagFromQuestionAsync(int questionId, int tagId)
@@ -162,41 +155,48 @@ namespace AskOnline.Services
             var currentUserId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            // Fetch question and check ownership
-            var question = await _context.Questions
-                .Include(q => q.QuestionTags)
-                .FirstOrDefaultAsync(q => q.QuestionId == questionId);
-
+            var question = await _unitOfWork.Questions.GetByIdAsync(questionId);
             if (question == null)
                 return false;
 
             if (!isAdmin && question.UserId != currentUserId)
                 return false;
 
-            var questionTag = question.QuestionTags.FirstOrDefault(qt => qt.TagId == tagId);
+            var questionTags = await _unitOfWork.QuestionTags.GetByQuestionIdAsync(questionId);
+            var questionTag = questionTags.FirstOrDefault(qt => qt.TagId == tagId);
+
             if (questionTag == null)
                 return false;
 
-            _context.QuestionTags.Remove(questionTag);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.QuestionTags.DeleteAsync(questionTag);
+            await _unitOfWork.SaveChangesAsync();
 
             await CleanupUnusedTagsAsync();
 
             return true;
         }
 
-
-
         public async Task CleanupUnusedTagsAsync()
         {
-            var unusedTags = await _context.Tags
-                .Where(tag => !tag.QuestionTags.Any())
-                .ToListAsync();
+            var allTags = await _unitOfWork.Tags.GetAllAsync();
+            var unusedTags = new List<Tag>();
+
+            foreach (var tag in allTags)
+            {
+                var questionTags = await _unitOfWork.QuestionTags.GetByTagIdAsync(tag.TagId);
+                if (!questionTags.Any())
+                {
+                    unusedTags.Add(tag);
+                }
+            }
 
             if (unusedTags.Any())
             {
-                _context.Tags.RemoveRange(unusedTags);
-                await _context.SaveChangesAsync();
+                foreach (var tag in unusedTags)
+                {
+                    await _unitOfWork.Tags.DeleteAsync(tag.TagId);
+                }
+                await _unitOfWork.SaveChangesAsync();
             }
         }
     }

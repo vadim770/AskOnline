@@ -81,12 +81,12 @@ const handleQuestionVote = async (isUpvote) => {
     return;
   }
 
-  const currentVote = questionState.currentUserVote; // Could be undefined initially
+  const currentVote = questionState.currentUserVote;
   let newVote = currentVote;
   let scoreChange = 0;
 
   if ((isUpvote && currentVote === true) || (!isUpvote && currentVote === false)) {
-    // User is undoing their vote
+    // user is undoing their vote
     try {
       await fetch(`${apiUrl}/questionratings/question/${questionState.questionId}`, {
         method: "DELETE",
@@ -99,7 +99,7 @@ const handleQuestionVote = async (isUpvote) => {
       return;
     }
   } else {
-    // User is casting a new vote or changing their vote
+    // user is casting a new vote or changing their vote
     try {
       await fetch(`${apiUrl}/questionratings`, {
         method: "POST",
@@ -113,11 +113,10 @@ const handleQuestionVote = async (isUpvote) => {
         }),
       });
 
-      // Fix the logic here - treat undefined the same as null
       if (currentVote === null || currentVote === undefined) {
-        scoreChange = isUpvote ? 1 : -1; // New vote
+        scoreChange = isUpvote ? 1 : -1; // new vote
       } else {
-        scoreChange = isUpvote ? 2 : -2; // Changing vote
+        scoreChange = isUpvote ? 2 : -2; // changing vote
       }
       newVote = isUpvote;
     } catch (error) {
@@ -141,7 +140,6 @@ const handleVote = async (answerId, isUpvote) => {
     return;
   }
 
-  // Find the current answer to get its vote state
   const currentAnswer = answers.find(a => a.answerId === answerId);
   if (!currentAnswer) return;
 
@@ -150,11 +148,11 @@ const handleVote = async (answerId, isUpvote) => {
 
   try {
     if ((isUpvote && currentVote === true) || (!isUpvote && currentVote === false)) {
-      // Remove vote
+      // remove vote
       apiCall = fetch(`${apiUrl}/ratings/answer/${answerId}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${token}`, // Fixed: use same token variable
+          "Authorization": `Bearer ${token}`,
         },
       });
     } else {
@@ -163,19 +161,19 @@ const handleVote = async (answerId, isUpvote) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`, // Fixed: use same token variable
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({ answerId, isUpvote }),
       });
     }
 
-    // Wait for API call to complete
+    // wait for API call to complete
     const response = await apiCall;
     if (!response.ok) {
       throw new Error(`API call failed: ${response.status} ${response.statusText}`);
     }
 
-    // Only update state if API call succeeded
+    // only update state if API call succeeded
     setAnswers(prevAnswers =>
       prevAnswers.map(a => {
         if (a.answerId !== answerId) return a;
@@ -229,7 +227,7 @@ const handleVote = async (answerId, isUpvote) => {
       if (!res.ok) throw new Error("Failed to post answer");
 
       const createdAnswer = await res.json();
-      setAnswers((prev) => [...prev, createdAnswer]);
+      setAnswers((prev) => [...prev, createdAnswer, ]);
       setNewAnswer("");
     } catch (err) {
       console.error("Error posting answer:", err);
@@ -313,11 +311,6 @@ const handleVote = async (answerId, isUpvote) => {
     setTagError("");
   };
 
-    const handleStartEdit = () => {
-    resetEditForm();
-    setIsEditing(true);
-  };
-
     const handleCancelEdit = () => {
     resetEditForm();
     setIsEditing(false);
@@ -370,7 +363,15 @@ const handleVote = async (answerId, isUpvote) => {
                 <span>Unknown User</span>
               )}
               {" • "}
-              {formattedDate}
+              <time dateTime={question.createdAt}>
+                {new Date(question.createdAt).toLocaleString('en-GB', {
+                  day: 'numeric',
+                  month: 'numeric',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </time>
             </div>
 
             <p className="mb-4 text-gray-700">{question.body}</p>

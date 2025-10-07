@@ -1,39 +1,36 @@
-﻿using AskOnline.Data;
+using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AskOnline.Services
 {
-    public class CommentService
+    public class CommentService : ICommentService
     {
-        private readonly AppDbContext _context;
-        private readonly UserService _userService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
-        public CommentService(AppDbContext context, UserService userService)
+        public CommentService(IUnitOfWork unitOfWork, IUserService userService)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _userService = userService;
         }
 
         public async Task<IEnumerable<CommentResponseDto>> GetCommentsByAnswerAsync(int answerId)
         {
-            return await _context.Comments
-                .Where(c => c.AnswerId == answerId)
-                .Include(c => c.User)
-                .OrderBy(c => c.CreatedAt)
-                .Select(c => new CommentResponseDto
+            var comments = await _unitOfWork.Comments.GetByAnswerIdAsync(answerId);
+
+            return comments.Select(c => new CommentResponseDto
+            {
+                CommentId = c.CommentId,
+                Text = c.Text,
+                CreatedAt = c.CreatedAt,
+                User = new UserResponseDto
                 {
-                    CommentId = c.CommentId,
-                    Text = c.Text,
-                    CreatedAt = c.CreatedAt,
-                    User = new UserResponseDto
-                    {
-                        UserId = c.User.UserId,
-                        Username = c.User.Username
-                    }
-                })
-                .ToListAsync();
+                    UserId = c.User.UserId,
+                    Username = c.User.Username
+                }
+            });
         }
 
         public async Task<CommentResponseDto> AddCommentToAnswerAsync(int answerId, CommentCreateDto dto)
@@ -42,11 +39,11 @@ namespace AskOnline.Services
             if (currentUserId == null)
                 throw new UnauthorizedAccessException("User must be logged in to add comments.");
 
-            var answer = await _context.Answers.FindAsync(answerId);
+            var answer = await _unitOfWork.Answers.GetByIdAsync(answerId);
             if (answer == null)
                 throw new ArgumentException("Answer not found");
 
-            var user = await _context.Users.FindAsync(currentUserId.Value);
+            var user = await _unitOfWork.Users.GetByIdAsync(currentUserId.Value);
             if (user == null)
                 throw new UnauthorizedAccessException("User not found");
 
@@ -60,8 +57,8 @@ namespace AskOnline.Services
                 CreatedAt = DateTime.UtcNow
             };
 
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Comments.AddAsync(comment);
+            await _unitOfWork.SaveChangesAsync();
 
             return new CommentResponseDto
             {
@@ -81,9 +78,7 @@ namespace AskOnline.Services
             var currentUserId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var comment = await _context.Comments
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.CommentId == commentId);
+            var comment = await _unitOfWork.Comments.GetByIdAsync(commentId);
 
             if (comment == null)
                 return null;
@@ -92,7 +87,9 @@ namespace AskOnline.Services
                 throw new UnauthorizedAccessException();
 
             comment.Text = dto.Text;
-            await _context.SaveChangesAsync();
+
+            await _unitOfWork.Comments.UpdateAsync(comment);
+            await _unitOfWork.SaveChangesAsync();
 
             return new CommentResponseDto
             {
@@ -112,18 +109,17 @@ namespace AskOnline.Services
             var currentUserId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.CommentId == commentId);
+            var comment = await _unitOfWork.Comments.GetByIdAsync(commentId);
             if (comment == null)
                 return false;
 
             if (!isAdmin && comment.UserId != currentUserId)
                 throw new UnauthorizedAccessException();
 
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Comments.DeleteAsync(commentId);
+            await _unitOfWork.SaveChangesAsync();
 
             return true;
         }
-
     }
 }

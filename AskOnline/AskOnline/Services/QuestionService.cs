@@ -1,20 +1,19 @@
 using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace AskOnline.Services
 {
-    public class QuestionService
+    public class QuestionService : IQuestionService
     {
-        private readonly AppDbContext _context;
-        private readonly UserService _userService;
-        private readonly TagService _tagService;
-        private readonly AnswerService _answerService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
+        private readonly ITagService _tagService;
+        private readonly IAnswerService _answerService;
 
-        public QuestionService(AppDbContext context, UserService userService, TagService tagService, AnswerService answerService)
+        public QuestionService(IUnitOfWork unitOfWork, IUserService userService, ITagService tagService, IAnswerService answerService)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _userService = userService;
             _tagService = tagService;
             _answerService = answerService;
@@ -24,7 +23,7 @@ namespace AskOnline.Services
         {
             var userId = _userService.GetCurrentUserId();
 
-            var userExists = await _context.Users.AnyAsync(u => u.UserId == userId);
+            var userExists = await _unitOfWork.Users.ExistsAsync(u => u.UserId == userId);
             if (!userExists)
                 return null;
 
@@ -39,40 +38,27 @@ namespace AskOnline.Services
 
             question.QuestionTags = await _tagService.GetOrCreateQuestionTagsAsync(request.TagNames, question);
 
-            _context.Questions.Add(question);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Questions.AddAsync(question);
+            await _unitOfWork.SaveChangesAsync();
 
-            var fullQuestion = await _context.Questions
-                .Include(q => q.User)
-                .Include(q => q.QuestionTags).ThenInclude(qt => qt.Tag)
-                .FirstOrDefaultAsync(q => q.QuestionId == question.QuestionId);
-
+            var fullQuestion = await _unitOfWork.Questions.GetWithTagsAndAnswersAsync(question.QuestionId);
             return MapQuestionToDto(fullQuestion);
         }
-
 
         public async Task<List<QuestionResponseDto>> GetAllQuestionsAsync()
         {
             var isAdmin = _userService.IsCurrentUserAdmin();
             var currentUserId = _userService.GetCurrentUserId();
 
-            var questions = await _context.Questions
-                .Include(q => q.QuestionTags)
-                    .ThenInclude(qt => qt.Tag)
-                .Include(q => q.User)
-                .Include(q => q.Answers)
-                    .ThenInclude(a => a.User)
-                .Include(q => q.Answers)
-                    .ThenInclude(a => a.Ratings)
-                .ToListAsync();
+            var questions = await _unitOfWork.Questions.GetWithTagsAsync();
 
             var result = new List<QuestionResponseDto>();
 
             foreach (var q in questions)
             {
-                var answerDtos = q.Answers
+                var answerDtos = q.Answers?
                     .Select(a => _answerService.MapAnswerToDto(a))
-                    .ToList();
+                    .ToList() ?? new List<AnswerResponseDto>();
 
                 result.Add(MapQuestionToDto(q, answerDtos));
             }
@@ -82,15 +68,7 @@ namespace AskOnline.Services
 
         public async Task<QuestionResponseDto?> GetQuestionByIdAsync(int questionId)
         {
-            var question = await _context.Questions
-                .Include(q => q.User)
-                .Include(q => q.Answers)
-                    .ThenInclude(a => a.User)
-                .Include(q => q.Answers)
-                    .ThenInclude(a => a.Ratings)
-                .Include(q => q.QuestionTags)
-                    .ThenInclude(qt => qt.Tag)
-                .FirstOrDefaultAsync(q => q.QuestionId == questionId);
+            var question = await _unitOfWork.Questions.GetWithTagsAndAnswersAsync(questionId);
 
             if (question == null)
                 return null;
@@ -98,9 +76,9 @@ namespace AskOnline.Services
             var isAdmin = _userService.IsCurrentUserAdmin();
             var currentUserId = _userService.GetCurrentUserId();
 
-            var answerDtos = question.Answers
+            var answerDtos = question.Answers?
                 .Select(a => _answerService.MapAnswerToDto(a))
-                .ToList();
+                .ToList() ?? new List<AnswerResponseDto>();
 
             return MapQuestionToDto(question, answerDtos);
         }
@@ -110,17 +88,15 @@ namespace AskOnline.Services
             var userId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var question = await _context.Questions
-                .Include(q => q.Ratings)
-                .FirstOrDefaultAsync(q => q.QuestionId == questionId);
+            var question = await _unitOfWork.Questions.GetByIdAsync(questionId);
             if (question == null)
                 return false;
 
             if (!isAdmin && question.UserId != userId)
                 throw new UnauthorizedAccessException("User is not authorized to delete this question.");
 
-            _context.Questions.Remove(question);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Questions.DeleteAsync(questionId);
+            await _unitOfWork.SaveChangesAsync();
 
             await _tagService.CleanupUnusedTagsAsync();
 
@@ -140,11 +116,11 @@ namespace AskOnline.Services
                 CreatedAt = question.CreatedAt,
                 User = _userService.MapUserDto(question.User),
                 Answers = answerDtos ?? new List<AnswerResponseDto>(),
-                Tags = question.QuestionTags.Select(qt => new TagDto
+                Tags = question.QuestionTags?.Select(qt => new TagDto
                 {
                     TagId = qt.Tag.TagId,
                     Name = qt.Tag.Name
-                }).ToList()
+                }).ToList() ?? new List<TagDto>()
             };
         }
 
@@ -152,13 +128,7 @@ namespace AskOnline.Services
         {
             try
             {
-                var questions = await _context.Questions
-                    .Where(q => q.UserId == userId)
-                    .Include(q => q.User)
-                    .Include(q => q.Answers)
-                    .Include(q => q.QuestionTags)
-                        .ThenInclude(qt => qt.Tag)
-                    .ToListAsync();
+                var questions = await _unitOfWork.Questions.GetByUserIdAsync(userId);
 
                 if (questions == null || !questions.Any())
                     return new List<QuestionResponseDto>();
@@ -166,10 +136,10 @@ namespace AskOnline.Services
                 var result = new List<QuestionResponseDto>();
                 foreach (var q in questions)
                 {
-                    if (q == null) continue; // skip null questions
+                    if (q == null) continue;
 
                     var answerDtos = q.Answers?
-                        .Where(a => a != null) // filter out null answers
+                        .Where(a => a != null)
                         .Select(a => _answerService.MapAnswerToDto(a))
                         .ToList() ?? new List<AnswerResponseDto>();
 
@@ -187,10 +157,8 @@ namespace AskOnline.Services
         {
             var userId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
-            var question = await _context.Questions
-                .Include(q => q.QuestionTags)
-                    .ThenInclude(qt => qt.Tag)
-                .FirstOrDefaultAsync(q => q.QuestionId == id);
+
+            var question = await _unitOfWork.Questions.GetWithTagsAndAnswersAsync(id);
 
             if (question == null)
                 return null;
@@ -219,12 +187,14 @@ namespace AskOnline.Services
                 .Where(tagName => !currentTagNames.Contains(tagName, StringComparer.OrdinalIgnoreCase))
                 .ToList();
 
+            // Remove old tags
             foreach (var questionTag in tagsToRemove)
             {
                 question.QuestionTags.Remove(questionTag);
-                _context.QuestionTags.Remove(questionTag);
+                await _unitOfWork.QuestionTags.DeleteAsync(questionTag);
             }
 
+            // Add new tags
             if (tagNamesToAdd.Any())
             {
                 var newQuestionTags = await _tagService.GetOrCreateQuestionTagsAsync(tagNamesToAdd, question);
@@ -234,7 +204,8 @@ namespace AskOnline.Services
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Questions.UpdateAsync(question);
+            await _unitOfWork.SaveChangesAsync();
 
             await _tagService.CleanupUnusedTagsAsync();
 
@@ -246,5 +217,22 @@ namespace AskOnline.Services
             };
         }
 
+        public async Task<List<QuestionResponseDto>> GetRecentQuestionsAsync(int limit = 20)
+        {
+            var questions = await _unitOfWork.Questions.GetRecentQuestionsAsync(limit);
+
+            var result = new List<QuestionResponseDto>();
+
+            foreach (var q in questions)
+            {
+                var answerDtos = q.Answers?
+                    .Select(a => _answerService.MapAnswerToDto(a))
+                    .ToList() ?? new List<AnswerResponseDto>();
+
+                result.Add(MapQuestionToDto(q, answerDtos));
+            }
+
+            return result;
+        }
     }
 }

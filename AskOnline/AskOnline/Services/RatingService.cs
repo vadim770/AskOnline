@@ -1,17 +1,16 @@
 using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
-using Microsoft.EntityFrameworkCore;
+using AskOnline.Services;
 
-
-public class RatingService
+public class RatingService : IRatingService
 {
-    private readonly AppDbContext _context;
-    private readonly UserService _userService;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserService _userService;
 
-    public RatingService(AppDbContext context, UserService userService)
+    public RatingService(IUnitOfWork unitOfWork, IUserService userService)
     {
-        _context = context;
+        _unitOfWork = unitOfWork;
         _userService = userService;
     }
 
@@ -21,17 +20,18 @@ public class RatingService
         if (userId == null)
             return null;
 
-        var answerExists = await _context.Answers.AnyAsync(a => a.AnswerId == request.AnswerId);
+        var answerExists = await _unitOfWork.Answers.ExistsAsync(a => a.AnswerId == request.AnswerId);
         if (!answerExists)
             return null;
 
-        var existingRating = await _context.AnswerRatings
-            .FirstOrDefaultAsync(r => r.AnswerId == request.AnswerId && r.UserId == userId);
+        var existingRating = await _unitOfWork.AnswerRatings
+            .GetByUserAndAnswerAsync(userId.Value, request.AnswerId);
 
         if (existingRating != null)
         {
             existingRating.IsUpvote = request.IsUpvote;
             existingRating.CreatedAt = DateTime.UtcNow;
+            await _unitOfWork.AnswerRatings.UpdateAsync(existingRating);
         }
         else
         {
@@ -42,10 +42,10 @@ public class RatingService
                 IsUpvote = request.IsUpvote,
                 CreatedAt = DateTime.UtcNow
             };
-            _context.AnswerRatings.Add(existingRating);
+            await _unitOfWork.AnswerRatings.AddAsync(existingRating);
         }
 
-        await _context.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return new RatingResponseDto
         {
@@ -62,35 +62,35 @@ public class RatingService
         if (userId == null)
             return false;
 
-        var rating = await _context.AnswerRatings
-            .FirstOrDefaultAsync(ar => ar.AnswerId == answerId && ar.UserId == userId);
+        var rating = await _unitOfWork.AnswerRatings
+            .GetByUserAndAnswerAsync(userId.Value, answerId);
 
         if (rating == null)
             return false;
 
-        _context.AnswerRatings.Remove(rating);
-        await _context.SaveChangesAsync();
+        await _unitOfWork.AnswerRatings.DeleteAsync(rating.RatingId);
+        await _unitOfWork.SaveChangesAsync();
+
         return true;
     }
 
     public async Task<AnswerScoreDto?> GetAnswerScoreAsync(int answerId)
     {
-        var answerExists = await _context.Answers.AnyAsync(a => a.AnswerId == answerId);
+        var answerExists = await _unitOfWork.Answers.ExistsAsync(a => a.AnswerId == answerId);
         if (!answerExists)
             return null;
 
-        var ratings = await _context.AnswerRatings
-            .Where(ar => ar.AnswerId == answerId)
-            .ToListAsync();
+        var ratings = await _unitOfWork.AnswerRatings.GetByAnswerIdAsync(answerId);
+        var ratingsList = ratings.ToList();
 
-        var upvotes = ratings.Count(r => r.IsUpvote);
-        var downvotes = ratings.Count(r => !r.IsUpvote);
+        var upvotes = ratingsList.Count(r => r.IsUpvote);
+        var downvotes = ratingsList.Count(r => !r.IsUpvote);
 
         bool? userVote = null;
         var userId = _userService.GetCurrentUserId();
         if (userId != null)
         {
-            var userRating = ratings.FirstOrDefault(r => r.UserId == userId);
+            var userRating = ratingsList.FirstOrDefault(r => r.UserId == userId);
             userVote = userRating?.IsUpvote;
         }
 
@@ -103,5 +103,4 @@ public class RatingService
             UserVote = userVote
         };
     }
-
 }

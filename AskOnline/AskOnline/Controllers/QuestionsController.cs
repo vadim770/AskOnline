@@ -14,9 +14,9 @@ namespace AskOnline.Controllers
     [ApiController]
     public class QuestionsController : ControllerBase
     {
-        private readonly QuestionService _questionService;
+        private readonly IQuestionService _questionService;
 
-        public QuestionsController(QuestionService questionService)
+        public QuestionsController(IQuestionService questionService)
         {
             _questionService = questionService;
         }
@@ -96,6 +96,23 @@ namespace AskOnline.Controllers
             }
         }
 
+        [HttpGet("recent")]
+        public async Task<ActionResult<List<QuestionResponseDto>>> GetRecentQuestions([FromQuery] int limit = 20)
+        {
+            try
+            {
+                // Validate limit to prevent abuse
+                if (limit <= 0) limit = 20;
+                if (limit > 100) limit = 100; // Max 100 questions
+
+                var questions = await _questionService.GetRecentQuestionsAsync(limit);
+                return Ok(questions);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Failed to fetch recent questions" });
+            }
+        }
 
 
     }

@@ -372,6 +372,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AskOnline.Controllers.QuestionsController",
+    "Method": "GetRecentQuestions",
+    "RelativePath": "api/Questions/recent",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "limit",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[AskOnline.Dtos.QuestionResponseDto, AskOnline, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "AskOnline.Controllers.RatingsController",
     "Method": "PostRating",
     "RelativePath": "api/Ratings",
@@ -451,11 +477,46 @@
         "Name": "q",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "sortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "noAnswers",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "noUpvotedAnswers",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "olderThanDays",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "tags",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AskOnline.Dtos.QuestionResponseDto, AskOnline, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "AskOnline.Dtos.SearchResultDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -464,6 +525,42 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "AskOnline.Controllers.SearchController",
+    "Method": "AdvancedSearch",
+    "RelativePath": "api/Search/advanced",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AskOnline.Dtos.SearchRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AskOnline.Dtos.SearchResultDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AskOnline.Controllers.SearchController",
+    "Method": "GetSearchOptions",
+    "RelativePath": "api/Search/options",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "AskOnline.Controllers.TagsController",

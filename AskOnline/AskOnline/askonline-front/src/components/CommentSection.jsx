@@ -15,7 +15,6 @@ export default function CommentSection({ answerId }) {
     const currentUserId = storedUser?.userId;
     const currentUserRole = storedUser?.role;
 
-    // Fetch comments
     useEffect(() => {
         const fetchComments = async () => {
             try {
@@ -32,7 +31,6 @@ export default function CommentSection({ answerId }) {
         fetchComments();
     }, [answerId]);
 
-    // Add new comment
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!newComment.trim()) return;
@@ -57,7 +55,6 @@ export default function CommentSection({ answerId }) {
         }
     };
 
-    // Delete comment
     const handleDelete = async (commentId) => {
         if (!window.confirm("Are you sure you want to delete this comment?")) return;
 
@@ -77,7 +74,6 @@ export default function CommentSection({ answerId }) {
         }
     };
 
-    // Edit comment
     const startEditing = (comment) => {
         setEditingCommentId(comment.commentId);
         setEditText(comment.text);
@@ -164,11 +160,11 @@ export default function CommentSection({ answerId }) {
                                             ) : (
                                                 <span className="text-gray-500">Unknown User</span>
                                             )}
-                                            <span className="text-gray-500 ml-1">
-                                                {new Date(comment.createdAt).toLocaleDateString('en-US', {
-                                                    month: 'short',
+                                            <span className="text-gray-500 ml-1 text-sm">
+                                                {new Date(comment.createdAt).toLocaleDateString('en-GB', {
+                                                    month: 'numeric',
                                                     day: 'numeric',
-                                                    year: new Date(comment.createdAt).getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+                                                    year: 'numeric'
                                                 })}
                                             </span>
                                             {comment.updatedAt && comment.updatedAt !== comment.createdAt && (

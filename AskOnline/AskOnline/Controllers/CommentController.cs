@@ -9,9 +9,9 @@ namespace AskOnline.Controllers
     [ApiController]
     public class CommentController : Controller
     {
-        private readonly CommentService _commentService;
+        private readonly ICommentService _commentService;
 
-        public CommentController(CommentService commentService)
+        public CommentController(ICommentService commentService)
         {
             _commentService = commentService;
         }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import UserQandA from '../components/UserQandA';
 
 export default function ProfilePage() {
   const { id } = useParams();
@@ -103,68 +104,31 @@ return (
 
     {/* Public info */}
     <p>Username: {profile.username}</p>
-    <p>Joined: {new Date(profile.createdAt).toLocaleDateString()}</p>
+    <p>Joined: {new Date(profile.createdAt).toLocaleString('en-GB', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    })}</p>
 
     {/* Private info */}
     {(isOwnProfile || user.role == "Admin") && <p>Email: {profile.email}</p>}
 
-    <div className="mt-6">
-      <h2 className="text-xl font-semibold mb-2">Questions</h2>
-      {questions.length === 0 ? (
-        <p>No questions yet.</p>
-      ) : (
-        <ul className="list-disc ml-6">
-          {questions.map((q) => (
-            <li key={q.questionId}>
-              <Link
-                to={`/questions/${q.questionId}`}
-                className="text-blue-600 hover:underline"
-              >
-                {q.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-
-    <div className="mt-6">
-      <h2 className="text-xl font-semibold mb-2">Answers</h2>
-      {answers.length === 0 ? (
-        <p>No answers yet.</p>
-      ) : (
-        <ul className="list-disc ml-6">
-          {answers.map((a) => (
-            <li key={a.answerId}>
-              <Link
-                to={`/questions/${a.questionId}`}
-                className="text-blue-600 hover:underline"
-              >
-                {a.body.length > 50 ? a.body.slice(0, 50) + "..." : a.body}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <UserQandA questions={questions} answers={answers} />
 
     {isOwnProfile && (
-  <div className="mt-8">
-    <button
-      onClick={handleDeleteAccount}
-      className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded border border-red-700 transition-colors duration-200"
-    >
-      Delete My Account
-    </button>
-    <p className="text-sm text-gray-500 mt-2">
-      This will permanently remove your account and all associated content.
-    </p>
-  </div>
+      <div className="mt-8">
+        <button
+          onClick={handleDeleteAccount}
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded border border-red-700 transition-colors duration-200"
+        >
+          Delete My Account
+        </button>
+        <p className="text-sm text-gray-500 mt-2">
+          This will permanently remove your account and all associated content.
+        </p>
+      </div>
     )}
-
   </div>
-
-  
 );
 
 }

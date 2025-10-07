@@ -9,7 +9,7 @@ export default function LoginPage() {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const { login } = useAuth(); // use login function from authcontext
+  const { login } = useAuth();
   console.log("API URL:", import.meta.env.VITE_API_URL);
 
   
@@ -33,7 +33,7 @@ export default function LoginPage() {
       }
 
       const data = await res.json();
-      login(data.token); // save token in context/localStorage
+      login(data.token);
       setSuccess("Logged in successfully!");
 
       window.location.href = "/";

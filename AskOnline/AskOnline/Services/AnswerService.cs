@@ -1,32 +1,25 @@
-﻿using AskOnline.Data;
+using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using AskOnline.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AskOnline.Services
 {
-    public class AnswerService
+    public class AnswerService : IAnswerService
     {
-        private readonly AppDbContext _context;
-        private readonly UserService _userService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
-        public AnswerService(AppDbContext context, UserService userService)
+        public AnswerService(IUnitOfWork unitOfWork, IUserService userService)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _userService = userService;
         }
 
         public async Task<List<AnswerResponseDto>> GetAnswersForQuestion(int questionId)
         {
-            var answers = await _context.Answers
-                .Where(a => a.QuestionId == questionId)
-                .Include(a => a.User)
-                .Include(a => a.Ratings)
-                .ToListAsync();
+            var answers = await _unitOfWork.Answers.GetByQuestionIdAsync(questionId);
 
             return answers
                 .Select(a => MapAnswerToDto(a))
@@ -38,9 +31,8 @@ namespace AskOnline.Services
             var userId = _userService.GetCurrentUserId();
             if (userId == null)
                 return null;
-            var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var question = await _context.Questions.FindAsync(request.QuestionId);
+            var question = await _unitOfWork.Questions.GetByIdAsync(request.QuestionId);
             if (question == null)
                 return null;
 
@@ -52,13 +44,10 @@ namespace AskOnline.Services
                 UserId = userId.Value
             };
 
-            _context.Answers.Add(answer);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Answers.AddAsync(answer);
+            await _unitOfWork.SaveChangesAsync();
 
-            var answerWithUser = await _context.Answers
-                .Include(a => a.User)
-                .Include(a => a.Ratings)
-                .FirstOrDefaultAsync(a => a.AnswerId == answer.AnswerId);
+            var answerWithUser = await _unitOfWork.Answers.GetWithRatingsAsync(answer.AnswerId);
 
             return MapAnswerToDto(answerWithUser);
         }
@@ -68,15 +57,15 @@ namespace AskOnline.Services
             var userId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var answer = await _context.Answers.FindAsync(id);
+            var answer = await _unitOfWork.Answers.GetByIdAsync(id);
             if (answer == null)
                 return new NotFoundResult();
 
             if (!isAdmin && answer.UserId != userId)
                 return new ForbidResult();
 
-            _context.Answers.Remove(answer);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Answers.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
 
             return new NoContentResult();
         }
@@ -111,15 +100,9 @@ namespace AskOnline.Services
             };
         }
 
-
         public async Task<List<AnswerResponseDto>> GetAnswersByUserIdAsync(int userId)
         {
-            var answers = await _context.Answers
-                .Where(a => a.UserId == userId)
-                .Include(a => a.User)
-                .Include(a => a.Ratings)
-                .Include(a => a.Question)
-                .ToListAsync();
+            var answers = await _unitOfWork.Answers.GetByUserIdAsync(userId);
 
             return answers.Select(a => MapAnswerToDto(a)).ToList();
         }
@@ -129,8 +112,7 @@ namespace AskOnline.Services
             var userId = _userService.GetCurrentUserId();
             var isAdmin = _userService.IsCurrentUserAdmin();
 
-            var answer = await _context.Answers
-                .FirstOrDefaultAsync(a => a.AnswerId == id);
+            var answer = await _unitOfWork.Answers.GetByIdAsync(id);
 
             if (answer == null)
                 return null;
@@ -140,13 +122,13 @@ namespace AskOnline.Services
 
             answer.Body = dto.Body;
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Answers.UpdateAsync(answer);
+            await _unitOfWork.SaveChangesAsync();
 
             return new AnswerUpdateDto
             {
                 Body = answer.Body
             };
         }
-
     }
 }

@@ -1,0 +1,459 @@
+﻿using AskOnline.Data.Repositories;
+using AskOnline.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
+namespace AskOnline.Data.Repositories.Implementations
+{
+    public class Repository<T> : IRepository<T> where T : class
+    {
+        protected readonly AppDbContext _context;
+        protected readonly DbSet<T> _dbSet;
+
+        public Repository(AppDbContext context)
+        {
+            _context = context;
+            _dbSet = context.Set<T>();
+        }
+
+        public virtual async Task<T?> GetByIdAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public virtual async Task<T?> GetByIdAsync(string id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
+
+        public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.Where(predicate).ToListAsync();
+        }
+
+        public virtual async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.FirstOrDefaultAsync(predicate);
+        }
+
+        public virtual async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.AnyAsync(predicate);
+        }
+
+        public virtual async Task<T> AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+            return entity;
+        }
+
+        public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+            return entities;
+        }
+
+        public virtual Task UpdateAsync(T entity)
+        {
+            _dbSet.Update(entity);
+            return Task.CompletedTask;
+        }
+
+        public virtual async Task DeleteAsync(T entity)
+        {
+            _dbSet.Remove(entity);
+            await Task.CompletedTask;
+        }
+
+        public virtual async Task DeleteAsync(int id)
+        {
+            var entity = await GetByIdAsync(id);
+            if (entity != null)
+            {
+                _dbSet.Remove(entity);
+            }
+        }
+
+        public virtual async Task DeleteAsync(string id)
+        {
+            var entity = await GetByIdAsync(id);
+            if (entity != null)
+            {
+                _dbSet.Remove(entity);
+            }
+        }
+
+        public virtual async Task<int> CountAsync()
+        {
+            return await _dbSet.CountAsync();
+        }
+
+        public virtual async Task<int> CountAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.CountAsync(predicate);
+        }
+
+        public virtual IQueryable<T> Query()
+        {
+            return _dbSet;
+        }
+
+        public virtual IQueryable<T> Query(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Where(predicate);
+        }
+    }
+
+    public class UserRepository : Repository<User>, IUserRepository
+    {
+        public UserRepository(AppDbContext context) : base(context) { }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _dbSet.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<User?> GetByUsernameAsync(string username)
+        {
+            return await _dbSet.FirstOrDefaultAsync(u => u.Username == username);
+        }
+
+        public async Task<bool> EmailExistsAsync(string email)
+        {
+            return await _dbSet.AnyAsync(u => u.Email == email);
+        }
+
+        public async Task<bool> UsernameExistsAsync(string username)
+        {
+            return await _dbSet.AnyAsync(u => u.Username == username);
+        }
+
+    }
+
+    public class QuestionRepository : Repository<Question>, IQuestionRepository
+    {
+        public QuestionRepository(AppDbContext context) : base(context) { }
+
+        public async Task<IEnumerable<Question>> GetByUserIdAsync(int userId)
+        {
+            return await _dbSet
+                .Include(q => q.User)
+                .Where(q => q.UserId == userId)
+                .OrderByDescending(q => q.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Question>> GetWithTagsAsync()
+        {
+            return await _dbSet
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(q => q.User)
+                .OrderByDescending(q => q.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<Question?> GetWithTagsAndAnswersAsync(int questionId)
+        {
+            return await _dbSet
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(q => q.Answers)
+                    .ThenInclude(a => a.User)
+                .Include(q => q.Answers)
+                    .ThenInclude(a => a.Ratings)
+                .Include(q => q.User)
+                .FirstOrDefaultAsync(q => q.QuestionId == questionId);
+        }
+
+        public async Task<IEnumerable<Question>> GetByTagAsync(string tagName)
+        {
+            return await _dbSet
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(q => q.User)
+                .Where(q => q.QuestionTags.Any(qt => qt.Tag.Name == tagName))
+                .OrderByDescending(q => q.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Question>> GetRecentQuestionsAsync(int count = 10)
+        {
+            return await _dbSet
+                .Include(q => q.User)
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(q => q.Answers)
+                .OrderByDescending(q => q.CreatedAt)
+                .Take(count)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Question>> SearchQuestionsAsync(string searchTerm)
+        {
+            return await _dbSet
+                .Include(q => q.User)
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Where(q => q.Title.Contains(searchTerm) || q.Body.Contains(searchTerm))
+                .OrderByDescending(q => q.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Question>> GetPopularQuestionsAsync(int count = 10)
+        {
+            return await _dbSet
+                .Include(q => q.User)
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(q => q.Answers)
+                .OrderByDescending(q => q.Answers.Count)
+                .ThenByDescending(q => q.CreatedAt)
+                .Take(count)
+                .ToListAsync();
+        }
+    }
+
+    public class AnswerRepository : Repository<Answer>, IAnswerRepository
+    {
+        public AnswerRepository(AppDbContext context) : base(context) { }
+
+        public async Task<IEnumerable<Answer>> GetByQuestionIdAsync(int questionId)
+        {
+            return await _dbSet
+                .Include(a => a.User)
+                .Include(a => a.Ratings)
+                .Include(a => a.Comments)
+                .Where(a => a.QuestionId == questionId)
+                .OrderByDescending(a => a.Ratings.Count(r => r.IsUpvote) - a.Ratings.Count(r => !r.IsUpvote))
+                .ThenByDescending(a => a.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Answer>> GetByUserIdAsync(int userId)
+        {
+            return await _dbSet
+                .Include(a => a.Question)
+                .Include(a => a.Ratings)
+                .Where(a => a.UserId == userId)
+                .OrderByDescending(a => a.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<Answer?> GetWithRatingsAsync(int answerId)
+        {
+            return await _dbSet
+                .Include(a => a.User)
+                .Include(a => a.Ratings)
+                    .ThenInclude(r => r.User)
+                .Include(a => a.Comments)
+                .FirstOrDefaultAsync(a => a.AnswerId == answerId);
+        }
+
+        public async Task<IEnumerable<Answer>> GetTopAnswersForQuestionAsync(int questionId, int count = 5)
+        {
+            return await _dbSet
+                .Include(a => a.User)
+                .Include(a => a.Ratings)
+                .Where(a => a.QuestionId == questionId)
+                .OrderByDescending(a => a.Ratings.Count(r => r.IsUpvote) - a.Ratings.Count(r => !r.IsUpvote))
+                .Take(count)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetAnswerCountForQuestionAsync(int questionId)
+        {
+            return await _dbSet.CountAsync(a => a.QuestionId == questionId);
+        }
+    }
+
+    public class TagRepository : Repository<Tag>, ITagRepository
+    {
+        public TagRepository(AppDbContext context) : base(context) { }
+
+        public async Task<Tag?> GetByNameAsync(string name)
+        {
+            return await _dbSet.FirstOrDefaultAsync(t => t.Name == name);
+        }
+
+        public async Task<IEnumerable<Tag>> GetPopularTagsAsync(int count = 20)
+        {
+            return await _dbSet
+                .Include(t => t.QuestionTags)
+                .OrderByDescending(t => t.QuestionTags.Count)
+                .Take(count)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Tag>> SearchTagsAsync(string searchTerm)
+        {
+            return await _dbSet
+                .Where(t => t.Name.Contains(searchTerm))
+                .OrderBy(t => t.Name)
+                .ToListAsync();
+        }
+
+        public async Task<Tag> GetOrCreateTagAsync(string tagName)
+        {
+            var existingTag = await GetByNameAsync(tagName);
+            if (existingTag != null)
+            {
+                return existingTag;
+            }
+
+            var newTag = new Tag { Name = tagName };
+            await AddAsync(newTag);
+            return newTag;
+        }
+    }
+
+    public class QuestionTagRepository : Repository<QuestionTag>, IQuestionTagRepository
+    {
+        public QuestionTagRepository(AppDbContext context) : base(context) { }
+
+        public async Task<IEnumerable<QuestionTag>> GetByQuestionIdAsync(int questionId)
+        {
+            return await _dbSet
+                .Include(qt => qt.Tag)
+                .Where(qt => qt.QuestionId == questionId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<QuestionTag>> GetByTagIdAsync(int tagId)
+        {
+            return await _dbSet
+                .Include(qt => qt.Question)
+                .Where(qt => qt.TagId == tagId)
+                .ToListAsync();
+        }
+
+        public async Task DeleteByQuestionIdAsync(int questionId)
+        {
+            var questionTags = await _dbSet.Where(qt => qt.QuestionId == questionId).ToListAsync();
+            _dbSet.RemoveRange(questionTags);
+        }
+
+        public async Task<bool> ExistsAsync(int questionId, int tagId)
+        {
+            return await _dbSet.AnyAsync(qt => qt.QuestionId == questionId && qt.TagId == tagId);
+        }
+    }
+
+    public class AnswerRatingRepository : Repository<AnswerRating>, IAnswerRatingRepository
+    {
+        public AnswerRatingRepository(AppDbContext context) : base(context) { }
+
+        public async Task<AnswerRating?> GetByUserAndAnswerAsync(int userId, int answerId)
+        {
+            return await _dbSet.FirstOrDefaultAsync(ar => ar.UserId == userId && ar.AnswerId == answerId);
+        }
+
+        public async Task<IEnumerable<AnswerRating>> GetByAnswerIdAsync(int answerId)
+        {
+            return await _dbSet
+                .Include(ar => ar.User)
+                .Where(ar => ar.AnswerId == answerId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<AnswerRating>> GetByUserIdAsync(int userId)
+        {
+            return await _dbSet
+                .Include(ar => ar.Answer)
+                .Where(ar => ar.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetRatingCountForAnswerAsync(int answerId)
+        {
+            return await _dbSet.CountAsync(ar => ar.AnswerId == answerId);
+        }
+
+        public async Task<int> GetScoreForAnswerAsync(int answerId)
+        {
+            var ratings = await _dbSet.Where(ar => ar.AnswerId == answerId).ToListAsync();
+            if (!ratings.Any()) return 0;
+
+            return ratings.Count(r => r.IsUpvote) - ratings.Count(r => !r.IsUpvote);
+        }
+    }
+
+    public class QuestionRatingRepository : Repository<QuestionRating>, IQuestionRatingRepository
+    {
+        public QuestionRatingRepository(AppDbContext context) : base(context) { }
+
+        public async Task<QuestionRating?> GetByUserAndQuestionAsync(int userId, int questionId)
+        {
+            return await _dbSet.FirstOrDefaultAsync(qr => qr.UserId == userId && qr.QuestionId == questionId);
+        }
+
+        public async Task<IEnumerable<QuestionRating>> GetByQuestionIdAsync(int questionId)
+        {
+            return await _dbSet
+                .Include(qr => qr.User)
+                .Where(qr => qr.QuestionId == questionId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<QuestionRating>> GetByUserIdAsync(int userId)
+        {
+            return await _dbSet
+                .Include(qr => qr.Question)
+                .Where(qr => qr.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetRatingCountForQuestionAsync(int questionId)
+        {
+            return await _dbSet.CountAsync(qr => qr.QuestionId == questionId);
+        }
+
+        public async Task<int> GetScoreForQuestionAsync(int questionId)
+        {
+            var ratings = await _dbSet.Where(qr => qr.QuestionId == questionId).ToListAsync();
+            if (!ratings.Any()) return 0;
+
+            return ratings.Count(r => r.IsUpvote) - ratings.Count(r => !r.IsUpvote);
+        }
+    }
+
+    public class CommentRepository : Repository<Comment>, ICommentRepository
+    {
+        public CommentRepository(AppDbContext context) : base(context) { }
+
+        public override async Task<Comment?> GetByIdAsync(int id)
+        {
+            return await _dbSet
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.CommentId == id);
+        }
+
+        public async Task<IEnumerable<Comment>> GetByAnswerIdAsync(int answerId)
+        {
+            return await _dbSet
+                .Include(c => c.User)
+                .Where(c => c.AnswerId == answerId)
+                .OrderBy(c => c.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Comment>> GetByUserIdAsync(int userId)
+        {
+            return await _dbSet
+                .Include(c => c.Answer)
+                .Where(c => c.UserId == userId)
+                .OrderByDescending(c => c.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetCommentCountForAnswerAsync(int answerId)
+        {
+            return await _dbSet.CountAsync(c => c.AnswerId == answerId);
+        }
+    }
+}

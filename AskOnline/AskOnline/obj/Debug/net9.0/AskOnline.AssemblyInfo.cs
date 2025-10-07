@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AskOnline")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5eb97881f8e741bdd467637f1cb5562fd886fc64")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+244689557b3f1eb1977d9d9001d259bbd1a2d0ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("AskOnline")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AskOnline")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

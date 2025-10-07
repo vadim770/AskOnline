@@ -14,12 +14,12 @@ namespace AskOnline.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _context;
-        private readonly UserService _userService;
-        private readonly QuestionService _questionService;
-        private readonly AnswerService _answerService;
+        private readonly IUserService _userService;
+        private readonly IQuestionService _questionService;
+        private readonly IAnswerService _answerService;
 
-        public UsersController(AppDbContext context, UserService userService,
-                                      QuestionService questionService, AnswerService answerService)
+        public UsersController(AppDbContext context, IUserService userService,
+                                      IQuestionService questionService, IAnswerService answerService)
         {
             _context = context;
             _userService = userService;

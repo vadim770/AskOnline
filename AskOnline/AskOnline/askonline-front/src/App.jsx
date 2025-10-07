@@ -8,7 +8,7 @@ import QuestionPageWrapper from "./components/QuestionPageWrapper";
 import AskQuestionPage from "./pages/AskQuestionPage";
 import ProfilePage from "./pages/ProfilePage";
 import LogoutMessage from "./components/LogoutMessage";
-import ResultsPage from "./pages/ResultsPage"
+import SearchPage from './pages/SearchPage';
 
 export default function App() {
   return (
@@ -24,7 +24,7 @@ export default function App() {
         <Route path="/ask" element={<AskQuestionPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
-        <Route path="/search" element={<ResultsPage />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
     </div>
   );

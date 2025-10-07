@@ -2,7 +2,6 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-// create the context
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -34,7 +33,6 @@ export const AuthProvider = ({ children }) => {
   
   const [logoutReason, setLogoutReason] = useState(null);
 
-  // function to check if token is expired
   const isTokenExpired = useCallback((token) => {
     try {
       const decoded = jwtDecode(token);
@@ -45,7 +43,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // function to logout user due to token expiration
   const logoutDueToExpiration = useCallback(() => {
     logoutWithMessage("Your session has expired. Please login again.");
   }, []);
@@ -62,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     return () => {
       window.removeEventListener('tokenExpired', handleTokenExpired);
     };
-  }, []); // remove logoutDueToExpiration dependency since we're now using logoutWithMessage directly
+  }, []);
 
   // check token expiration periodically
   useEffect(() => {

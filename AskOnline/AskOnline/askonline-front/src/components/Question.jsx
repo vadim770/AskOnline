@@ -41,7 +41,19 @@ export default function Question({ question }) {
           <span>Unknown User</span>
         )}
         {" • "}
-        {new Date(question.createdAt).toLocaleDateString()}
+        <time
+          className="text-gray-500 ml-1"
+          dateTime={question.createdAt}
+        >
+          {new Date(question.createdAt).toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
+        </time>
+
         {" • "}
         {question.answers ? question.answers.length : 0} answer(s)
       </div>

@@ -7,7 +7,7 @@ export default function LogoutMessage() {
   useEffect(() => {
     if (logoutReason) {
       alert(logoutReason);
-      setLogoutReason(null); // Reset after showing
+      setLogoutReason(null); // reset after showing
     }
   }, [logoutReason, setLogoutReason]);
 

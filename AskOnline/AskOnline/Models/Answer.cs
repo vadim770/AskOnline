@@ -17,7 +17,5 @@ namespace AskOnline.Models
 
         public ICollection<AnswerRating> Ratings { get; set; } = new List<AnswerRating>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-
-        public int Score => Ratings?.Count(r => r.IsUpvote) - Ratings?.Count(r => !r.IsUpvote) ?? 0;
     }
 }

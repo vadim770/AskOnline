@@ -1,11 +1,6 @@
-﻿using AskOnline.Data;
-using AskOnline.Dtos;
+﻿using AskOnline.Dtos;
 using AskOnline.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace AskOnline.Controllers
 {
@@ -13,77 +8,136 @@ namespace AskOnline.Controllers
     [Route("api/[controller]")]
     public class SearchController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ISearchService _searchService;
         private readonly ILogger<SearchController> _logger;
 
-        public SearchController(AppDbContext context, ILogger<SearchController> logger)
+        public SearchController(ISearchService searchService, ILogger<SearchController> logger)
         {
-            _context = context;
+            _searchService = searchService;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Search questions with various filters and sorting options
+        /// </summary>
+        /// <param name="q">Search query (can include [tagname] syntax for tag filtering)</param>
+        /// <param name="sortBy">Sort order: Relevance, Newest, Active, Score</param>
+        /// <param name="page">Page number (default: 1)</param>
+        /// <param name="pageSize">Items per page (default: 15, max: 50)</param>
+        /// <param name="noAnswers">Filter questions with no answers</param>
+        /// <param name="noUpvotedAnswers">Filter questions with no upvoted answers</param>
+        /// <param name="olderThanDays">Filter questions older than specified days</param>
+        /// <param name="tags">Additional tags to filter by (comma-separated)</param>
+        /// <returns>Paginated search results</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<QuestionResponseDto>>> Search([FromQuery] string q)
+        public async Task<ActionResult<SearchResultDto>> Search(
+            [FromQuery] string? q,
+            [FromQuery] SearchSortBy sortBy = SearchSortBy.Relevance,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 15,
+            [FromQuery] bool? noAnswers = null,
+            [FromQuery] bool? noUpvotedAnswers = null,
+            [FromQuery] int? olderThanDays = null,
+            [FromQuery] string? tags = null)
         {
-            if (string.IsNullOrWhiteSpace(q))
-            {
-                return Ok(new List<QuestionResponseDto>());
-            }
-
             try
             {
-                var searchTerm = q.Trim();
+                // Validate pagination parameters
+                if (page < 1) page = 1;
+                if (pageSize < 1) pageSize = 15;
+                if (pageSize > 50) pageSize = 50; // Limit max page size
 
-                var questions = await _context.Questions
-                    .Include(qu => qu.User)
-                    .Include(qu => qu.Answers)
-                        .ThenInclude(a => a.User)
-                    .Include(qu => qu.QuestionTags)
-                        .ThenInclude(qt => qt.Tag)
-                    .Where(qu =>
-                        EF.Functions.Like(qu.Title.ToLower(), $"%{searchTerm.ToLower()}%") ||
-                        EF.Functions.Like(qu.Body.ToLower(), $"%{searchTerm.ToLower()}%") ||
-                        qu.QuestionTags.Any(qt => EF.Functions.Like(qt.Tag.Name.ToLower(), $"%{searchTerm.ToLower()}%"))
-                    )
+                // Parse comma-separated tags
+                var tagList = string.IsNullOrWhiteSpace(tags)
+                    ? null
+                    : tags.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                           .Select(t => t.Trim())
+                           .Where(t => !string.IsNullOrWhiteSpace(t))
+                           .ToList();
 
-                    .OrderByDescending(qu => qu.CreatedAt)
-                    .Take(50)
-                    .ToListAsync();
-
-                var questionDtos = questions.Select(q => new QuestionResponseDto
+                var searchRequest = new SearchRequestDto
                 {
-                    QuestionId = q.QuestionId,
-                    Title = q.Title,
-                    Body = q.Body,
-                    CreatedAt = q.CreatedAt,
-                    User = new UserResponseDto
+                    Query = q,
+                    SortBy = sortBy,
+                    Page = page,
+                    PageSize = pageSize,
+                    Filters = new SearchFilters
                     {
-                        UserId = q.User.UserId,
-                        Username = q.User.Username,
-                        Email = null, // Hide email for privacy in search results
-                        CreatedAt = q.User.CreatedAt,
-                        Role = q.User.Role
-                    },
-                    Tags = q.QuestionTags.Select(qt => new TagDto
-                    {
-                        TagId = qt.Tag.TagId,
-                        Name = qt.Tag.Name
-                    }).ToList(),
-                    Answers = q.Answers?.Select(a => new AnswerResponseDto
-                    {
-                        AnswerId = a.AnswerId
-                    }).ToList() ?? new List<AnswerResponseDto>()
-                }).ToList();
+                        NoAnswers = noAnswers,
+                        NoUpvotedAnswers = noUpvotedAnswers,
+                        OlderThanDays = olderThanDays,
+                        Tags = tagList
+                    }
+                };
 
-                return Ok(questionDtos);
+                var result = await _searchService.SearchQuestionsAsync(searchRequest);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while searching questions");
-                return StatusCode(500, new { error = "Search failed" });
+                _logger.LogError(ex, "Error occurred while searching questions with query: {Query}", q);
+                return StatusCode(500, new
+                {
+                    error = "Search failed",
+                    message = "An error occurred while processing your search request."
+                });
             }
         }
+
+        /// <summary>
+        /// Advanced search endpoint with full request body support
+        /// </summary>
+        /// <param name="request">Complete search request with all parameters</param>
+        /// <returns>Paginated search results</returns>
+        [HttpPost("advanced")]
+        public async Task<ActionResult<SearchResultDto>> AdvancedSearch([FromBody] SearchRequestDto request)
+        {
+            try
+            {
+                // Validate and sanitize request
+                if (request.Page < 1) request.Page = 1;
+                if (request.PageSize < 1) request.PageSize = 15;
+                if (request.PageSize > 50) request.PageSize = 50;
+
+                var result = await _searchService.SearchQuestionsAsync(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred during advanced search");
+                return StatusCode(500, new
+                {
+                    error = "Advanced search failed",
+                    message = "An error occurred while processing your advanced search request."
+                });
+            }
+        }
+
+        /// <summary>
+        /// Get available search options and metadata
+        /// </summary>
+        /// <returns>Search configuration and available options</returns>
+        [HttpGet("options")]
+        public ActionResult GetSearchOptions()
+        {
+            return Ok(new
+            {
+                sortOptions = Enum.GetValues<SearchSortBy>().Select(s => new
+                {
+                    value = s.ToString().ToLower(),
+                    display = s.ToString()
+                }).ToList(),
+                maxPageSize = 50,
+                defaultPageSize = 15,
+                tagSearchSyntax = "[tagname]",
+                supportedFilters = new[]
+                {
+                    "noAnswers",
+                    "noUpvotedAnswers",
+                    "olderThanDays",
+                    "tags"
+                }
+            });
+        }
     }
-
-
 }

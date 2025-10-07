@@ -13,9 +13,9 @@ namespace AskOnline.Controllers
     [ApiController]
     public class AnswersController : ControllerBase
     {
-        private readonly AnswerService _answerService;
+        private readonly IAnswerService _answerService;
 
-        public AnswersController(AnswerService answerService)
+        public AnswersController(IAnswerService answerService)
         {
             _answerService = answerService;
         }

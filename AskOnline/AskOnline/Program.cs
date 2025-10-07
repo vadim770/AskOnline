@@ -1,19 +1,22 @@
 using AskOnline.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Security.Claims;
 using AskOnline.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel;
+using System.Security.Claims;
+using System.Text;
+using AskOnline.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.WriteIndented = true;
         options.JsonSerializerOptions.ReferenceHandler = null;
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        options.JsonSerializerOptions.Converters.Add(new AskOnline.Utils.DateTimeConverter());
     });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -71,18 +74,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Register IHttpContextAccessor
-builder.Services.AddHttpContextAccessor();
 
-// Register services
-builder.Services.AddScoped<AnswerService>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<TagService>();
-builder.Services.AddScoped<QuestionService>();
-builder.Services.AddScoped<RatingService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAnswerService, AnswerService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<CommentService>();
-builder.Services.AddScoped<QuestionRatingService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IQuestionRatingService, QuestionRatingService>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 
 
 builder.Services.AddCors(options =>
@@ -95,18 +98,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-//builder.Services.AddControllers()
-//    .AddJsonOptions(options =>
-//    {
-//        // Disable reference handling
-//        options.JsonSerializerOptions.ReferenceHandler = null;
-//    });
-
-
-
 
 var app = builder.Build();
-
 
 app.UseCors("AllowFrontend");
 
@@ -117,7 +110,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 

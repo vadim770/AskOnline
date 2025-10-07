@@ -9,9 +9,9 @@ namespace AskOnline.Controllers
     [ApiController]
     public class QuestionRatingsController : ControllerBase
     {
-        private readonly QuestionRatingService _ratingService;
+        private readonly IQuestionRatingService _ratingService;
 
-        public QuestionRatingsController(QuestionRatingService ratingService)
+        public QuestionRatingsController(IQuestionRatingService ratingService)
         {
             _ratingService = ratingService;
         }

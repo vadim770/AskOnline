@@ -198,9 +198,9 @@ export default function Answer({ answer, handleVote }) {
                                     </div>
                                     <div className="flex items-center gap-2 text-xs text-gray-500">
                                         <time dateTime={currentAnswer.createdAt}>
-                                            {new Date(currentAnswer.createdAt).toLocaleDateString('en-US', {
+                                            {new Date(currentAnswer.createdAt).toLocaleString('en-GB', {
                                                 year: 'numeric',
-                                                month: 'long',
+                                                month: 'numeric',
                                                 day: 'numeric',
                                                 hour: '2-digit',
                                                 minute: '2-digit'

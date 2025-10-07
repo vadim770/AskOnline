@@ -17,7 +17,6 @@ namespace AskOnline.Models
         public ICollection<Question>? Questions { get; set; }
         public ICollection<Answer>? Answers { get; set; }
 
-        // Navigation property
         public ICollection<AnswerRating> AnswerRatings { get; set; } = new List<AnswerRating>();
         public ICollection<QuestionRating> QuestionRatings { get; set; } = new List<QuestionRating>();
     }

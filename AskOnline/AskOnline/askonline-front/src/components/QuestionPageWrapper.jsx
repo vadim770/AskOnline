@@ -5,7 +5,7 @@ import QuestionPage from "../pages/QuestionPage.jsx";
 
 
 export default function QuestionPageWrapper() {
-  const { id } = useParams(); // get questionId from url
+  const { id } = useParams();
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,22 +24,19 @@ export default function QuestionPageWrapper() {
       const storedUser = JSON.parse(localStorage.getItem("user"));
       const token = storedUser?.token || null;
 
-      // Fetch vote data if user is logged in
-      if (token) {
-        try {
-          const voteRes = await fetch(`${apiUrl}/questionratings/question/${id}`, {
-            headers: { "Authorization": `Bearer ${token}` }
-          });
-          if (voteRes.ok) {
-            const voteData = await voteRes.json();
-            questionData.totalScore = voteData.totalScore;
-            questionData.currentUserVote = voteData.userVote;
-          }
-        } catch (voteError) {
-          console.error("Failed to fetch vote data:", voteError);
-          // Continue without vote data
+      try {
+        const headers = token ? { "Authorization": `Bearer ${token}` } : {};
+        const voteRes = await fetch(`${apiUrl}/questionratings/question/${id}`, { headers });
+
+        if (voteRes.ok) {
+          const voteData = await voteRes.json();
+          questionData.totalScore = voteData.totalScore;
+          questionData.currentUserVote = voteData.userVote ?? null;
         }
+      } catch (voteError) {
+        console.error("Failed to fetch vote data:", voteError);
       }
+
 
       setQuestion(questionData);
 

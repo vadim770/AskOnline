@@ -1,4 +1,4 @@
-﻿using AskOnline.Data;
+using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
 using AskOnline.Services;
@@ -12,9 +12,9 @@ namespace AskOnline.Controllers
     [ApiController]
     public class TagsController : ControllerBase
     {
-        private readonly TagService _tagService;
+        private readonly ITagService _tagService;
 
-        public TagsController(TagService tagService)
+        public TagsController(ITagService tagService)
         {
             _tagService = tagService;
         }
@@ -73,7 +73,7 @@ namespace AskOnline.Controllers
 
 
         // DELETE: api/tags/{id}
-        [Authorize(Roles = Roles.Admin)] // Only admins can delete tags
+        [Authorize(Roles = Roles.Admin)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTag(int id)
         {
