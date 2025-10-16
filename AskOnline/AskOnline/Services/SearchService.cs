@@ -173,7 +173,6 @@ namespace AskOnline.Services
                         : q.CreatedAt
                 ),
 
-                SearchSortBy.Relevance or _ => query.OrderByDescending(q => q.CreatedAt) // Default to newest for now
             };
         }
 

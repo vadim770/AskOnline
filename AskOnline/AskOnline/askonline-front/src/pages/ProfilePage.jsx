@@ -5,7 +5,7 @@ import UserQandA from '../components/UserQandA';
 
 export default function ProfilePage() {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [questions, setQuestions] = useState([]);
@@ -67,11 +67,25 @@ export default function ProfilePage() {
     fetchProfileData();
   }, [id, user, navigate, apiUrl]);
 
-  const handleDeleteAccount = async () => {
-  if (!window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) return;
+  
+
+async function handleDeleteAccount(targetUserId) {
+ 
+  // Convert both to strings for comparison
+  const isSelf = String(targetUserId) === String(user.userId);
+
+  const confirmMessage = isSelf
+    ? "Are you sure you want to delete your account? This action cannot be undone."
+    : "Are you sure you want to delete this user? This action cannot be undone.";
+
+  const confirmed = window.confirm(confirmMessage);
+  
+  if (!confirmed) {
+    return;
+  }
 
   try {
-    const res = await fetch(`${apiUrl}/users/${user.userId}`, {
+    const res = await fetch(`${apiUrl}/users/${targetUserId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${user.token}` },
     });
@@ -81,15 +95,19 @@ export default function ProfilePage() {
       throw new Error(errorText || "Failed to delete account");
     }
 
-    alert("Your account has been deleted successfully.");
-    localStorage.removeItem("user"); // clear local storage
-    navigate("/"); // redirect to homepage
-    window.location.reload(); // force re-render/log out state
+    if (isSelf) {
+      logout("Your account has been deleted successfully.", true);
+    } else {
+      alert("User has been deleted successfully.");
+      navigate("/");
+    }
+
   } catch (error) {
-    console.error("Delete account error:", error);
     alert("Error deleting account: " + error.message);
   }
-};
+}
+
+
 
 
 if (loading) return <p>Loading profile...</p>;
@@ -115,10 +133,10 @@ return (
 
     <UserQandA questions={questions} answers={answers} />
 
-    {isOwnProfile && (
+    {(isOwnProfile || user.role == "Admin") && (
       <div className="mt-8">
         <button
-          onClick={handleDeleteAccount}
+          onClick={() => handleDeleteAccount(profile.userId)}
           className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded border border-red-700 transition-colors duration-200"
         >
           Delete My Account

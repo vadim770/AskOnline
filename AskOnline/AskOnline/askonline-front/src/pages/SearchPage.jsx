@@ -9,7 +9,7 @@ export default function SearchPage() {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [sortBy, setSortBy] = useState("relevance");
+  const [sortBy, setSortBy] = useState("newest");
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     noAnswers: false,
@@ -165,7 +165,6 @@ export default function SearchPage() {
             onChange={(e) => handleSortChange(e.target.value)}
             className="px-3 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="relevance">Relevance</option>
             <option value="newest">Newest</option>
             <option value="active">Active</option>
             <option value="score">Score</option>

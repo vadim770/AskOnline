@@ -195,6 +195,46 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AskOnline.API.Controllers.DevController",
+    "Method": "ClearDatabase",
+    "RelativePath": "api/Dev/clear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AskOnline.API.Controllers.DevController",
+    "Method": "ResetDatabase",
+    "RelativePath": "api/Dev/reset",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AskOnline.API.Controllers.DevController",
+    "Method": "SeedDatabase",
+    "RelativePath": "api/Dev/seed",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AskOnline.API.Controllers.DevController",
+    "Method": "GetDatabaseStats",
+    "RelativePath": "api/Dev/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AskOnline.Controllers.QuestionRatingsController",
     "Method": "PostRating",
     "RelativePath": "api/QuestionRatings",

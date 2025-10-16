@@ -110,25 +110,24 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = (reason = null, showMessage = false) => {
-    localStorage.removeItem("user");
+    // Clear state FIRST
     setUser(null);
+    localStorage.removeItem("user");
     
     // only set logout reason if we want to show a message
     if (showMessage && reason) {
-      // ensure reason is always a string
       const messageText = typeof reason === 'string' ? reason : 'You have been logged out.';
       setLogoutReason(messageText);
-      navigate("/login");
+      // Use setTimeout to ensure state update completes
+      setTimeout(() => navigate("/login"), 0);
     } else if (showMessage) {
-      // default message for manual logout if showMessage is true but no reason provided
       setLogoutReason("You have been logged out successfully.");
-      navigate("/login");
+      setTimeout(() => navigate("/login"), 0);
     } else {
-      // dont set logoutReason, just navigate if on a protected route
       const currentPath = window.location.pathname;
       const publicPaths = ['/', '/login', '/signup'];
       if (!publicPaths.includes(currentPath)) {
-        navigate("/");
+        setTimeout(() => navigate("/"), 0);
       }
     }
   };

@@ -5,7 +5,7 @@ namespace AskOnline.Dtos
     public class SearchRequestDto
     {
         public string? Query { get; set; }
-        public SearchSortBy SortBy { get; set; } = SearchSortBy.Relevance;
+        public SearchSortBy SortBy { get; set; } = SearchSortBy.Newest;
         public SearchFilters? Filters { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 15;
@@ -21,7 +21,6 @@ namespace AskOnline.Dtos
 
     public enum SearchSortBy
     {
-        Relevance,
         Newest,
         Active,
         Score

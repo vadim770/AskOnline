@@ -355,6 +355,54 @@
         }
       }
     },
+    "/api/Dev/seed": {
+      "post": {
+        "tags": [
+          "Dev"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dev/clear": {
+      "post": {
+        "tags": [
+          "Dev"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dev/reset": {
+      "post": {
+        "tags": [
+          "Dev"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dev/stats": {
+      "get": {
+        "tags": [
+          "Dev"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/QuestionRatings": {
       "post": {
         "tags": [
@@ -1829,7 +1877,6 @@
       },
       "SearchSortBy": {
         "enum": [
-          "Relevance",
           "Newest",
           "Active",
           "Score"

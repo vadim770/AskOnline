@@ -21,7 +21,7 @@ namespace AskOnline.Controllers
         /// Search questions with various filters and sorting options
         /// </summary>
         /// <param name="q">Search query (can include [tagname] syntax for tag filtering)</param>
-        /// <param name="sortBy">Sort order: Relevance, Newest, Active, Score</param>
+        /// <param name="sortBy">Sort order Newest, Active, Score</param>
         /// <param name="page">Page number (default: 1)</param>
         /// <param name="pageSize">Items per page (default: 15, max: 50)</param>
         /// <param name="noAnswers">Filter questions with no answers</param>
@@ -32,7 +32,7 @@ namespace AskOnline.Controllers
         [HttpGet]
         public async Task<ActionResult<SearchResultDto>> Search(
             [FromQuery] string? q,
-            [FromQuery] SearchSortBy sortBy = SearchSortBy.Relevance,
+            [FromQuery] SearchSortBy sortBy = SearchSortBy.Newest,
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 15,
             [FromQuery] bool? noAnswers = null,
