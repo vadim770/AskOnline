@@ -17,8 +17,6 @@ public class UserService : IUserService
 
     public async Task<List<UserResponseDto>> GetAllUsersAsync()
     {
-        var currentUserId = GetCurrentUserId();
-        var isAdmin = IsCurrentUserAdmin();
 
         var users = await _unitOfWork.Users.GetAllAsync();
 
@@ -117,7 +115,27 @@ public class UserService : IUserService
             // Delete question-tag links and questions
             foreach (var questionId in questionIds)
             {
+                // Get tags before deleting
+                var questionTags = await _unitOfWork.QuestionTags.GetByQuestionIdAsync(questionId);
+                var tagIds = questionTags.Select(qt => qt.TagId).ToList();
+
+                Console.WriteLine($"Question {questionId} has {tagIds.Count} tags: {string.Join(", ", tagIds)}");
+
                 await _unitOfWork.QuestionTags.DeleteByQuestionIdAsync(questionId);
+                await _unitOfWork.SaveChangesAsync();
+
+                // Check each tag
+                foreach (var tagId in tagIds)
+                {
+                    var tag = await _unitOfWork.Tags.GetTagWithQuestionTagsAsync(tagId);
+                    Console.WriteLine($"Tag {tagId}: Found={tag != null}, QuestionTags count={tag?.QuestionTags.Count ?? -1}");
+
+                    if (tag != null && !tag.QuestionTags.Any())
+                    {
+                        Console.WriteLine($"Deleting unused tag {tagId}");
+                        await _unitOfWork.Tags.DeleteAsync(tagId);
+                    }
+                }
 
                 // Delete question ratings
                 var questionRatings = await _unitOfWork.QuestionRatings.GetByQuestionIdAsync(questionId);

@@ -25,69 +25,91 @@ export default function HomePage() {
   }, [apiUrl]);
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Recent Questions</h1>
-        <Link 
-          to="/ask" 
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+    <div className="flex">
+    {/* Sidebar */}
+    <aside className="w-48 border-r border-gray-300 min-h-screen p-4">
+      <h2 className="font-bold text-lg mb-4">Navigation</h2>
+      <nav className="space-y-2">
+        <Link
+          to="/tags"
+          className="block px-4 py-3 rounded hover:bg-gray-200 transition-colors text-blue-600 hover:text-blue-800 font-semibold text-base"
         >
-          Ask Question
+          Tags
         </Link>
-      </div>
+        <Link
+          to="/users"
+          className="block px-4 py-3 rounded hover:bg-gray-200 transition-colors text-blue-600 hover:text-blue-800 font-semibold text-base"
+        >
+          Users
+        </Link>
+      </nav>
+    </aside>
 
-      {loading && (
-        <div className="flex justify-center items-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-          <span className="ml-2 text-gray-600">Loading recent questions...</span>
-        </div>
-      )}
-
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          <strong>Error:</strong> {error}
-        </div>
-      )}
-
-      {!loading && !error && recentQuestions.length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-gray-500 text-lg mb-4">No questions yet!</div>
-          <p className="text-gray-400 mb-6">Be the first to ask a question in our community.</p>
+      {/* Main Content */}
+      <div className="flex-1 max-w-4xl mx-auto mt-10 p-4">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Recent Questions</h1>
           <Link 
             to="/ask" 
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
           >
-            Ask the First Question
+            Ask Question
           </Link>
         </div>
-      )}
 
-      {!loading && !error && recentQuestions.length > 0 && (
-        <>
-          <div className="text-sm text-gray-600 mb-4">
-            Showing {recentQuestions.length} most recent questions
+        {loading && (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <span className="ml-2 text-gray-600">Loading recent questions...</span>
           </div>
-          
-          <ul className="space-y-6">
-            {recentQuestions.map((q) => (
-              <li key={q.questionId}>
-                <Question question={q} />
-              </li>
-            ))}
-          </ul>
+        )}
 
-          {recentQuestions.length === 20 && (
-            <div className="text-center mt-8">
-              <Link 
-                to="/search" 
-                className="text-blue-500 hover:text-blue-700 underline"
-              >
-                View all questions
-              </Link>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <strong>Error:</strong> {error}
+          </div>
+        )}
+
+        {!loading && !error && recentQuestions.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-gray-500 text-lg mb-4">No questions yet!</div>
+            <p className="text-gray-400 mb-6">Be the first to ask a question in our community.</p>
+            <Link 
+              to="/ask" 
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+            >
+              Ask the First Question
+            </Link>
+          </div>
+        )}
+
+        {!loading && !error && recentQuestions.length > 0 && (
+          <>
+            <div className="text-sm text-gray-600 mb-4">
+              Showing {recentQuestions.length} most recent questions
             </div>
-          )}
-        </>
-      )}
+            
+            <ul className="space-y-6">
+              {recentQuestions.map((q) => (
+                <li key={q.questionId}>
+                  <Question question={q} />
+                </li>
+              ))}
+            </ul>
+
+            {recentQuestions.length === 20 && (
+              <div className="text-center mt-8">
+                <Link 
+                  to="/search" 
+                  className="text-blue-500 hover:text-blue-700 underline"
+                >
+                  View all questions
+                </Link>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

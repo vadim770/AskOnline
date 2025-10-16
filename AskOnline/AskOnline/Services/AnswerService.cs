@@ -1,7 +1,6 @@
 using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AskOnline.Services

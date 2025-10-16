@@ -285,14 +285,14 @@ export default function SearchPage() {
                       <div className={`font-semibold ${question.score > 0 ? 'text-green-600' : question.score < 0 ? 'text-red-600' : ''}`}>
                         {question.score}
                       </div>
-                      <div>votes</div>
+                      <div>Rating</div>
                     </div>
                     
                     <div className="flex flex-col items-center text-sm text-gray-600 min-w-[60px]">
                       <div className={`font-semibold ${question.answerCount > 0 ? 'text-green-600' : ''}`}>
                         {question.answerCount}
                       </div>
-                      <div>answers</div>
+                      <div>Answers</div>
                     </div>
 
                     {/* Question Content */}
@@ -336,9 +336,13 @@ export default function SearchPage() {
                           >
                             {question.user.username}
                           </Link>
-                          <span>{timeAgo(question.createdAt)}</span>
+                          <span>{new Date(question.createdAt).toLocaleString('en-GB', {
+                                day: 'numeric',
+                                month: 'numeric',
+                                year: 'numeric'
+                              })}</span>
                           {question.lastActivity && question.lastActivity !== question.createdAt && (
-                            <span>modified {timeAgo(question.lastActivity)}</span>
+                            <span>modified: {timeAgo(question.lastActivity)}</span>
                           )}
                         </div>
                         

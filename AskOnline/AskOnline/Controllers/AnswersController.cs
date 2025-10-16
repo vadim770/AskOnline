@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AskOnline.Data;
-using AskOnline.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using AskOnline.Dtos;
 using AskOnline.Services;
 

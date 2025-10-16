@@ -9,6 +9,8 @@ import AskQuestionPage from "./pages/AskQuestionPage";
 import ProfilePage from "./pages/ProfilePage";
 import LogoutMessage from "./components/LogoutMessage";
 import SearchPage from './pages/SearchPage';
+import TagsPage from "./pages/TagsPage";
+import UsersPage from "./pages/UsersPage";
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/tags" element={<TagsPage />} />
+        <Route path="/users" element={<UsersPage />} />
       </Routes>
     </div>
   );

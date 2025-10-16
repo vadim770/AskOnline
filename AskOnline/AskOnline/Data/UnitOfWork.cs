@@ -1,8 +1,5 @@
-﻿using AskOnline.Data;
-using AskOnline.Data.Repositories;
+﻿using AskOnline.Data.Repositories;
 using AskOnline.Data.Repositories.Implementations;
-using AskOnline.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace AskOnline.Data

@@ -10,28 +10,28 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
     const fetchProfileData = async () => {
       try {
         setLoading(true);
         setError(null);
-        const userId = id || user.userId;
+        
+        // If no id in URL and no logged-in user, redirect to login
+        if (!id && !user) {
+          navigate("/login");
+          return;
+        }
+        
+        const userId = id || user?.userId;
         
         const profileUrl = `${apiUrl}/users/${userId}`;
         
-        const uRes = await fetch(profileUrl, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        const uRes = await fetch(profileUrl);
         
         if (!uRes.ok) {
           const errorText = await uRes.text();
@@ -42,19 +42,20 @@ export default function ProfilePage() {
         const uData = await uRes.json();
         setProfile(uData);
         
-        const qRes = await fetch(`${apiUrl}/users/${userId}/questions`, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        const qRes = await fetch(`${apiUrl}/users/${userId}/questions`);
         if (!qRes.ok) throw new Error("Failed to fetch questions");
         const qData = await qRes.json();
         setQuestions(qData || []);
 
-        const aRes = await fetch(`${apiUrl}/users/${userId}/answers`, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        const aRes = await fetch(`${apiUrl}/users/${userId}/answers`);
         if (!aRes.ok) throw new Error("Failed to fetch answers");
         const aData = await aRes.json();
         setAnswers(aData || []);
+        
+        const cRes = await fetch(`${apiUrl}/users/${userId}/comments`);
+        if (!cRes.ok) throw new Error("Failed to fetch comments");
+        const cData = await cRes.json();
+        setComments(cData || []);
         
       } catch (err) {
         console.error('ProfilePage error:', err);
@@ -67,86 +68,79 @@ export default function ProfilePage() {
     fetchProfileData();
   }, [id, user, navigate, apiUrl]);
 
-  
+  async function handleDeleteAccount(targetUserId) {
+    const isSelf = String(targetUserId) === String(user?.userId);
 
-async function handleDeleteAccount(targetUserId) {
- 
-  // Convert both to strings for comparison
-  const isSelf = String(targetUserId) === String(user.userId);
+    const confirmMessage = isSelf
+      ? "Are you sure you want to delete your account? This action cannot be undone."
+      : "Are you sure you want to delete this user? This action cannot be undone.";
 
-  const confirmMessage = isSelf
-    ? "Are you sure you want to delete your account? This action cannot be undone."
-    : "Are you sure you want to delete this user? This action cannot be undone.";
-
-  const confirmed = window.confirm(confirmMessage);
-  
-  if (!confirmed) {
-    return;
-  }
-
-  try {
-    const res = await fetch(`${apiUrl}/users/${targetUserId}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(errorText || "Failed to delete account");
+    const confirmed = window.confirm(confirmMessage);
+    
+    if (!confirmed) {
+      return;
     }
 
-    if (isSelf) {
-      logout("Your account has been deleted successfully.", true);
-    } else {
-      alert("User has been deleted successfully.");
-      navigate("/");
+    try {
+      const res = await fetch(`${apiUrl}/users/${targetUserId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || "Failed to delete account");
+      }
+
+      if (isSelf) {
+        logout("Your account has been deleted successfully.", true);
+      } else {
+        alert("User has been deleted successfully.");
+        navigate("/");
+      }
+
+    } catch (error) {
+      alert("Error deleting account: " + error.message);
     }
-
-  } catch (error) {
-    alert("Error deleting account: " + error.message);
   }
-}
 
+  if (loading) return <p>Loading profile...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!profile) return null;
 
+  const isOwnProfile = user && (!id || id === user.userId.toString());
+  const isAdmin = user?.role === "Admin";
 
+  return (
+    <div className="max-w-4xl mx-auto mt-10 p-4 border rounded shadow">
+      <h1 className="text-2xl font-bold mb-4">{profile.username}'s Profile</h1>
 
-if (loading) return <p>Loading profile...</p>;
-if (error) return <p className="text-red-500">{error}</p>;
-if (!profile) return null;
+      {/* Public info */}
+      <p>Username: {profile.username}</p>
+      <p>Joined: {new Date(profile.createdAt).toLocaleString('en-GB', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      })}</p>
 
-const isOwnProfile = !id || id === user.userId.toString();
+      {/* Private info */}
+      {(isOwnProfile || isAdmin) && <p>Email: {profile.email}</p>}
 
-return (
-  <div className="max-w-4xl mx-auto mt-10 p-4 border rounded shadow">
-    <h1 className="text-2xl font-bold mb-4">{profile.username}'s Profile</h1>
+      <UserQandA questions={questions} answers={answers} comments={comments}/>
 
-    {/* Public info */}
-    <p>Username: {profile.username}</p>
-    <p>Joined: {new Date(profile.createdAt).toLocaleString('en-GB', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    })}</p>
-
-    {/* Private info */}
-    {(isOwnProfile || user.role == "Admin") && <p>Email: {profile.email}</p>}
-
-    <UserQandA questions={questions} answers={answers} />
-
-    {(isOwnProfile || user.role == "Admin") && (
-      <div className="mt-8">
-        <button
-          onClick={() => handleDeleteAccount(profile.userId)}
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded border border-red-700 transition-colors duration-200"
-        >
-          Delete My Account
-        </button>
-        <p className="text-sm text-gray-500 mt-2">
-          This will permanently remove your account and all associated content.
-        </p>
-      </div>
-    )}
-  </div>
-);
-
+      {(isOwnProfile || isAdmin) && (
+        <div className="mt-8">
+          <button
+            onClick={() => handleDeleteAccount(profile.userId)}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded border border-red-700 transition-colors duration-200"
+          >
+            Delete {isOwnProfile ? "My" : "This"} Account
+          </button>
+          <p className="text-sm text-gray-500 mt-2">
+            This will permanently remove {isOwnProfile ? "your" : "this"} account and all associated content.
+          </p>
+        </div>
+      )}
+    </div>
+  );
 }

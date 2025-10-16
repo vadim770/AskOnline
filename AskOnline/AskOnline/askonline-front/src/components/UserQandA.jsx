@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function UserQandA({ questions, answers }) {
+export default function UserQandA({ questions, answers, comments}) {
   const [view, setView] = useState("questions");
   const [sortBy, setSortBy] = useState("newest");
   const [scores, setScores] = useState({}); // { "q-1": 10, "a-3": 5 }
@@ -46,6 +46,11 @@ export default function UserQandA({ questions, answers }) {
 
   const sortItems = (items, type) => {
     const sorted = [...items];
+    if (type === "comment") {
+      return sortBy === "oldest" 
+        ? sorted.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        : sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
     if (sortBy === "score") {
       return sorted.sort((a, b) => {
         const aKey = type === "question" ? `q-${a.questionId}` : `a-${a.answerId}`;
@@ -53,22 +58,16 @@ export default function UserQandA({ questions, answers }) {
         return (scores[bKey] ?? 0) - (scores[aKey] ?? 0);
       });
     }
-    return sorted.sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    );
+    return sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   };
 
-  const currentItems = view === "questions" ? questions : answers;
-  const sortedItems = sortItems(
-    currentItems,
-    view === "questions" ? "question" : "answer"
-  );
+  const currentItems = view === "questions" ? questions : view === "answers" ? answers : comments;
+  const currentType = view === "questions" ? "question" : view === "answers" ? "answer" : "comment";
+  const sortedItems = sortItems(currentItems, currentType);
 
   return (
     <div className="mt-6">
-      {/* Toggle and Sort Controls */}
       <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b">
-        {/* View Toggle */}
         <div className="flex gap-2">
           <button
             onClick={() => setView("questions")}
@@ -90,9 +89,18 @@ export default function UserQandA({ questions, answers }) {
           >
             Answers ({answers.length})
           </button>
+          <button
+            onClick={() => setView("comments")}
+            className={`px-4 py-2 rounded font-medium transition-colors ${
+              view === "comments"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
+          >
+            Comments ({comments.length})
+          </button>
         </div>
 
-        {/* Sort Options */}
         <div className="flex items-center gap-2 ml-auto">
           <span className="text-sm text-gray-600">Sort by:</span>
           <select
@@ -100,13 +108,21 @@ export default function UserQandA({ questions, answers }) {
             onChange={(e) => setSortBy(e.target.value)}
             className="px-3 py-2 border rounded bg-white text-sm"
           >
-            <option value="newest">Newest</option>
-            <option value="score">Highest Score</option>
+            {view === "comments" ? (
+              <>
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+              </>
+            ) : (
+              <>
+                <option value="newest">Newest</option>
+                <option value="score">Highest Score</option>
+              </>
+            )}
           </select>
         </div>
       </div>
 
-      {/* Content Display */}
       {sortedItems.length === 0 ? (
         <p className="text-gray-500 italic">No {view} yet.</p>
       ) : (
@@ -150,7 +166,8 @@ export default function UserQandA({ questions, answers }) {
                   </div>
                 </div>
               ))
-            : sortedItems.map((a) => (
+            : view === "answers"
+            ? sortedItems.map((a) => (
                 <div
                   key={a.answerId}
                   className="p-4 border rounded hover:bg-gray-50 transition-colors"
@@ -182,6 +199,22 @@ export default function UserQandA({ questions, answers }) {
                       </span>
                       <span className="text-xs text-gray-600">score</span>
                     </div>
+                  </div>
+                </div>
+              ))
+            : sortedItems.map((c) => (
+                <div
+                  key={c.commentId}
+                  className="p-4 border rounded hover:bg-gray-50 transition-colors"
+                >
+                  <Link
+                    to={`/questions/${c.questionId}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    <p className="text-gray-800">{c.text}</p>
+                  </Link>
+                  <div className="text-xs text-gray-500 mt-2">
+                    {new Date(c.createdAt).toLocaleDateString("en-GB")}
                   </div>
                 </div>
               ))}

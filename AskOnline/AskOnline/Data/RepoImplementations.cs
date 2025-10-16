@@ -1,4 +1,4 @@
-﻿using AskOnline.Data.Repositories;
+﻿using AskOnline.Dtos;
 using AskOnline.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -217,6 +217,108 @@ namespace AskOnline.Data.Repositories.Implementations
                 .Take(count)
                 .ToListAsync();
         }
+
+        public async Task<(IEnumerable<Question> questions, int totalCount)> SearchAsync(
+            string? searchText,
+            List<string> extractedTags,
+            List<string>? filterTags,
+            SearchFilters? filters,
+            SearchSortBy sortBy,
+            int page,
+            int pageSize)
+        {
+            IQueryable<Question> query = _dbSet
+                .Include(q => q.User)
+                .Include(q => q.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(q => q.Answers)
+                    .ThenInclude(a => a.Ratings)
+                .Include(q => q.Ratings);
+
+            // Apply text search
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                var searchTerm = searchText.ToLower();
+                query = query.Where(q =>
+                    EF.Functions.Like(q.Title.ToLower(), $"%{searchTerm}%") ||
+                    EF.Functions.Like(q.Body.ToLower(), $"%{searchTerm}%")
+                );
+            }
+
+            // Apply tag filtering from extracted tags
+            if (extractedTags.Any())
+            {
+                foreach (var tag in extractedTags)
+                {
+                    var tagLower = tag.ToLower();
+                    query = query.Where(q =>
+                        q.QuestionTags.Any(qt =>
+                            EF.Functions.Like(qt.Tag.Name.ToLower(), tagLower)
+                        )
+                    );
+                }
+            }
+
+            // Apply additional tag filtering
+            if (filterTags != null && filterTags.Any())
+            {
+                foreach (var tag in filterTags)
+                {
+                    var tagLower = tag.ToLower();
+                    query = query.Where(q =>
+                        q.QuestionTags.Any(qt =>
+                            EF.Functions.Like(qt.Tag.Name.ToLower(), tagLower)
+                        )
+                    );
+                }
+            }
+
+            // Apply other filters
+            if (filters != null)
+            {
+                if (filters.NoAnswers == true)
+                {
+                    query = query.Where(q => !q.Answers.Any());
+                }
+
+                if (filters.NoUpvotedAnswers == true)
+                {
+                    query = query.Where(q =>
+                        !q.Answers.Any(a => a.Ratings.Any(r => r.IsUpvote))
+                    );
+                }
+
+                if (filters.OlderThanDays.HasValue && filters.OlderThanDays.Value > 0)
+                {
+                    var cutoffDate = DateTime.UtcNow.AddDays(-filters.OlderThanDays.Value);
+                    query = query.Where(q => q.CreatedAt < cutoffDate);
+                }
+            }
+
+            // Get total count before pagination
+            var totalCount = await query.CountAsync();
+
+            // Apply sorting
+            query = sortBy switch
+            {
+                SearchSortBy.Newest => query.OrderByDescending(q => q.CreatedAt),
+                SearchSortBy.Score => query.OrderByDescending(q =>
+                    q.Ratings.Count(r => r.IsUpvote) - q.Ratings.Count(r => !r.IsUpvote)
+                ),
+                SearchSortBy.Active => query.OrderByDescending(q =>
+                    q.Answers.Any() ? q.Answers.Max(a => a.CreatedAt) : q.CreatedAt
+                ),
+                _ => query.OrderByDescending(q => q.CreatedAt)
+            };
+
+            // Apply pagination
+            var questions = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (questions, totalCount);
+        }
     }
 
     public class AnswerRepository : Repository<Answer>, IAnswerRepository
@@ -309,6 +411,13 @@ namespace AskOnline.Data.Repositories.Implementations
             var newTag = new Tag { Name = tagName };
             await AddAsync(newTag);
             return newTag;
+        }
+
+        public async Task<Tag?> GetTagWithQuestionTagsAsync(int tagId)
+        {
+            return await _dbSet
+                .Include(t => t.QuestionTags)
+                .FirstOrDefaultAsync(t => t.TagId == tagId);
         }
     }
 
@@ -430,6 +539,7 @@ namespace AskOnline.Data.Repositories.Implementations
         {
             return await _dbSet
                 .Include(c => c.User)
+                .Include(c => c.Answer)
                 .FirstOrDefaultAsync(c => c.CommentId == id);
         }
 
@@ -437,6 +547,7 @@ namespace AskOnline.Data.Repositories.Implementations
         {
             return await _dbSet
                 .Include(c => c.User)
+                .Include(c => c.Answer)
                 .Where(c => c.AnswerId == answerId)
                 .OrderBy(c => c.CreatedAt)
                 .ToListAsync();
@@ -446,6 +557,7 @@ namespace AskOnline.Data.Repositories.Implementations
         {
             return await _dbSet
                 .Include(c => c.Answer)
+                .Include(c => c.User)
                 .Where(c => c.UserId == userId)
                 .OrderByDescending(c => c.CreatedAt)
                 .ToListAsync();

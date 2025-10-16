@@ -1,4 +1,5 @@
-﻿using AskOnline.Models;
+﻿using AskOnline.Dtos;
+using AskOnline.Models;
 using System.Linq.Expressions;
 
 namespace AskOnline.Data.Repositories
@@ -46,6 +47,15 @@ namespace AskOnline.Data.Repositories
         Task<IEnumerable<Question>> GetRecentQuestionsAsync(int count = 10);
         Task<IEnumerable<Question>> SearchQuestionsAsync(string searchTerm);
         Task<IEnumerable<Question>> GetPopularQuestionsAsync(int count = 10);
+        Task<(IEnumerable<Question> questions, int totalCount)> SearchAsync(
+        string? searchText,
+        List<string> extractedTags,
+        List<string>? filterTags,
+        SearchFilters? filters,
+        SearchSortBy sortBy,
+        int page,
+        int pageSize
+    );
     }
 
     public interface IAnswerRepository : IRepository<Answer>
@@ -63,6 +73,7 @@ namespace AskOnline.Data.Repositories
         Task<IEnumerable<Tag>> GetPopularTagsAsync(int count = 20);
         Task<IEnumerable<Tag>> SearchTagsAsync(string searchTerm);
         Task<Tag> GetOrCreateTagAsync(string tagName);
+        Task<Tag?> GetTagWithQuestionTagsAsync(int tagId);
     }
 
     public interface IQuestionTagRepository : IRepository<QuestionTag>
@@ -71,6 +82,7 @@ namespace AskOnline.Data.Repositories
         Task<IEnumerable<QuestionTag>> GetByTagIdAsync(int tagId);
         Task DeleteByQuestionIdAsync(int questionId);
         Task<bool> ExistsAsync(int questionId, int tagId);
+
     }
 
     public interface IAnswerRatingRepository : IRepository<AnswerRating>
@@ -97,4 +109,6 @@ namespace AskOnline.Data.Repositories
         Task<IEnumerable<Comment>> GetByUserIdAsync(int userId);
         Task<int> GetCommentCountForAnswerAsync(int answerId);
     }
+
+
 }

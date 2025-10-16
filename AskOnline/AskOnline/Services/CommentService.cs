@@ -1,7 +1,6 @@
 using AskOnline.Data;
 using AskOnline.Dtos;
 using AskOnline.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace AskOnline.Services
 {
@@ -29,7 +28,8 @@ namespace AskOnline.Services
                 {
                     UserId = c.User.UserId,
                     Username = c.User.Username
-                }
+                },
+                QuestionId = c.Answer.QuestionId
             });
         }
 
@@ -65,6 +65,7 @@ namespace AskOnline.Services
                 CommentId = comment.CommentId,
                 Text = comment.Text,
                 CreatedAt = comment.CreatedAt,
+                QuestionId = answer.QuestionId,
                 User = new UserResponseDto
                 {
                     UserId = user.UserId,
@@ -96,6 +97,7 @@ namespace AskOnline.Services
                 CommentId = comment.CommentId,
                 Text = comment.Text,
                 CreatedAt = comment.CreatedAt,
+                QuestionId = comment.Answer.QuestionId,
                 User = new UserResponseDto
                 {
                     UserId = comment.User.UserId,
@@ -120,6 +122,25 @@ namespace AskOnline.Services
             await _unitOfWork.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<IEnumerable<CommentResponseDto>> GetCommentsByUserIdAsync(int userId)
+        {
+            var comments = await _unitOfWork.Comments.GetByUserIdAsync(userId);
+
+            return comments.Select(c => new CommentResponseDto
+            {
+                CommentId = c.CommentId,
+                Text = c.Text,
+                CreatedAt = c.CreatedAt,
+                User = new UserResponseDto
+                {
+                    UserId = c.User.UserId,
+                    Username = c.User.Username
+                },
+                QuestionId = c.Answer.QuestionId
+            });
+
         }
     }
 }

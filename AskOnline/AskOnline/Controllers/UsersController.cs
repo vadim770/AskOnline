@@ -1,11 +1,7 @@
-﻿using AskOnline.Data;
-using AskOnline.Dtos;
-using AskOnline.Models;
+﻿using AskOnline.Dtos;
 using AskOnline.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace AskOnline.Controllers
 {
@@ -13,22 +9,21 @@ namespace AskOnline.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly AppDbContext _context;
         private readonly IUserService _userService;
         private readonly IQuestionService _questionService;
         private readonly IAnswerService _answerService;
+        private readonly ICommentService _commentService;
 
-        public UsersController(AppDbContext context, IUserService userService,
-                                      IQuestionService questionService, IAnswerService answerService)
+        public UsersController(IUserService userService,
+                                      IQuestionService questionService, IAnswerService answerService, ICommentService commentService)
         {
-            _context = context;
             _userService = userService;
             _questionService = questionService;
             _answerService = answerService;
+            _commentService = commentService;
         }
 
         // GET: api/Users
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
         {
@@ -39,7 +34,6 @@ namespace AskOnline.Controllers
 
 
         // GET: api/Users/1
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserResponseDto>> GetUser(int id)
         {
@@ -66,7 +60,6 @@ namespace AskOnline.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet("me")]
         public async Task<ActionResult<UserResponseDto>> GetCurrentUser()
         {
@@ -94,6 +87,13 @@ namespace AskOnline.Controllers
             return Ok(answers);
         }
 
+        // GET: api/users/1/comments
+        [HttpGet("{id}/comments")]
+        public async Task<ActionResult<IEnumerable<CommentResponseDto>>> GetUserComments(int id)
+        {
+            var comments = await _commentService.GetCommentsByUserIdAsync(id);
+            return Ok(comments);
+        }
 
 
 
