@@ -26,25 +26,6 @@ export default function HomePage() {
 
   return (
     <div className="flex">
-    {/* Sidebar */}
-    <aside className="w-48 border-r border-gray-300 min-h-screen p-4">
-      <h2 className="font-bold text-lg mb-4">Navigation</h2>
-      <nav className="space-y-2">
-        <Link
-          to="/tags"
-          className="block px-4 py-3 rounded hover:bg-gray-200 transition-colors text-blue-600 hover:text-blue-800 font-semibold text-base"
-        >
-          Tags
-        </Link>
-        <Link
-          to="/users"
-          className="block px-4 py-3 rounded hover:bg-gray-200 transition-colors text-blue-600 hover:text-blue-800 font-semibold text-base"
-        >
-          Users
-        </Link>
-      </nav>
-    </aside>
-
       {/* Main Content */}
       <div className="flex-1 max-w-4xl mx-auto mt-10 p-4">
         <div className="flex justify-between items-center mb-6">

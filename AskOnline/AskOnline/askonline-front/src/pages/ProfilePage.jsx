@@ -31,7 +31,9 @@ export default function ProfilePage() {
         
         const profileUrl = `${apiUrl}/users/${userId}`;
         
-        const uRes = await fetch(profileUrl);
+        const uRes = await fetch(profileUrl, {
+          headers: user?.token ? { Authorization: `Bearer ${user.token}` } : {}
+        });
         
         if (!uRes.ok) {
           const errorText = await uRes.text();

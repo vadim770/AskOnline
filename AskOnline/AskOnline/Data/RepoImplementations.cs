@@ -238,10 +238,16 @@ namespace AskOnline.Data.Repositories.Implementations
             // Apply text search
             if (!string.IsNullOrWhiteSpace(searchText))
             {
-                var searchTerm = searchText.ToLower();
+                var searchTerms = searchText.ToLower()
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(term => $"%{term}%")
+                    .ToList();
+
                 query = query.Where(q =>
-                    EF.Functions.Like(q.Title.ToLower(), $"%{searchTerm}%") ||
-                    EF.Functions.Like(q.Body.ToLower(), $"%{searchTerm}%")
+                    searchTerms.Any(pattern =>
+                        EF.Functions.Like(q.Title.ToLower(), pattern) ||
+                        EF.Functions.Like(q.Body.ToLower(), pattern)
+                    )
                 );
             }
 

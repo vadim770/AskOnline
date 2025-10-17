@@ -11,25 +11,31 @@ import LogoutMessage from "./components/LogoutMessage";
 import SearchPage from './pages/SearchPage';
 import TagsPage from "./pages/TagsPage";
 import UsersPage from "./pages/UsersPage";
+import SideBar from "./components/SideBar";
 
 export default function App() {
   return (
     <div>
       <Navbar />
       <LogoutMessage />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/questions/:id" element={<QuestionPageWrapper />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/questions/:id" element={<QuestionPage />} />
-        <Route path="/ask" element={<AskQuestionPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/:id" element={<ProfilePage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/tags" element={<TagsPage />} />
-        <Route path="/users" element={<UsersPage />} />
-      </Routes>
+      <div className="flex">
+        <SideBar />
+        <div className="flex-1">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/questions/:id" element={<QuestionPageWrapper />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/questions/:id" element={<QuestionPage />} />
+            <Route path="/ask" element={<AskQuestionPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/tags" element={<TagsPage />} />
+            <Route path="/users" element={<UsersPage />} />
+          </Routes>
+        </div>
+      </div>
     </div>
   );
 }

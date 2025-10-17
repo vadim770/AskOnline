@@ -21,7 +21,6 @@ namespace AskOnline.Services
             // Extract tags from query using [tagname] syntax
             var (searchText, extractedTags) = ExtractTagsFromQuery(request.Query);
 
-            // Call repository search method
             var (questions, totalCount) = await _unitOfWork.Questions.SearchAsync(
                 searchText,
                 extractedTags,
@@ -32,7 +31,6 @@ namespace AskOnline.Services
                 request.PageSize
             );
 
-            // Map to DTOs
             var questionDtos = questions.Select(MapToSearchDto).ToList();
 
             return new SearchResultDto

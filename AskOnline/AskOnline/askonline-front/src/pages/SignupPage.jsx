@@ -37,7 +37,6 @@ export default function SignupPage() {
     }
 
     const data = await res.json();
-    console.log("Signup success:", data);
 
     setSuccess("Registration successful! Redirecting to login...");
     setTimeout(() => {
