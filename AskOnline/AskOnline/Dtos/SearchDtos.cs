@@ -23,7 +23,8 @@ namespace AskOnline.Dtos
     {
         Newest,
         Active,
-        Score
+        Score,
+        Relevance
     }
 
     public class SearchResultDto

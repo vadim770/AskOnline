@@ -9,7 +9,7 @@ export default function SearchPage() {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState("relevance");
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     noAnswers: false,
@@ -168,6 +168,7 @@ export default function SearchPage() {
             <option value="newest">Newest</option>
             <option value="active">Active</option>
             <option value="score">Score</option>
+            <option value="relevance">Relevance</option>
           </select>
         </div>
 

@@ -1953,7 +1953,8 @@
         "enum": [
           "Newest",
           "Active",
-          "Score"
+          "Score",
+          "Relevance"
         ],
         "type": "string"
       },

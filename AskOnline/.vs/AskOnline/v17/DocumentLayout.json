@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\data\\repoimplementations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\data\\repoimplementations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\dtos\\searchdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\dtos\\searchdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\searchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\searchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\controllers\\searchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\controllers\\searchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\data\\repoimplementations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\data\\repoimplementations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,11 +38,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 141,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "SearchDtos.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Dtos\\SearchDtos.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Dtos\\SearchDtos.cs",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Dtos\\SearchDtos.cs",
+              "RelativeToolTip": "AskOnline\\Dtos\\SearchDtos.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAcwBcAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T19:09:08.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "SearchController.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Controllers\\SearchController.cs",
               "RelativeDocumentMoniker": "AskOnline\\Controllers\\SearchController.cs",
@@ -46,12 +63,11 @@
               "RelativeToolTip": "AskOnline\\Controllers\\SearchController.cs",
               "ViewState": "AgIAAEMAAAAAAAAAAAAAAFYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T13:15:40.474Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T13:15:40.474Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "UserService.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "AskOnline\\Services\\UserService.cs",
@@ -59,12 +75,11 @@
               "RelativeToolTip": "AskOnline\\Services\\UserService.cs",
               "ViewState": "AgIAAMEAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:06:04.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T18:06:04.008Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "TagService.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\TagService.cs",
               "RelativeDocumentMoniker": "AskOnline\\Services\\TagService.cs",
@@ -72,25 +87,24 @@
               "RelativeToolTip": "AskOnline\\Services\\TagService.cs",
               "ViewState": "AgIAAJ8AAAAAAAAAAAAgwL0AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:05:21.88Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T18:05:21.88Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "RepoImplementations.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Data\\RepoImplementations.cs",
               "RelativeDocumentMoniker": "AskOnline\\Data\\RepoImplementations.cs",
               "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Data\\RepoImplementations.cs",
               "RelativeToolTip": "AskOnline\\Data\\RepoImplementations.cs",
-              "ViewState": "AgIAANsAAAAAAAAAAAAAAPsAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAC8BAAAAAAAAAAAAwD4BAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T13:35:00.64Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Repositories.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Data\\Repositories.cs",
               "RelativeDocumentMoniker": "AskOnline\\Data\\Repositories.cs",
@@ -102,13 +116,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "SearchService.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\SearchService.cs",
               "RelativeDocumentMoniker": "AskOnline\\Services\\SearchService.cs",
               "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\SearchService.cs",
               "RelativeToolTip": "AskOnline\\Services\\SearchService.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAA1wCIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwB8AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T11:18:13.675Z",
               "EditorCaption": ""

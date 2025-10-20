@@ -235,10 +235,12 @@ namespace AskOnline.Data.Repositories.Implementations
                     .ThenInclude(a => a.Ratings)
                 .Include(q => q.Ratings);
 
+            var searchTerms = new List<string>();
+
             // Apply text search
             if (!string.IsNullOrWhiteSpace(searchText))
             {
-                var searchTerms = searchText.ToLower()
+                searchTerms = searchText.ToLower()
                     .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(term => $"%{term}%")
                     .ToList();
@@ -308,12 +310,22 @@ namespace AskOnline.Data.Repositories.Implementations
             query = sortBy switch
             {
                 SearchSortBy.Newest => query.OrderByDescending(q => q.CreatedAt),
+
                 SearchSortBy.Score => query.OrderByDescending(q =>
                     q.Ratings.Count(r => r.IsUpvote) - q.Ratings.Count(r => !r.IsUpvote)
                 ),
+
                 SearchSortBy.Active => query.OrderByDescending(q =>
                     q.Answers.Any() ? q.Answers.Max(a => a.CreatedAt) : q.CreatedAt
                 ),
+
+                SearchSortBy.Relevance => query.OrderByDescending(q =>
+                    // Count how many search terms match in title (weighted higher)
+                    searchTerms.Count(pattern => EF.Functions.Like(q.Title.ToLower(), pattern)) * 2 +
+                    // Count how many search terms match in body
+                    searchTerms.Count(pattern => EF.Functions.Like(q.Body.ToLower(), pattern))
+                ),
+
                 _ => query.OrderByDescending(q => q.CreatedAt)
             };
 
