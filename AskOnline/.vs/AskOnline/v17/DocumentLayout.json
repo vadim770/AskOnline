@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|d:\\users\\skynet\\documents\\askonline\\askonline\\askonline\\askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BB01415-B943-4383-BDA3-54E3A571CFCF}|AskOnline\\AskOnline.csproj|solutionrelative:askonline\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,19 +31,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "AskOnline\\Services\\UserService.cs",
+              "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\UserService.cs",
+              "RelativeToolTip": "AskOnline\\Services\\UserService.cs",
+              "ViewState": "AgIAALYAAAAAAAAAAIA6wMcAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T13:39:02.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Program.cs",
               "RelativeDocumentMoniker": "AskOnline\\Program.cs",
               "ToolTip": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Program.cs",
               "RelativeToolTip": "AskOnline\\Program.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-10T13:00:42.112Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CommentService.cs",
               "DocumentMoniker": "D:\\Users\\Skynet\\Documents\\AskOnline\\AskOnline\\AskOnline\\AskOnline\\Services\\CommentService.cs",
               "RelativeDocumentMoniker": "AskOnline\\Services\\CommentService.cs",
@@ -47,8 +64,7 @@
               "RelativeToolTip": "AskOnline\\Services\\CommentService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-01T11:55:17.956Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-01T11:55:17.956Z"
             }
           ]
         }
