@@ -1,3 +1,6 @@
+
+ // decodes a JWT token from local storage and extracts user information.
+
 export function getUserFromToken() {
   const token = localStorage.getItem("token");
   if (!token) return null;
@@ -16,6 +19,9 @@ export function getUserFromToken() {
   }
 }
 
+
+
+ //removes the JWT token from local storage and redirects the user to the login page.
 
 export function logout() {
   localStorage.removeItem("token");

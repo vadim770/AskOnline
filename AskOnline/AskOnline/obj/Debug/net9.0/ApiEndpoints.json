@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "AnswerRequestDto",
+        "Type": "AskOnline.Dtos.AnswerRequestDto",
         "IsRequired": true
       }
     ],

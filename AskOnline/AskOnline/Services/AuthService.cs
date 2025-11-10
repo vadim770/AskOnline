@@ -27,6 +27,10 @@ namespace AskOnline.Services
             if (existing != null)
                 return null;
 
+            var existingUsername = await _unitOfWork.Users.GetByUsernameAsync(request.Username.Trim());
+            if (existingUsername != null)
+                return null;
+
             var role = request.Role == Roles.Admin || request.Role == Roles.User
                 ? request.Role
                 : Roles.User;
@@ -69,10 +73,14 @@ namespace AskOnline.Services
                 new Claim(ClaimTypes.Role, user.Role)
             };
 
+            // create a security key from the JWT settings
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
+            // create signing credentials using the key and HmacSha256 algorithm
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            // et token expiry time
             var expiry = DateTime.UtcNow.AddMinutes(double.Parse(_config["JwtSettings:ExpiryMinutes"]!));
 
+            // create the JWT token
             var token = new JwtSecurityToken(
                 issuer: _config["JwtSettings:Issuer"],
                 audience: _config["JwtSettings:Audience"],
@@ -81,6 +89,7 @@ namespace AskOnline.Services
                 signingCredentials: creds
             );
 
+            // serialize the token to a string
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

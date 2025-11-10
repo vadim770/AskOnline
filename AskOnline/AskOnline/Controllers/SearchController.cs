@@ -88,7 +88,7 @@ namespace AskOnline.Controllers
         /// Advanced search endpoint with full request body support
         /// </summary>
         /// <param name="request">Complete search request with all parameters</param>
-        /// <returns>Paginated search results</returns>
+        /// <returns>Paginated search result</returns>
         [HttpPost("advanced")]
         public async Task<ActionResult<SearchResultDto>> AdvancedSearch([FromBody] SearchRequestDto request)
         {
@@ -116,7 +116,7 @@ namespace AskOnline.Controllers
         /// <summary>
         /// Get available search options and metadata
         /// </summary>
-        /// <returns>Search configuration and available options</returns>
+        /// <returns>search configuration and available options</returns>
         [HttpGet("options")]
         public ActionResult GetSearchOptions()
         {

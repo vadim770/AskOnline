@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AskOnline.Data;
-using AskOnline.Models;
 using Microsoft.AspNetCore.Authorization;
 using AskOnline.Dtos;
-using System.Security.Claims;
 using AskOnline.Services;
 
 
@@ -47,14 +43,18 @@ namespace AskOnline.Controllers
         // POST: api/questions
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<QuestionResponseDto>> PostQuestion(QuestionRequestDto request)
+        public async Task<ActionResult<QuestionResponseDto>> PostQuestion([FromBody] QuestionRequestDto request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var response = await _questionService.CreateQuestionAsync(request);
             if (response == null)
                 return Unauthorized("User not found or unauthorized");
 
             return CreatedAtAction(nameof(GetQuestion), new { id = response.QuestionId }, response);
         }
+
 
 
 
@@ -80,8 +80,11 @@ namespace AskOnline.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateQuestion(int id, QuestionUpdateDto dto)
+        public async Task<IActionResult> UpdateQuestion(int id, [FromBody] QuestionUpdateDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
                 var updated = await _questionService.UpdateQuestionAsync(id, dto);

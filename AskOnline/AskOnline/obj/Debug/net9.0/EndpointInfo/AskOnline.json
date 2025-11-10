@@ -1489,6 +1489,9 @@
         "additionalProperties": false
       },
       "AnswerRequestDto": {
+        "required": [
+          "body"
+        ],
         "type": "object",
         "properties": {
           "questionId": {
@@ -1496,8 +1499,9 @@
             "format": "int32"
           },
           "body": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 500,
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1673,15 +1677,21 @@
         "additionalProperties": false
       },
       "QuestionRequestDto": {
+        "required": [
+          "body",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 30,
+            "minLength": 1,
+            "type": "string"
           },
           "body": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 500,
+            "minLength": 1,
+            "type": "string"
           },
           "tagNames": {
             "type": "array",
@@ -1807,15 +1817,21 @@
         "additionalProperties": false
       },
       "QuestionUpdateDto": {
+        "required": [
+          "body",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 30,
+            "minLength": 1,
+            "type": "string"
           },
           "body": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 500,
+            "minLength": 1,
+            "type": "string"
           },
           "tags": {
             "type": "array",

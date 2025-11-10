@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AskOnline.Utils
 {
+    // converts datetime objects to and from JSON ensuring UTC format.
     public class DateTimeConverter : JsonConverter<DateTime>
     {
         public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

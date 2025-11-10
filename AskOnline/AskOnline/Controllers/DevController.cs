@@ -16,9 +16,7 @@ public class DevController : ControllerBase
         _seeder = seeder;
     }
 
-    /// <summary>
-    /// Seeds the database with fake data for testing
-    /// </summary>
+    // Seeds the database with fake data for testing
     [HttpPost("seed")]
     public async Task<IActionResult> SeedDatabase()
     {
@@ -48,8 +46,6 @@ public class DevController : ControllerBase
 
     private async Task<object> GetDatabaseStats()
     {
-        // You'll need to inject IUnitOfWork into the controller
-        // For now, this is a placeholder
         return new
         {
             users = "Check logs",
@@ -58,9 +54,7 @@ public class DevController : ControllerBase
         };
     }
 
-    /// <summary>
-    /// Clears all data from the database
-    /// </summary>
+    // Clears all data from the database
     [HttpPost("clear")]
     public async Task<IActionResult> ClearDatabase()
     {
@@ -75,9 +69,7 @@ public class DevController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Clears and reseeds the database
-    /// </summary>
+    // Clears and reseeds the database
     [HttpPost("reset")]
     public async Task<IActionResult> ResetDatabase()
     {

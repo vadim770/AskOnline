@@ -20,6 +20,8 @@ export default function QuestionPage({ question, answers, setAnswers }) {
   const [tagInput, setTagInput] = useState("");
   const [tagError, setTagError] = useState("");
   const [questionState, setQuestionState] = useState({ ...question, totalScore: question.totalScore || 0 });
+  const [error, setError] = useState("");
+
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -173,7 +175,6 @@ const handleVote = async (answerId, isUpvote) => {
       throw new Error(`API call failed: ${response.status} ${response.statusText}`);
     }
 
-    // only update state if API call succeeded
     setAnswers(prevAnswers =>
       prevAnswers.map(a => {
         if (a.answerId !== answerId) return a;
@@ -209,7 +210,7 @@ const handleVote = async (answerId, isUpvote) => {
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
     if (!newAnswer.trim()) return;
-
+    setError(""); // clear previous general errors
     setSubmitting(true);
     try {
       const res = await fetch(`${apiUrl}/answers`, {
@@ -224,14 +225,28 @@ const handleVote = async (answerId, isUpvote) => {
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to post answer");
+      if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+
+      if (res.status === 400 && errorData?.errors) {
+        const messages = Object.values(errorData.errors)
+          .flat()
+          .join("\n");
+        throw new Error(messages);
+      }
+
+      if (errorData?.message) {
+        throw new Error(errorData.message);
+      }
+
+      throw new Error("Failed to update question");
+    }
 
       const createdAnswer = await res.json();
       setAnswers((prev) => [...prev, createdAnswer, ]);
       setNewAnswer("");
     } catch (err) {
-      console.error("Error posting answer:", err);
-      alert("Error posting answer.");
+      setError(err.message || "An unexpected error occurred.");
     } finally {
       setSubmitting(false);
     }
@@ -241,43 +256,66 @@ const handleVote = async (answerId, isUpvote) => {
     return <p>Loading question...</p>;
   }
 
-    async function handleUpdate() {
+  async function handleUpdate() {
+    // Frontend tag validation
+    if (editedTags.length === 0) {
+      setTagError("At least one tag is required");
+      return;
+    }
+    if (editedTags.length > 5) {
+      setTagError("Maximum of 5 tags allowed");
+      return;
+    }
+    setTagError("");
+    setError(""); // clear previous general errors
 
-        if (editedTags.length === 0) {
-          setTagError("At least one tag is required");
-          return;
-        }
-        if (editedTags.length > 5) {
-          setTagError("Maximum of 5 tags allowed");
-          return;
-        }
-        setTagError("");
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      const token = storedUser?.token;
 
-        try {
-          const storedUser = JSON.parse(localStorage.getItem("user"));
-          const token = storedUser?.token;
-          const res = await fetch(`${apiUrl}/questions/${question.questionId}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({ 
-              title: editTitle, 
-              body: editBody,
-              tags: editedTags
-            }),
-          });
-          if (!res.ok) throw new Error("Failed to update question");
-          const updatedQuestion = await res.json();
-          setIsEditing(false);
-          question.title = updatedQuestion.title;
-          question.body = updatedQuestion.body;
-          question.tags = updatedQuestion.tags?.map(tagName => ({ name: tagName })) || [];
-        } catch (err) {
-          console.error("Failed to update question:", err);
+      const res = await fetch(`${apiUrl}/questions/${question.questionId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ 
+          title: editTitle, 
+          body: editBody,
+          tags: editedTags
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => null);
+
+        if (res.status === 400 && errorData?.errors) {
+          const messages = Object.values(errorData.errors)
+            .flat()
+            .join("\n");
+          throw new Error(messages);
         }
+
+        if (errorData?.message) {
+          throw new Error(errorData.message);
+        }
+
+        throw new Error("Failed to update question");
       }
+
+      const updatedQuestion = await res.json();
+
+      setIsEditing(false);
+      question.title = updatedQuestion.title;
+      question.body = updatedQuestion.body;
+      question.tags =
+        updatedQuestion.tags?.map(tagName => ({ name: tagName })) || [];
+
+    } catch (err) {
+      setError(err.message || "An unexpected error occurred.");
+    }
+  }
+
 
     const handleRemoveTag = (tagToRemove) => {
     setEditedTags(editedTags.filter(tag => tag !== tagToRemove));
@@ -399,6 +437,15 @@ const handleVote = async (answerId, isUpvote) => {
         }}
         className="space-y-4 bg-gray-50 p-4 rounded-lg border"
       >
+
+        {/* General backend error */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+            {error.split("\n").map((line, i) => (
+              <p key={i}>{line}</p>
+            ))}
+          </div>
+        )}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Title
@@ -408,8 +455,12 @@ const handleVote = async (answerId, isUpvote) => {
             value={editTitle}
             onChange={(e) => setEditTitle(e.target.value)}
             className="w-full border rounded p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            maxLength={50}
             required
           />
+          <div className="text-sm text-gray-600 mb-4 text-right">
+          {editTitle.length}/50 characters
+          </div>
         </div>
        
         <div>
@@ -421,8 +472,12 @@ const handleVote = async (answerId, isUpvote) => {
             onChange={(e) => setEditBody(e.target.value)}
             className="w-full border rounded p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             rows={5}
+            maxLength={500}
             required
           />
+          <div className="text-sm text-gray-600 mb-4 text-right">
+        {editBody.length}/500 characters
+        </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -524,6 +579,13 @@ const handleVote = async (answerId, isUpvote) => {
       {/* Answer Form */}
       {user ? (
         <div className="bg-gray-50 p-6 rounded-xl shadow-sm">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+              {error.split("\n").map((line, i) => (
+                <p key={i}>{line}</p>
+              ))}
+            </div>
+          )}
           <h3 className="text-xl font-semibold mb-3">Your Answer</h3>
           <form onSubmit={handleAnswerSubmit}>
             <textarea
@@ -532,8 +594,12 @@ const handleVote = async (answerId, isUpvote) => {
               placeholder="Write your answer..."
               value={newAnswer}
               onChange={(e) => setNewAnswer(e.target.value)}
+              maxLength={500}
               required
             />
+            <div className="text-sm text-gray-600 mb-4 text-right">
+            {newAnswer.length}/500 characters
+          </div>
             <button
               type="submit"
               className="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition"

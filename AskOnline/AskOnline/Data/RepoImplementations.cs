@@ -242,15 +242,28 @@ namespace AskOnline.Data.Repositories.Implementations
             {
                 searchTerms = searchText.ToLower()
                     .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(term => term.Length >= 2)
                     .Select(term => $"%{term}%")
                     .ToList();
 
-                query = query.Where(q =>
-                    searchTerms.Any(pattern =>
-                        EF.Functions.Like(q.Title.ToLower(), pattern) ||
-                        EF.Functions.Like(q.Body.ToLower(), pattern)
-                    )
-                );
+                if (searchTerms.Any())
+                {
+                    foreach (var pattern in searchTerms)
+                    {
+                        query = query.Where(q =>
+                            EF.Functions.Like(q.Title.ToLower(), pattern) ||
+                            EF.Functions.Like(q.Body.ToLower(), pattern)
+                        );
+                    }
+
+                    // Stricter filtering only for pure relevance sort
+                    if (sortBy == SearchSortBy.Relevance)
+                    {
+                        query = query.Where(q =>
+                            searchTerms.Count(pattern => EF.Functions.Like(q.Title.ToLower(), pattern)) >= 1
+                        );
+                    }
+                }
             }
 
             // Apply tag filtering from extracted tags
@@ -309,20 +322,37 @@ namespace AskOnline.Data.Repositories.Implementations
             // Apply sorting
             query = sortBy switch
             {
-                SearchSortBy.Newest => query.OrderByDescending(q => q.CreatedAt),
+                SearchSortBy.Newest => searchTerms.Any()
+                    ? query.OrderByDescending(q =>
+                        searchTerms.Count(pattern => EF.Functions.Like(q.Title.ToLower(), pattern)) * 2 +
+                        searchTerms.Count(pattern => EF.Functions.Like(q.Body.ToLower(), pattern))
+                      ).ThenByDescending(q => q.CreatedAt)
+                    : query.OrderByDescending(q => q.CreatedAt),
 
-                SearchSortBy.Score => query.OrderByDescending(q =>
-                    q.Ratings.Count(r => r.IsUpvote) - q.Ratings.Count(r => !r.IsUpvote)
-                ),
+                SearchSortBy.Score => searchTerms.Any()
+                    ? query.OrderByDescending(q =>
+                        searchTerms.Count(pattern => EF.Functions.Like(q.Title.ToLower(), pattern)) * 2 +
+                        searchTerms.Count(pattern => EF.Functions.Like(q.Body.ToLower(), pattern))
+                      ).ThenByDescending(q =>
+                        q.Ratings.Count(r => r.IsUpvote) - q.Ratings.Count(r => !r.IsUpvote)
+                      )
+                    : query.OrderByDescending(q =>
+                        q.Ratings.Count(r => r.IsUpvote) - q.Ratings.Count(r => !r.IsUpvote)
+                      ),
 
-                SearchSortBy.Active => query.OrderByDescending(q =>
-                    q.Answers.Any() ? q.Answers.Max(a => a.CreatedAt) : q.CreatedAt
-                ),
+                SearchSortBy.Active => searchTerms.Any()
+                    ? query.OrderByDescending(q =>
+                        searchTerms.Count(pattern => EF.Functions.Like(q.Title.ToLower(), pattern)) * 2 +
+                        searchTerms.Count(pattern => EF.Functions.Like(q.Body.ToLower(), pattern))
+                      ).ThenByDescending(q =>
+                        q.Answers.Any() ? q.Answers.Max(a => a.CreatedAt) : q.CreatedAt
+                      )
+                    : query.OrderByDescending(q =>
+                        q.Answers.Any() ? q.Answers.Max(a => a.CreatedAt) : q.CreatedAt
+                      ),
 
                 SearchSortBy.Relevance => query.OrderByDescending(q =>
-                    // Count how many search terms match in title (weighted higher)
                     searchTerms.Count(pattern => EF.Functions.Like(q.Title.ToLower(), pattern)) * 2 +
-                    // Count how many search terms match in body
                     searchTerms.Count(pattern => EF.Functions.Like(q.Body.ToLower(), pattern))
                 ),
 

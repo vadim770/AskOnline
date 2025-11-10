@@ -146,8 +146,12 @@ export default function Answer({ answer, handleVote }) {
                                 onChange={(e) => setEditBody(e.target.value)}
                                 className="w-full border border-blue-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[120px] text-gray-800 placeholder-gray-500"
                                 placeholder="Share your knowledge and help solve this question..."
+                                maxLength={500}
                                 required
                             />
+                            <div className="text-sm text-gray-600 mb-4 text-right">
+                            {editBody.length}/500 characters
+                            </div>
                         </div>
                         <div className="flex gap-3">
                             <button

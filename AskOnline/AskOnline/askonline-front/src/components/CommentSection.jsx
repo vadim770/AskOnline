@@ -128,8 +128,12 @@ export default function CommentSection({ answerId }) {
                                                 value={editText}
                                                 onChange={(e) => setEditText(e.target.value)}
                                                 className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                                                maxLength={500}
                                                 rows="2"
                                             />
+                                            <div className="text-sm text-gray-600 mb-4 text-right">
+                                            {editText.length}/500 characters
+                                            </div>
                                             <div className="flex gap-2 mt-2">
                                                 <button
                                                     onClick={() => handleEditSubmit(comment.commentId)}
@@ -209,6 +213,9 @@ export default function CommentSection({ answerId }) {
                             className="flex-1 border border-gray-300 rounded px-3 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                             maxLength="500"
                         />
+                        <div className="text-sm text-gray-600 mb-4 text-right">
+                        {newComment.length}/500 characters
+                        </div>
                         <button
                             type="submit"
                             disabled={!newComment.trim()}

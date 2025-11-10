@@ -1,3 +1,4 @@
+//  manages JWT token attachment, checks for token expiration, and handles unauthorized responses by clearing user data and dispatching a token expiration event
 import { jwtDecode } from "jwt-decode";
 
 class ApiClient {
@@ -5,6 +6,7 @@ class ApiClient {
     this.baseURL = 'http://localhost:5230/api';
   }
 
+  // retrieves authentication headers, including the JWT token if available.
   getAuthHeaders() {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     if (user?.token) {
@@ -28,6 +30,7 @@ class ApiClient {
     }
   }
 
+  // handles token expiration by removing user data from local storage and starting an event.
   handleTokenExpiration() {
     localStorage.removeItem('user');
     window.dispatchEvent(new CustomEvent('tokenExpired', {
@@ -35,6 +38,7 @@ class ApiClient {
     }));
   }
 
+  // performs a fetch request, automatically handling token expiration and adding authentication headers.
   async fetch(endpoint, options = {}) {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     

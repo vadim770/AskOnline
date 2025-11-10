@@ -58,25 +58,44 @@ export default function AskQuestionPage() {
       return;
     }
 
-    try {
-      const res = await fetch(`${apiUrl}/questions`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ title, body, tagNames: tags }),
-      });
-      
-      if (!res.ok) {
-        throw new Error("Failed to post question");
+  try {
+    const res = await fetch(`${apiUrl}/questions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({ title, body, tagNames: tags }),
+    });
+
+    // If response not OK (e.g., 400 Bad Request)
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+
+      // Check if the backend returned ModelState validation errors
+      if (res.status === 400 && errorData?.errors) {
+        // Flatten the validation errors into a single readable string
+        const messages = Object.values(errorData.errors)
+          .flat()
+          .join("\n");
+        throw new Error(messages);
       }
-      
-      const data = await res.json();
-      navigate(`/questions/${data.questionId}`);
-    } catch (err) {
-      setError(err.message);
+
+      // Handle other possible backend messages (like Unauthorized)
+      if (errorData?.message) {
+        throw new Error(errorData.message);
+      }
+
+      throw new Error("Failed to post question");
     }
+
+    const data = await res.json();
+    navigate(`/questions/${data.questionId}`);
+
+  } catch (err) {
+    setError(err.message);
+  }
+
   };
 
   return (
@@ -100,8 +119,12 @@ export default function AskQuestionPage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full border rounded p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            maxLength={50}
             required
           />
+          <div className="text-sm text-gray-600 mb-4 text-right">
+            {title.length}/50 characters
+          </div>
         </div>
 
         <div>
@@ -113,8 +136,12 @@ export default function AskQuestionPage() {
             value={body}
             onChange={(e) => setBody(e.target.value)}
             className="w-full border rounded p-3 h-40 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            maxLength={500}
             required
           />
+          <div className="text-sm text-gray-600 mb-4 text-right">
+            {body.length}/500 characters
+          </div>
         </div>
 
         <div>

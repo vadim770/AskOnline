@@ -11,6 +11,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// configure controllers and json options
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -20,13 +21,15 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new AskOnline.Utils.DateTimeConverter());
     });
 
+
 builder.Services.AddEndpointsApiExplorer();
 
+// configure swagger for api documentation and jwt authentication
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "AskOnline API", Version = "v1" });
 
-    // Add JWT Bearer Authorization to Swagger
+    // add jwt bearer authorization to swagger
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -53,11 +56,14 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// configure database context
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// retrieve JWT settings from configuration
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
+// configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -75,7 +81,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
+// add HttpContext accessor and register application services
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAnswerService, AnswerService>();
@@ -88,7 +94,7 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IQuestionRatingService, QuestionRatingService>();
 builder.Services.AddScoped<ISearchService, SearchService>();
 
-
+// configure CORS policy
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -99,23 +105,27 @@ builder.Services.AddCors(options =>
     });
 });
 
+// register password hasher and database seeder
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<DatabaseSeeder>();
 
 var app = builder.Build();
 
+// enable CORS for the frontend
 app.UseCors("AllowFrontend");
 
-// Configure the HTTP request pipeline.
+// configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// enable authentication and authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
+// map API controllers
 app.MapControllers();
 
 app.Run();

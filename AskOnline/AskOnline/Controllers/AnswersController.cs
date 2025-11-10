@@ -27,8 +27,11 @@ namespace AskOnline.Controllers
         // POST: api/Answers
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<AnswerResponseDto>> PostAnswer(AnswerRequestDto request)
+        public async Task<ActionResult<AnswerResponseDto>> PostAnswer([FromBody] AnswerRequestDto request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var response = await _answerService.CreateAnswerAsync(request);
             if (response == null)
                 return NotFound("Question not found.");

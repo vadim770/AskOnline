@@ -1,3 +1,4 @@
+// attaches the JWT token from local storage to requests and handles token expiration by redirecting to the login page
 import { useNavigate } from "react-router-dom";
 
 // create a wrapper for fetch calls
