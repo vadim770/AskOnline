@@ -16,6 +16,11 @@ namespace AskOnline.Controllers
             _answerService = answerService;
         }
 
+        /// <summary>
+        /// Gets all answers for a specific question.
+        /// </summary>
+        /// <param name="questionId">The ID of the question.</param>
+        /// <returns>A list of answers for the question.</returns>
         // GET: api/Answers/by-question/3
         [HttpGet("by-question/{questionId}")]
         public async Task<ActionResult<IEnumerable<AnswerResponseDto>>> GetAnswersForQuestion(int questionId)
@@ -24,6 +29,11 @@ namespace AskOnline.Controllers
             return Ok(answerDtos);
         }
 
+        /// <summary>
+        /// Creates a new answer for a question.
+        /// </summary>
+        /// <param name="request">The answer creation request.</param>
+        /// <returns>The created answer.</returns>
         // POST: api/Answers
         [Authorize]
         [HttpPost]
@@ -40,6 +50,11 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Deletes an answer.
+        /// </summary>
+        /// <param name="id">The ID of the answer to delete.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnswer(int id)
@@ -47,6 +62,12 @@ namespace AskOnline.Controllers
             return await _answerService.DeleteAnswerAsync(id);
         }
 
+        /// <summary>
+        /// Updates an existing answer.
+        /// </summary>
+        /// <param name="id">The ID of the answer to update.</param>
+        /// <param name="dto">The answer update data.</param>
+        /// <returns>The updated answer.</returns>
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAnswer(int id, AnswerUpdateDto dto)

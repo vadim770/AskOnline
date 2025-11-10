@@ -17,7 +17,11 @@ namespace AskOnline.Controllers
             _questionService = questionService;
         }
 
-        // GET: api/questions
+        /// <summary>
+        /// Gets all questions.
+        /// </summary>
+        /// <returns>A list of all questions.</returns>
+        // GET: api/questions                                                                                                                                                          
         [HttpGet]
         public async Task<ActionResult<IEnumerable<QuestionResponseDto>>> GetQuestions()
         {
@@ -28,6 +32,11 @@ namespace AskOnline.Controllers
 
 
 
+        /// <summary>
+        /// Gets a specific question by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the question.</param>
+        /// <returns>The question with the specified ID.</returns>
         // GET: api/questions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<QuestionResponseDto>> GetQuestion(int id)
@@ -40,6 +49,11 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Creates a new question.
+        /// </summary>
+        /// <param name="request">The question creation request.</param>
+        /// <returns>The created question.</returns>
         // POST: api/questions
         [Authorize]
         [HttpPost]
@@ -59,6 +73,11 @@ namespace AskOnline.Controllers
 
 
 
+        /// <summary>
+        /// Deletes a question.
+        /// </summary>
+        /// <param name="id">The ID of the question to delete.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteQuestion(int id)
@@ -78,6 +97,12 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Updates an existing question.
+        /// </summary>
+        /// <param name="id">The ID of the question to update.</param>
+        /// <param name="dto">The question update data.</param>
+        /// <returns>The updated question.</returns>
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateQuestion(int id, [FromBody] QuestionUpdateDto dto)
@@ -99,6 +124,11 @@ namespace AskOnline.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a list of recent questions.
+        /// </summary>
+        /// <param name="limit">The maximum number of questions to return.</param>
+        /// <returns>A list of recent questions.</returns>
         [HttpGet("recent")]
         public async Task<ActionResult<List<QuestionResponseDto>>> GetRecentQuestions([FromQuery] int limit = 20)
         {

@@ -15,6 +15,11 @@ namespace AskOnline.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="request">User registration data.</param>
+        /// <returns>A confirmation message.</returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterRequest request)
         {
@@ -28,6 +33,11 @@ namespace AskOnline.Controllers
             return Ok(new { message = $"User registered as {role}" });
         }
 
+        /// <summary>
+        /// Authenticates a user and returns an authentication token.
+        /// </summary>
+        /// <param name="login">User login credentials.</param>
+        /// <returns>An authentication token.</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest login)
         {

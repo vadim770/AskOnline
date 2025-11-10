@@ -10,10 +10,12 @@
         "tags": [
           "Answers"
         ],
+        "summary": "Gets all answers for a specific question.",
         "parameters": [
           {
             "name": "questionId",
             "in": "path",
+            "description": "The ID of the question.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -59,7 +61,9 @@
         "tags": [
           "Answers"
         ],
+        "summary": "Creates a new answer for a question.",
         "requestBody": {
+          "description": "The answer creation request.",
           "content": {
             "application/json": {
               "schema": {
@@ -107,10 +111,12 @@
         "tags": [
           "Answers"
         ],
+        "summary": "Deletes an answer.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the answer to delete.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -128,10 +134,12 @@
         "tags": [
           "Answers"
         ],
+        "summary": "Updates an existing answer.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the answer to update.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -140,6 +148,7 @@
           }
         ],
         "requestBody": {
+          "description": "The answer update data.",
           "content": {
             "application/json": {
               "schema": {
@@ -170,7 +179,9 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Registers a new user.",
         "requestBody": {
+          "description": "User registration data.",
           "content": {
             "application/json": {
               "schema": {
@@ -201,7 +212,9 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Authenticates a user and returns an authentication token.",
         "requestBody": {
+          "description": "User login credentials.",
           "content": {
             "application/json": {
               "schema": {
@@ -232,10 +245,12 @@
         "tags": [
           "Comment"
         ],
+        "summary": "Gets all comments for a specific answer.",
         "parameters": [
           {
             "name": "answerId",
             "in": "path",
+            "description": "The ID of the answer.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -253,10 +268,12 @@
         "tags": [
           "Comment"
         ],
+        "summary": "Adds a new comment to an answer.",
         "parameters": [
           {
             "name": "answerId",
             "in": "path",
+            "description": "The ID of the answer to add a comment to.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -265,6 +282,7 @@
           }
         ],
         "requestBody": {
+          "description": "The comment creation data.",
           "content": {
             "application/json": {
               "schema": {
@@ -295,10 +313,12 @@
         "tags": [
           "Comment"
         ],
+        "summary": "Updates an existing comment.",
         "parameters": [
           {
             "name": "commentId",
             "in": "path",
+            "description": "The ID of the comment to update.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -307,6 +327,7 @@
           }
         ],
         "requestBody": {
+          "description": "The comment update data.",
           "content": {
             "application/json": {
               "schema": {
@@ -337,10 +358,12 @@
         "tags": [
           "Comment"
         ],
+        "summary": "Deletes a comment.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the comment to delete.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -360,6 +383,7 @@
         "tags": [
           "Dev"
         ],
+        "summary": "Seeds the database with fake data for testing.",
         "responses": {
           "200": {
             "description": "OK"
@@ -372,6 +396,7 @@
         "tags": [
           "Dev"
         ],
+        "summary": "Clears all data from the database.",
         "responses": {
           "200": {
             "description": "OK"
@@ -384,6 +409,7 @@
         "tags": [
           "Dev"
         ],
+        "summary": "Clears and reseeds the database.",
         "responses": {
           "200": {
             "description": "OK"
@@ -396,6 +422,7 @@
         "tags": [
           "Dev"
         ],
+        "summary": "Gets statistics about the data in the database.",
         "responses": {
           "200": {
             "description": "OK"
@@ -408,7 +435,9 @@
         "tags": [
           "QuestionRatings"
         ],
+        "summary": "Creates or updates a rating for a question.",
         "requestBody": {
+          "description": "The rating request.",
           "content": {
             "application/json": {
               "schema": {
@@ -456,10 +485,12 @@
         "tags": [
           "QuestionRatings"
         ],
+        "summary": "Deletes a rating for a question.",
         "parameters": [
           {
             "name": "questionId",
             "in": "path",
+            "description": "The ID of the question.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -477,10 +508,12 @@
         "tags": [
           "QuestionRatings"
         ],
+        "summary": "Gets the score for a question.",
         "parameters": [
           {
             "name": "questionId",
             "in": "path",
+            "description": "The ID of the question.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -517,6 +550,7 @@
         "tags": [
           "Questions"
         ],
+        "summary": "Gets all questions.",
         "responses": {
           "200": {
             "description": "OK",
@@ -553,7 +587,9 @@
         "tags": [
           "Questions"
         ],
+        "summary": "Creates a new question.",
         "requestBody": {
+          "description": "The question creation request.",
           "content": {
             "application/json": {
               "schema": {
@@ -601,10 +637,12 @@
         "tags": [
           "Questions"
         ],
+        "summary": "Gets a specific question by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the question.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -639,10 +677,12 @@
         "tags": [
           "Questions"
         ],
+        "summary": "Deletes a question.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the question to delete.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -660,10 +700,12 @@
         "tags": [
           "Questions"
         ],
+        "summary": "Updates an existing question.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the question to update.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -672,6 +714,7 @@
           }
         ],
         "requestBody": {
+          "description": "The question update data.",
           "content": {
             "application/json": {
               "schema": {
@@ -702,10 +745,12 @@
         "tags": [
           "Questions"
         ],
+        "summary": "Gets a list of recent questions.",
         "parameters": [
           {
             "name": "limit",
             "in": "query",
+            "description": "The maximum number of questions to return.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -751,7 +796,9 @@
         "tags": [
           "Ratings"
         ],
+        "summary": "Creates or updates a rating for an answer.",
         "requestBody": {
+          "description": "The rating request.",
           "content": {
             "application/json": {
               "schema": {
@@ -799,10 +846,12 @@
         "tags": [
           "Ratings"
         ],
+        "summary": "Deletes a rating for an answer.",
         "parameters": [
           {
             "name": "answerId",
             "in": "path",
+            "description": "The ID of the answer.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -820,10 +869,12 @@
         "tags": [
           "Ratings"
         ],
+        "summary": "Gets the score for an answer.",
         "parameters": [
           {
             "name": "answerId",
             "in": "path",
+            "description": "The ID of the answer.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -860,10 +911,12 @@
         "tags": [
           "Search"
         ],
+        "summary": "Search questions with various filters and sorting options",
         "parameters": [
           {
             "name": "q",
             "in": "query",
+            "description": "Search query (can include [tagname] syntax for tag filtering)",
             "schema": {
               "type": "string"
             }
@@ -871,6 +924,7 @@
           {
             "name": "sortBy",
             "in": "query",
+            "description": "Sort order Newest, Active, Score",
             "schema": {
               "$ref": "#/components/schemas/SearchSortBy"
             }
@@ -878,6 +932,7 @@
           {
             "name": "page",
             "in": "query",
+            "description": "Page number (default: 1)",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -887,6 +942,7 @@
           {
             "name": "pageSize",
             "in": "query",
+            "description": "Items per page (default: 15, max: 50)",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -896,6 +952,7 @@
           {
             "name": "noAnswers",
             "in": "query",
+            "description": "Filter questions with no answers",
             "schema": {
               "type": "boolean"
             }
@@ -903,6 +960,7 @@
           {
             "name": "noUpvotedAnswers",
             "in": "query",
+            "description": "Filter questions with no upvoted answers",
             "schema": {
               "type": "boolean"
             }
@@ -910,6 +968,7 @@
           {
             "name": "olderThanDays",
             "in": "query",
+            "description": "Filter questions older than specified days",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -918,6 +977,7 @@
           {
             "name": "tags",
             "in": "query",
+            "description": "Additional tags to filter by (comma-separated)",
             "schema": {
               "type": "string"
             }
@@ -952,7 +1012,9 @@
         "tags": [
           "Search"
         ],
+        "summary": "Advanced search endpoint with full request body support",
         "requestBody": {
+          "description": "Complete search request with all parameters",
           "content": {
             "application/json": {
               "schema": {
@@ -1000,6 +1062,7 @@
         "tags": [
           "Search"
         ],
+        "summary": "Get available search options and metadata",
         "responses": {
           "200": {
             "description": "OK"
@@ -1012,7 +1075,9 @@
         "tags": [
           "Tags"
         ],
+        "summary": "Adds a tag to a question.",
         "requestBody": {
+          "description": "The request containing the question ID and tag name.",
           "content": {
             "application/json": {
               "schema": {
@@ -1043,7 +1108,9 @@
         "tags": [
           "Tags"
         ],
+        "summary": "Creates a new tag.",
         "requestBody": {
+          "description": "The tag creation data.",
           "content": {
             "application/json": {
               "schema": {
@@ -1072,6 +1139,7 @@
         "tags": [
           "Tags"
         ],
+        "summary": "Gets all tags.",
         "responses": {
           "200": {
             "description": "OK",
@@ -1110,10 +1178,12 @@
         "tags": [
           "Tags"
         ],
+        "summary": "Gets a specific tag by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the tag.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -1148,10 +1218,12 @@
         "tags": [
           "Tags"
         ],
+        "summary": "Deletes a tag.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the tag to delete.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -1171,10 +1243,12 @@
         "tags": [
           "Tags"
         ],
+        "summary": "Removes a tag from a question.",
         "parameters": [
           {
             "name": "questionId",
             "in": "query",
+            "description": "The ID of the question.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1183,6 +1257,7 @@
           {
             "name": "tagId",
             "in": "query",
+            "description": "The ID of the tag.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1201,6 +1276,7 @@
         "tags": [
           "Users"
         ],
+        "summary": "Gets all users.",
         "responses": {
           "200": {
             "description": "OK",
@@ -1239,10 +1315,12 @@
         "tags": [
           "Users"
         ],
+        "summary": "Gets a specific user by their ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the user.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -1277,10 +1355,12 @@
         "tags": [
           "Users"
         ],
+        "summary": "Deletes a user.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the user to delete.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -1300,6 +1380,7 @@
         "tags": [
           "Users"
         ],
+        "summary": "Gets the currently authenticated user.",
         "responses": {
           "200": {
             "description": "OK",
@@ -1329,10 +1410,12 @@
         "tags": [
           "Users"
         ],
+        "summary": "Gets all questions asked by a specific user.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the user.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -1378,10 +1461,12 @@
         "tags": [
           "Users"
         ],
+        "summary": "Gets all answers provided by a specific user.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the user.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -1427,10 +1512,12 @@
         "tags": [
           "Users"
         ],
+        "summary": "Gets all comments made by a specific user.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the user.",
             "required": true,
             "schema": {
               "type": "integer",

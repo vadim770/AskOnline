@@ -512,3 +512,5 @@ D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\bin\Debug\net9.0\BCrypt.Net-Next.dll
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\bin\Debug\net9.0\Bogus.dll
 D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\obj\Debug\net9.0\AskOnline.xml
+D:\Users\Skynet\Documents\AskOnline\AskOnline\AskOnline\AskOnline\bin\Debug\net9.0\AskOnline.xml

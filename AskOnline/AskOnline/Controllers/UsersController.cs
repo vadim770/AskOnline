@@ -23,6 +23,10 @@ namespace AskOnline.Controllers
             _commentService = commentService;
         }
 
+        /// <summary>
+        /// Gets all users.
+        /// </summary>
+        /// <returns>A list of all users.</returns>
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
@@ -33,6 +37,11 @@ namespace AskOnline.Controllers
 
 
 
+        /// <summary>
+        /// Gets a specific user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>The user with the specified ID.</returns>
         // GET: api/Users/1
         [HttpGet("{id}")]
         public async Task<ActionResult<UserResponseDto>> GetUser(int id)
@@ -41,6 +50,11 @@ namespace AskOnline.Controllers
             return dto == null ? NotFound() : Ok(dto);
         }
 
+        /// <summary>
+        /// Deletes a user.
+        /// </summary>
+        /// <param name="id">The ID of the user to delete.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         // DELETE: api/Users/5
         [Authorize]
         [HttpDelete("{id}")]
@@ -60,6 +74,10 @@ namespace AskOnline.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the currently authenticated user.
+        /// </summary>
+        /// <returns>The currently authenticated user.</returns>
         [HttpGet("me")]
         public async Task<ActionResult<UserResponseDto>> GetCurrentUser()
         {
@@ -71,6 +89,11 @@ namespace AskOnline.Controllers
             return dto == null ? NotFound() : Ok(dto);
         }
 
+        /// <summary>
+        /// Gets all questions asked by a specific user.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>A list of questions asked by the user.</returns>
         // GET: api/users/1/questions
         [HttpGet("{id}/questions")]
         public async Task<ActionResult<IEnumerable<QuestionResponseDto>>> GetUserQuestions(int id)
@@ -79,6 +102,11 @@ namespace AskOnline.Controllers
             return Ok(questions);
         }
 
+        /// <summary>
+        /// Gets all answers provided by a specific user.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>A list of answers provided by the user.</returns>
         // GET: api/users/1/answers
         [HttpGet("{id}/answers")]
         public async Task<ActionResult<IEnumerable<AnswerResponseDto>>> GetUserAnswers(int id)
@@ -87,6 +115,11 @@ namespace AskOnline.Controllers
             return Ok(answers);
         }
 
+        /// <summary>
+        /// Gets all comments made by a specific user.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>A list of comments made by the user.</returns>
         // GET: api/users/1/comments
         [HttpGet("{id}/comments")]
         public async Task<ActionResult<IEnumerable<CommentResponseDto>>> GetUserComments(int id)

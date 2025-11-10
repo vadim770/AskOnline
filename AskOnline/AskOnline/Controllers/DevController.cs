@@ -16,6 +16,10 @@ public class DevController : ControllerBase
         _seeder = seeder;
     }
 
+    /// <summary>
+    /// Seeds the database with fake data for testing.
+    /// </summary>
+    /// <returns>A confirmation message.</returns>
     // Seeds the database with fake data for testing
     [HttpPost("seed")]
     public async Task<IActionResult> SeedDatabase()
@@ -54,6 +58,10 @@ public class DevController : ControllerBase
         };
     }
 
+    /// <summary>
+    /// Clears all data from the database.
+    /// </summary>
+    /// <returns>A confirmation message.</returns>
     // Clears all data from the database
     [HttpPost("clear")]
     public async Task<IActionResult> ClearDatabase()
@@ -69,6 +77,10 @@ public class DevController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Clears and reseeds the database.
+    /// </summary>
+    /// <returns>A confirmation message.</returns>
     // Clears and reseeds the database
     [HttpPost("reset")]
     public async Task<IActionResult> ResetDatabase()
@@ -85,6 +97,11 @@ public class DevController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Gets statistics about the data in the database.
+    /// </summary>
+    /// <param name="unitOfWork">The unit of work.</param>
+    /// <returns>Database statistics.</returns>
     [HttpGet("stats")]
     public async Task<IActionResult> GetDatabaseStats([FromServices] IUnitOfWork unitOfWork)
     {

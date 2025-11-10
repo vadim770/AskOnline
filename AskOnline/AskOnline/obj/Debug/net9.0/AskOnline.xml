@@ -1,0 +1,325 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AskOnline</name>
+    </assembly>
+    <members>
+        <member name="M:AskOnline.Controllers.AnswersController.GetAnswersForQuestion(System.Int32)">
+            <summary>
+            Gets all answers for a specific question.
+            </summary>
+            <param name="questionId">The ID of the question.</param>
+            <returns>A list of answers for the question.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.AnswersController.PostAnswer(AskOnline.Dtos.AnswerRequestDto)">
+            <summary>
+            Creates a new answer for a question.
+            </summary>
+            <param name="request">The answer creation request.</param>
+            <returns>The created answer.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.AnswersController.DeleteAnswer(System.Int32)">
+            <summary>
+            Deletes an answer.
+            </summary>
+            <param name="id">The ID of the answer to delete.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.AnswersController.UpdateAnswer(System.Int32,AskOnline.Dtos.AnswerUpdateDto)">
+            <summary>
+            Updates an existing answer.
+            </summary>
+            <param name="id">The ID of the answer to update.</param>
+            <param name="dto">The answer update data.</param>
+            <returns>The updated answer.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.AuthController.Register(AskOnline.Dtos.UserRegisterRequest)">
+            <summary>
+            Registers a new user.
+            </summary>
+            <param name="request">User registration data.</param>
+            <returns>A confirmation message.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.AuthController.Login(AskOnline.Dtos.LoginRequest)">
+            <summary>
+            Authenticates a user and returns an authentication token.
+            </summary>
+            <param name="login">User login credentials.</param>
+            <returns>An authentication token.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.CommentController.GetCommentsForAnswer(System.Int32)">
+            <summary>
+            Gets all comments for a specific answer.
+            </summary>
+            <param name="answerId">The ID of the answer.</param>
+            <returns>A list of comments for the answer.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.CommentController.AddCommentToAnswer(System.Int32,AskOnline.Dtos.CommentCreateDto)">
+            <summary>
+            Adds a new comment to an answer.
+            </summary>
+            <param name="answerId">The ID of the answer to add a comment to.</param>
+            <param name="dto">The comment creation data.</param>
+            <returns>The created comment.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.CommentController.UpdateComment(System.Int32,AskOnline.Dtos.CommentUpdateDto)">
+            <summary>
+            Updates an existing comment.
+            </summary>
+            <param name="commentId">The ID of the comment to update.</param>
+            <param name="dto">The comment update data.</param>
+            <returns>The updated comment.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.CommentController.DeleteComment(System.Int32)">
+            <summary>
+            Deletes a comment.
+            </summary>
+            <param name="id">The ID of the comment to delete.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionRatingsController.PostRating(AskOnline.Dtos.QuestionRatingRequestDto)">
+            <summary>
+            Creates or updates a rating for a question.
+            </summary>
+            <param name="request">The rating request.</param>
+            <returns>The created or updated rating.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionRatingsController.DeleteRating(System.Int32)">
+            <summary>
+            Deletes a rating for a question.
+            </summary>
+            <param name="questionId">The ID of the question.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionRatingsController.GetQuestionScore(System.Int32)">
+            <summary>
+            Gets the score for a question.
+            </summary>
+            <param name="questionId">The ID of the question.</param>
+            <returns>The score of the question.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionsController.GetQuestions">
+            <summary>
+            Gets all questions.
+            </summary>
+            <returns>A list of all questions.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionsController.GetQuestion(System.Int32)">
+            <summary>
+            Gets a specific question by its ID.
+            </summary>
+            <param name="id">The ID of the question.</param>
+            <returns>The question with the specified ID.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionsController.PostQuestion(AskOnline.Dtos.QuestionRequestDto)">
+            <summary>
+            Creates a new question.
+            </summary>
+            <param name="request">The question creation request.</param>
+            <returns>The created question.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionsController.DeleteQuestion(System.Int32)">
+            <summary>
+            Deletes a question.
+            </summary>
+            <param name="id">The ID of the question to delete.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionsController.UpdateQuestion(System.Int32,AskOnline.Dtos.QuestionUpdateDto)">
+            <summary>
+            Updates an existing question.
+            </summary>
+            <param name="id">The ID of the question to update.</param>
+            <param name="dto">The question update data.</param>
+            <returns>The updated question.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.QuestionsController.GetRecentQuestions(System.Int32)">
+            <summary>
+            Gets a list of recent questions.
+            </summary>
+            <param name="limit">The maximum number of questions to return.</param>
+            <returns>A list of recent questions.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.RatingsController.PostRating(AskOnline.Dtos.RatingRequestDto)">
+            <summary>
+            Creates or updates a rating for an answer.
+            </summary>
+            <param name="request">The rating request.</param>
+            <returns>The created or updated rating.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.RatingsController.DeleteRating(System.Int32)">
+            <summary>
+            Deletes a rating for an answer.
+            </summary>
+            <param name="answerId">The ID of the answer.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.RatingsController.GetAnswerScore(System.Int32)">
+            <summary>
+            Gets the score for an answer.
+            </summary>
+            <param name="answerId">The ID of the answer.</param>
+            <returns>The score of the answer.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.SearchController.Search(System.String,AskOnline.Dtos.SearchSortBy,System.Int32,System.Int32,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String)">
+            <summary>
+            Search questions with various filters and sorting options
+            </summary>
+            <param name="q">Search query (can include [tagname] syntax for tag filtering)</param>
+            <param name="sortBy">Sort order Newest, Active, Score</param>
+            <param name="page">Page number (default: 1)</param>
+            <param name="pageSize">Items per page (default: 15, max: 50)</param>
+            <param name="noAnswers">Filter questions with no answers</param>
+            <param name="noUpvotedAnswers">Filter questions with no upvoted answers</param>
+            <param name="olderThanDays">Filter questions older than specified days</param>
+            <param name="tags">Additional tags to filter by (comma-separated)</param>
+            <returns>Paginated search results</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.SearchController.AdvancedSearch(AskOnline.Dtos.SearchRequestDto)">
+            <summary>
+            Advanced search endpoint with full request body support
+            </summary>
+            <param name="request">Complete search request with all parameters</param>
+            <returns>Paginated search result</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.SearchController.GetSearchOptions">
+            <summary>
+            Get available search options and metadata
+            </summary>
+            <returns>search configuration and available options</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.TagsController.AddTagToQuestion(AskOnline.Dtos.AddTagToQuestionRequestDto)">
+            <summary>
+            Adds a tag to a question.
+            </summary>
+            <param name="request">The request containing the question ID and tag name.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.TagsController.CreateTag(AskOnline.Dtos.TagCreateDto)">
+            <summary>
+            Creates a new tag.
+            </summary>
+            <param name="dto">The tag creation data.</param>
+            <returns>The created tag.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.TagsController.GetTag(System.Int32)">
+            <summary>
+            Gets a specific tag by its ID.
+            </summary>
+            <param name="id">The ID of the tag.</param>
+            <returns>The tag with the specified ID.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.TagsController.GetTags">
+            <summary>
+            Gets all tags.
+            </summary>
+            <returns>A list of all tags.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.TagsController.DeleteTag(System.Int32)">
+            <summary>
+            Deletes a tag.
+            </summary>
+            <param name="id">The ID of the tag to delete.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.TagsController.RemoveTagFromQuestion(System.Int32,System.Int32)">
+            <summary>
+            Removes a tag from a question.
+            </summary>
+            <param name="questionId">The ID of the question.</param>
+            <param name="tagId">The ID of the tag.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.UsersController.GetUsers">
+            <summary>
+            Gets all users.
+            </summary>
+            <returns>A list of all users.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.UsersController.GetUser(System.Int32)">
+            <summary>
+            Gets a specific user by their ID.
+            </summary>
+            <param name="id">The ID of the user.</param>
+            <returns>The user with the specified ID.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Deletes a user.
+            </summary>
+            <param name="id">The ID of the user to delete.</param>
+            <returns>An IActionResult indicating the result of the operation.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.UsersController.GetCurrentUser">
+            <summary>
+            Gets the currently authenticated user.
+            </summary>
+            <returns>The currently authenticated user.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.UsersController.GetUserQuestions(System.Int32)">
+            <summary>
+            Gets all questions asked by a specific user.
+            </summary>
+            <param name="id">The ID of the user.</param>
+            <returns>A list of questions asked by the user.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.UsersController.GetUserAnswers(System.Int32)">
+            <summary>
+            Gets all answers provided by a specific user.
+            </summary>
+            <param name="id">The ID of the user.</param>
+            <returns>A list of answers provided by the user.</returns>
+        </member>
+        <member name="M:AskOnline.Controllers.UsersController.GetUserComments(System.Int32)">
+            <summary>
+            Gets all comments made by a specific user.
+            </summary>
+            <param name="id">The ID of the user.</param>
+            <returns>A list of comments made by the user.</returns>
+        </member>
+        <member name="M:AskOnline.API.Controllers.DevController.SeedDatabase">
+            <summary>
+            Seeds the database with fake data for testing.
+            </summary>
+            <returns>A confirmation message.</returns>
+        </member>
+        <member name="M:AskOnline.API.Controllers.DevController.ClearDatabase">
+            <summary>
+            Clears all data from the database.
+            </summary>
+            <returns>A confirmation message.</returns>
+        </member>
+        <member name="M:AskOnline.API.Controllers.DevController.ResetDatabase">
+            <summary>
+            Clears and reseeds the database.
+            </summary>
+            <returns>A confirmation message.</returns>
+        </member>
+        <member name="M:AskOnline.API.Controllers.DevController.GetDatabaseStats(AskOnline.Data.IUnitOfWork)">
+            <summary>
+            Gets statistics about the data in the database.
+            </summary>
+            <param name="unitOfWork">The unit of work.</param>
+            <returns>Database statistics.</returns>
+        </member>
+        <member name="T:AskOnline.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:AskOnline.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AskOnline.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AskOnline.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AskOnline.Services.ISearchService.SearchQuestionsAsync(AskOnline.Dtos.SearchRequestDto)">
+            <summary>
+            Searches for questions based on the given request parameters.
+            </summary>
+            <param name="request">Search request containing query, filters, pagination, and sorting options.</param>
+            <returns>A <see cref="T:AskOnline.Dtos.SearchResultDto"/> containing the matching questions, total count, and pagination details.</returns>
+        </member>
+    </members>
+</doc>

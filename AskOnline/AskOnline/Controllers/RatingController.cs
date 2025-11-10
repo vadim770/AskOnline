@@ -19,6 +19,11 @@ namespace AskOnline.Controllers
             _ratingService = ratingService;
         }
 
+        /// <summary>
+        /// Creates or updates a rating for an answer.
+        /// </summary>
+        /// <param name="request">The rating request.</param>
+        /// <returns>The created or updated rating.</returns>
         // POST: api/ratings
         [Authorize]
         [HttpPost]
@@ -33,6 +38,11 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Deletes a rating for an answer.
+        /// </summary>
+        /// <param name="answerId">The ID of the answer.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         // DELETE: api/ratings/answer/5
         [Authorize]
         [HttpDelete("answer/{answerId}")]
@@ -46,6 +56,11 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Gets the score for an answer.
+        /// </summary>
+        /// <param name="answerId">The ID of the answer.</param>
+        /// <returns>The score of the answer.</returns>
         // GET: api/ratings/answer/5
         [HttpGet("answer/{answerId}")]
         public async Task<ActionResult<AnswerScoreDto>> GetAnswerScore(int answerId)

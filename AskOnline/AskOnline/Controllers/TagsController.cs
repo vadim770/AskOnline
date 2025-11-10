@@ -19,6 +19,11 @@ namespace AskOnline.Controllers
             _tagService = tagService;
         }
 
+        /// <summary>
+        /// Adds a tag to a question.
+        /// </summary>
+        /// <param name="request">The request containing the question ID and tag name.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         [Authorize]
         [HttpPost("add-to-question")]
         public async Task<IActionResult> AddTagToQuestion(AddTagToQuestionRequestDto request)
@@ -36,6 +41,11 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Creates a new tag.
+        /// </summary>
+        /// <param name="dto">The tag creation data.</param>
+        /// <returns>The created tag.</returns>
         // POST: api/Tags
         [Authorize]
         [HttpPost]
@@ -52,6 +62,11 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Gets a specific tag by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the tag.</param>
+        /// <returns>The tag with the specified ID.</returns>
         // GET: api/Tags/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TagDto>> GetTag(int id)
@@ -63,6 +78,10 @@ namespace AskOnline.Controllers
             return Ok(tagDto);
         }
 
+        /// <summary>
+        /// Gets all tags.
+        /// </summary>
+        /// <returns>A list of all tags.</returns>
         // GET: api/Tags
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TagDto>>> GetTags()
@@ -72,6 +91,11 @@ namespace AskOnline.Controllers
         }
 
 
+        /// <summary>
+        /// Deletes a tag.
+        /// </summary>
+        /// <param name="id">The ID of the tag to delete.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         // DELETE: api/tags/{id}
         [Authorize(Roles = Roles.Admin)]
         [HttpDelete("{id}")]
@@ -84,6 +108,12 @@ namespace AskOnline.Controllers
             return NoContent(); // 204
         }
 
+        /// <summary>
+        /// Removes a tag from a question.
+        /// </summary>
+        /// <param name="questionId">The ID of the question.</param>
+        /// <param name="tagId">The ID of the tag.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         // DELETE: api/Tags/remove-from-question
         [Authorize]
         [HttpDelete("remove-from-question")]
