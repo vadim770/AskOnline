@@ -76,9 +76,22 @@ public class DatabaseSeeder
 
         _users = userFaker.Generate(50);
 
+        // Create a specific admin user
+        var adminUser = new User
+        {
+            Username = "admin",
+            Email = "admin@admin.com",
+            Role = Roles.Admin,
+            CreatedAt = DateTime.UtcNow
+        };
+        adminUser.PasswordHash = _passwordHasher.HashPassword(adminUser, "admin");
+        _users.Add(adminUser); // Add the admin user to the list
+
         // Hash passwords using Identity's PasswordHasher
         foreach (var user in _users)
         {
+            // Skip hashing for the admin user as it's already done
+            if (user.Email == adminUser.Email) continue;
             user.PasswordHash = _passwordHasher.HashPassword(user, "Password123!");
         }
 
