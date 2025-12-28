@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useAuth, AuthContext } from "../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
-import { createApi } from "../utils/api";
 import { Link } from "react-router-dom";
 import Tag from "../components/Tag.jsx";
 import Answer from "../components/Answer.jsx";
@@ -12,7 +11,6 @@ export default function QuestionPage({ question, answers, setAnswers }) {
   const [newAnswer, setNewAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
-  const apiFetch = createApi(navigate);
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(question.title);
   const [editBody, setEditBody] = useState(question.body);
